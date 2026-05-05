@@ -96,7 +96,7 @@ const quizData = [
 
   {
     q: "44. Which link for categorization of the type of research design is NOT true?",
-    image: "images/question44.png",  // 👈 PUT YOUR IMAGE FILE HERE
+    image: "https://raw.githubusercontent.com/USERNAME/REPO/main/question44.png",
     options: ["A", "B", "C", "D"],
     answer: 1
   }
@@ -108,7 +108,6 @@ quizData.forEach((item, i) => {
   let html = `<div class="question">
     <p>${item.q}</p>`;
 
-  // ✅ IMAGE SUPPORT (IMPORTANT PART)
   if (item.image) {
     html += `<img src="${item.image}" alt="question image">`;
   }

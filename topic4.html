@@ -19,10 +19,12 @@ body {
   background: white;
   padding: 25px;
   border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 h1 {
   text-align: center;
+  color: #1e3a8a;
 }
 
 .question {
@@ -30,6 +32,12 @@ h1 {
   padding: 15px;
   border: 1px solid #ddd;
   border-radius: 10px;
+  background: #fafafa;
+}
+
+.question:hover {
+  background: #f0f0f0;
+  transition: 0.3s;
 }
 
 .question img {
@@ -40,7 +48,19 @@ h1 {
 
 label {
   display: block;
-  margin: 5px 0;
+  margin: 8px 0;
+  cursor: pointer;
+  padding: 5px;
+}
+
+label:hover {
+  background: #e8e8e8;
+  border-radius: 5px;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+  cursor: pointer;
 }
 
 button {
@@ -51,16 +71,70 @@ button {
   border: none;
   border-radius: 10px;
   cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #1d4ed8;
+  transition: 0.3s;
 }
 
 .result {
   margin-top: 20px;
   font-weight: bold;
   text-align: center;
+  font-size: 18px;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.result.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.result.error {
+  background: #fee2e2;
+  color: #991b1b;
 }
 
 .small-text {
   white-space: pre-line;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.reset-btn {
+  background: #6c757d;
+  margin-top: 10px;
+}
+
+.reset-btn:hover {
+  background: #5a6268;
+}
+
+.score-highlight {
+  font-size: 24px;
+  color: #2563eb;
+}
+
+.answer-feedback {
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.correct-feedback {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.wrong-feedback {
+  background: #fee2e2;
+  color: #991b1b;
 }
 </style>
 </head>
@@ -72,9 +146,11 @@ button {
 
 <div id="quiz"></div>
 
-<button onclick="submitQuiz()">Submit</button>
+<button onclick="submitQuiz()">Submit Quiz</button>
+<button onclick="resetQuiz()" class="reset-btn">Reset All Answers</button>
 
 <div id="result" class="result"></div>
+<div id="detailedResult" style="margin-top: 20px;"></div>
 </div>
 
 <script>
@@ -83,7 +159,8 @@ const quizData = [
   {
     q: "38. The research design is like a blueprint and it describes the entire framework or plan for a research project.",
     options: ["Yes", "No"],
-    answer: 0
+    answer: 0,
+    explanation: "Research design serves as a blueprint or framework for conducting research."
   },
 
   {
@@ -99,29 +176,26 @@ iv. Unstructured and flexible in data collection`,
       "Empirical research",
       "Hypothetical research"
     ],
-    answer: 1
+    answer: 1,
+    explanation: "These characteristics describe qualitative research, which focuses on understanding phenomena through non-numerical data."
   },
 
   {
     q: "40. Quantitative research is more statistical in nature.",
     options: ["Yes", "No"],
-    answer: 0
+    answer: 0,
+    explanation: "Quantitative research relies heavily on statistical analysis of numerical data."
   },
 
   {
-    q: `41.The above are characteristics of ____ data.`,
+    q: `41. The above are characteristics of ____ data:
 i. For the problem at hand
 ii. Data collection process is complex and involved
 iii. Cost incurred is relatively high
-iv. Time consuming
-
-
-    options: [
-      "Secondary",
-      "Tertiary",
-      "Primary"
-    ],
-    answer: 2
+iv. Time consuming`,
+    options: ["Secondary", "Tertiary", "Primary"],
+    answer: 2,
+    explanation: "Primary data is collected specifically for the research problem at hand, often involving complex, costly, and time-consuming processes."
   },
 
   {
@@ -132,7 +206,8 @@ iv. Time consuming
       "Information is obtained for more than once and usually is more reliable",
       "Relatively expensive to carry out since several studies will be conducted"
     ],
-    answer: 2
+    answer: 2,
+    explanation: "Information being more reliable is an advantage, not a disadvantage of longitudinal research."
   },
 
   {
@@ -143,20 +218,23 @@ iv. Time consuming
       "It attributes the responses directly to the respondents",
       "It results in free exchange of information"
     ],
-    answer: 1
+    answer: 1,
+    explanation: "Depth interviews are not 'always' better than focus groups; each method has its own strengths depending on the research context."
   },
 
   {
     q: "44. Which link for categorization of the type of research design is NOT true?",
-    image: "images/question44.png",
+    image: "",  // Removed image reference - you can add your image path here if needed
     options: ["A", "B", "C", "D"],
-    answer: 1
+    answer: 1,  // B is the answer (index 1)
+    explanation: "Based on research design categorization, option B is not a true link."
   },
 
   {
     q: "45. Descriptive research usually will answer the 6 Ws questions.",
     options: ["Yes", "No"],
-    answer: 0
+    answer: 0,
+    explanation: "Descriptive research aims to answer Who, What, When, Where, Why, and How questions."
   },
 
   {
@@ -167,7 +245,8 @@ iv. Time consuming
       "Manipulation of variable(s)",
       "Cross-sectional descriptive research"
     ],
-    answer: 3
+    answer: 3,
+    explanation: "Cross-sectional descriptive research is not part of causal research; it's descriptive in nature."
   },
 
   {
@@ -178,7 +257,8 @@ iv. Time consuming
       "Structure",
       "Size"
     ],
-    answer: 3
+    answer: 3,
+    explanation: "Size is not typically listed as an advantage of focus groups; advantages include speed, synergy, and structure."
   },
 
   {
@@ -189,7 +269,8 @@ iv. Time consuming
       "Concise measurement",
       "Co-creation"
     ],
-    answer: 1
+    answer: 1,
+    explanation: "Concomitant variation (correlation) is one of the three conditions for establishing causality."
   },
 
   {
@@ -200,47 +281,154 @@ iv. Time consuming
       "Projection",
       "Construction"
     ],
-    answer: 2
+    answer: 2,
+    explanation: "Projection is not a specific projective technique; projection refers to the psychological concept behind these techniques, while word association, sentence completion, and construction are actual projective techniques."
   }
 ];
 
 const quiz = document.getElementById("quiz");
 
+// Build the quiz
 quizData.forEach((item, i) => {
-  let html = `<div class="question">`;
-
+  let html = `<div class="question" id="question${i}">`;
   html += `<p class="small-text">${item.q}</p>`;
-
-  if (item.image) {
+  
+  if (item.image && item.image !== "") {
     html += `<img src="${item.image}" alt="question image">`;
   }
-
+  
   item.options.forEach((opt, j) => {
     html += `
       <label>
-        <input type="radio" name="q${i}" value="${j}">
+        <input type="radio" name="q${i}" value="${j}" onclick="clearFeedback(${i})">
         ${opt}
       </label>
     `;
   });
-
+  
+  html += `<div id="feedback${i}" class="answer-feedback"></div>`;
   html += `</div>`;
   quiz.innerHTML += html;
 });
 
+// Function to clear previous feedback when user changes answer
+function clearFeedback(questionIndex) {
+  const feedbackDiv = document.getElementById(`feedback${questionIndex}`);
+  if (feedbackDiv) {
+    feedbackDiv.innerHTML = '';
+    feedbackDiv.className = 'answer-feedback';
+  }
+  // Clear overall result when answers are changed
+  document.getElementById("result").innerHTML = '';
+  document.getElementById("result").className = 'result';
+  document.getElementById("detailedResult").innerHTML = '';
+}
+
 function submitQuiz() {
   let score = 0;
-
+  let allAnswered = true;
+  let unansweredQuestions = [];
+  
+  // Check each question
   quizData.forEach((item, i) => {
     const selected = document.querySelector(`input[name="q${i}"]:checked`);
-    if (selected && parseInt(selected.value) === item.answer) {
-      score++;
+    const feedbackDiv = document.getElementById(`feedback${i}`);
+    
+    if (!selected) {
+      allAnswered = false;
+      unansweredQuestions.push(i + 38); // Adding 38 because questions start at 38
+      if (feedbackDiv) {
+        feedbackDiv.innerHTML = '⚠️ Question not answered';
+        feedbackDiv.className = 'answer-feedback wrong-feedback';
+      }
+    } else {
+      const isCorrect = parseInt(selected.value) === item.answer;
+      if (isCorrect) {
+        score++;
+        if (feedbackDiv) {
+          feedbackDiv.innerHTML = `✅ Correct! ${item.explanation || ''}`;
+          feedbackDiv.className = 'answer-feedback correct-feedback';
+        }
+      } else {
+        const correctAnswerText = item.options[item.answer];
+        if (feedbackDiv) {
+          feedbackDiv.innerHTML = `❌ Incorrect. The correct answer is: ${correctAnswerText}. ${item.explanation || ''}`;
+          feedbackDiv.className = 'answer-feedback wrong-feedback';
+        }
+      }
     }
   });
-
-  document.getElementById("result").innerText =
-    `Your Score: ${score} / ${quizData.length}`;
+  
+  const resultDiv = document.getElementById("result");
+  const detailedDiv = document.getElementById("detailedResult");
+  
+  if (!allAnswered) {
+    resultDiv.innerHTML = `⚠️ Please answer all questions before submitting. ⚠️<br>
+                          Missing answers for questions: ${unansweredQuestions.join(', ')}`;
+    resultDiv.className = 'result error';
+    detailedDiv.innerHTML = '';
+    return;
+  }
+  
+  const percentage = (score / quizData.length) * 100;
+  let gradeMessage = '';
+  if (percentage >= 90) {
+    gradeMessage = 'Excellent! 🌟';
+  } else if (percentage >= 75) {
+    gradeMessage = 'Good job! 👍';
+  } else if (percentage >= 60) {
+    gradeMessage = 'Not bad, but room for improvement! 📚';
+  } else {
+    gradeMessage = 'Need more practice. Keep studying! 💪';
+  }
+  
+  resultDiv.innerHTML = `<span class="score-highlight">Your Score: ${score} / ${quizData.length}</span><br>
+                        (${percentage}%)<br>
+                        ${gradeMessage}`;
+  resultDiv.className = 'result success';
+  
+  // Scroll to result
+  resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
+
+function resetQuiz() {
+  // Clear all radio selections
+  const allRadios = document.querySelectorAll('input[type="radio"]');
+  allRadios.forEach(radio => {
+    radio.checked = false;
+  });
+  
+  // Clear all feedback
+  for (let i = 0; i < quizData.length; i++) {
+    const feedbackDiv = document.getElementById(`feedback${i}`);
+    if (feedbackDiv) {
+      feedbackDiv.innerHTML = '';
+      feedbackDiv.className = 'answer-feedback';
+    }
+  }
+  
+  // Clear result displays
+  document.getElementById("result").innerHTML = '';
+  document.getElementById("result").className = 'result';
+  document.getElementById("detailedResult").innerHTML = '';
+  
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  // Optional: Show confirmation
+  const tempMsg = document.createElement('div');
+  tempMsg.textContent = 'All answers have been reset!';
+  tempMsg.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #28a745; color: white; padding: 10px; border-radius: 5px; z-index: 1000;';
+  document.body.appendChild(tempMsg);
+  setTimeout(() => tempMsg.remove(), 2000);
+}
+
+// Add keyboard navigation (optional)
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.key === 'Enter') {
+    submitQuiz();
+  }
+});
 
 </script>
 

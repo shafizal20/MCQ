@@ -3,74 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Topic 2 Quiz</title>
+<title>Topic 2: Defining Problem and Research Objectives</title>
 
 <style>
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   background: #f5f7fb;
   margin: 0;
   padding: 20px;
+  color: #1f2937;
 }
 
 .container {
   max-width: 900px;
   margin: auto;
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
 h1 {
   text-align: center;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 20px;
+  font-size: 14px;
 }
 
 .question {
   margin-bottom: 20px;
-  padding: 15px;
-  border: 1px solid #ddd;
+  padding: 18px;
+  border: 1px solid #e5e7eb;
   border-radius: 10px;
+  background: #fafafa;
 }
 
 label {
   display: block;
-  margin: 5px 0;
+  margin: 6px 0;
+  cursor: pointer;
+}
+
+input {
+  margin-right: 8px;
 }
 
 button {
   width: 100%;
   padding: 14px;
-  background: #2563eb;
-  color: white;
+  margin-top: 20px;
   border: none;
   border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.result {
-  margin-top: 20px;
-  font-weight: bold;
-  text-align: center;
+button:hover {
+  background: #1d4ed8;
 }
+
+.result {
+  margin-top: 25px;
+  padding: 18px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 10px;
+  display: none;
+}
+
+.correct { color: #16a34a; font-weight: 600; }
+.wrong { color: #dc2626; font-weight: 600; }
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<h1>Topic 2: Marketing Research</h1>
 
-<div id="quiz"></div>
+<h1>Topic 2: Defining Problem and Research Objectives</h1>
+<div class="subtitle">Answer all questions before submitting</div>
+
+<form id="quizForm"></form>
 
 <button onclick="submitQuiz()">Submit</button>
 
-<div id="result" class="result"></div>
+<div id="resultBox" class="result"></div>
+
 </div>
 
 <script>
+
 const quizData = [
   {
-    q: "11. A/an ____ and ____ identified and defined problem enables research to be properly conducted.",
+    question: "11. A/an ____ and ____ identified and defined problem enables research to be properly conducted.",
     options: [
       "nicely, beautifully",
       "clearly, accurately",
@@ -80,12 +113,12 @@ const quizData = [
     answer: 1
   },
   {
-    q: "12. A good problem definition avoids unnecessary costs.",
+    question: "12. A good problem definition avoids unnecessary costs.",
     options: ["Yes", "No"],
     answer: 0
   },
   {
-    q: "13. Which is NOT an important task in problem definition?",
+    question: "13. Which is NOT an important task in problem definition?",
     options: [
       "Search literature",
       "Discuss experts",
@@ -96,38 +129,76 @@ const quizData = [
   }
 ];
 
-const quiz = document.getElementById("quiz");
+const quizForm = document.getElementById("quizForm");
 
-quizData.forEach((item, i) => {
-  let html = `<div class="question">
-    <p>${item.q}</p>`;
+function loadQuiz() {
+  quizForm.innerHTML = "";
 
-  item.options.forEach((opt, j) => {
-    html += `
-      <label>
-        <input type="radio" name="q${i}" value="${j}">
-        ${opt}
-      </label>
-    `;
+  quizData.forEach((q, i) => {
+    const div = document.createElement("div");
+    div.className = "question";
+
+    let html = `<p><b>${q.question}</b></p>`;
+
+    q.options.forEach((opt, j) => {
+      html += `
+        <label>
+          <input type="radio" name="q${i}" value="${j}">
+          ${opt}
+        </label>
+      `;
+    });
+
+    html += `<div id="fb${i}"></div>`;
+    div.innerHTML = html;
+    quizForm.appendChild(div);
   });
-
-  html += `</div>`;
-  quiz.innerHTML += html;
-});
+}
 
 function submitQuiz() {
   let score = 0;
+  let allAnswered = true;
 
-  quizData.forEach((item, i) => {
+  quizData.forEach((q, i) => {
     const selected = document.querySelector(`input[name="q${i}"]:checked`);
-    if (selected && parseInt(selected.value) === item.answer) {
-      score++;
+    const fb = document.getElementById(`fb${i}`);
+
+    if (!selected) {
+      allAnswered = false;
+      fb.innerHTML = `<span class="wrong">Please answer this question</span>`;
+    } else {
+      if (parseInt(selected.value) === q.answer) {
+        score++;
+        fb.innerHTML = `<span class="correct">Correct ✓</span>`;
+      } else {
+        fb.innerHTML = `<span class="wrong">Incorrect ✗</span>`;
+      }
     }
   });
 
-  document.getElementById("result").innerText =
-    `Your Score: ${score} / ${quizData.length}`;
+  if (!allAnswered) {
+    alert("Please answer ALL questions before submitting.");
+    return;
+  }
+
+  const resultBox = document.getElementById("resultBox");
+  resultBox.style.display = "block";
+
+  resultBox.innerHTML =
+    `Score: ${score} / ${quizData.length}`;
+
+  // LMS PROGRESS SAVE (Topic 2)
+  let completed = JSON.parse(localStorage.getItem("completedTopics")) || [];
+
+  if (!completed.includes("topic2")) {
+    completed.push("topic2");
+  }
+
+  localStorage.setItem("completedTopics", JSON.stringify(completed));
 }
+
+loadQuiz();
+
 </script>
 
 </body>

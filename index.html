@@ -3,47 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marketing Research Quiz</title>
+  <title>Topic 1: Introduction to Marketing Research</title>
+
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f5f7fb;
       margin: 0;
       padding: 20px;
-      color: #222;
+      color: #1f2937;
     }
 
     .container {
       max-width: 900px;
       margin: auto;
-      background: #fff;
+      background: #ffffff;
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     }
 
     h1 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
+      font-size: 26px;
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #6b7280;
+      font-size: 14px;
     }
 
     .question {
-      margin-bottom: 25px;
-      padding: 20px;
-      border: 1px solid #ddd;
+      margin-bottom: 20px;
+      padding: 18px;
+      border: 1px solid #e5e7eb;
       border-radius: 10px;
       background: #fafafa;
     }
 
     .question h3 {
-      margin-top: 0;
-      font-size: 18px;
+      margin: 0 0 12px;
+      font-size: 16px;
     }
 
     label {
       display: block;
-      margin: 8px 0;
+      margin: 6px 0;
       cursor: pointer;
+      font-size: 14px;
     }
 
     input[type="radio"] {
@@ -58,128 +68,98 @@
       border-radius: 10px;
       cursor: pointer;
       margin-top: 20px;
-    }
-
-    .submit-btn {
       background: #2563eb;
       color: white;
+      font-weight: 600;
     }
 
-    .retry-btn {
-      background: #16a34a;
-      color: white;
-      display: none;
+    button:hover {
+      background: #1d4ed8;
     }
 
     .result {
-      margin-top: 30px;
+      margin-top: 25px;
       padding: 20px;
       border-radius: 10px;
-      background: #eefbf0;
-      display: none;
-      font-size: 18px;
-      font-weight: bold;
       text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      display: none;
     }
 
-    .correct {
-      color: green;
-      font-weight: bold;
-    }
-
-    .wrong {
-      color: red;
-      font-weight: bold;
-    }
+    .excellent { background: #dcfce7; color: #166534; }
+    .good { background: #dbeafe; color: #1e40af; }
+    .pass { background: #fef9c3; color: #854d0e; }
+    .fail { background: #fee2e2; color: #991b1b; }
 
     .feedback {
-      margin-top: 10px;
+      margin-top: 8px;
+      font-size: 13px;
     }
+
+    .correct { color: #16a34a; font-weight: 600; }
+    .wrong { color: #dc2626; font-weight: 600; }
   </style>
 </head>
+
 <body>
   <div class="container">
-    <h1>Marketing Research Quiz</h1>
+    <h1>Marketing Research Assessment</h1>
+    <div class="subtitle">
+      Answer all questions. Click Submit to view your results.
+    </div>
 
     <form id="quizForm"></form>
 
-    <button type="button" class="submit-btn" onclick="submitQuiz()">Submit Quiz</button>
-    <button type="button" class="retry-btn" onclick="retryQuiz()">Retry Quiz</button>
+    <button type="button" onclick="submitQuiz()">Submit Assessment</button>
 
-    <div class="result" id="resultBox"></div>
+    <div id="resultBox" class="result"></div>
   </div>
 
   <script>
     const quizData = [
       {
         question: "1. What are the important characteristics of a marketing research?",
-        options: [
-          "A) i & ii",
-          "B) ii & iii",
-          "C) i, ii & iii",
-          "D) i, ii, iii & iv"
-        ],
+        options: ["A) i & ii", "B) ii & iii", "C) i, ii & iii", "D) i, ii, iii & iv"],
         answer: 3
       },
       {
-        question: "2. Marketing research is important for the marketing and also other functional managers.",
+        question: "2. Marketing research is important for marketing and other functional managers.",
         options: ["Yes", "No"],
         answer: 0
       },
       {
-        question: "3. Marketing research is related to the marketing mix, customers/stakeholders, marketing environment as well as marketing decisions.",
+        question: "3. Marketing research is related to marketing mix, customers, environment and decisions.",
         options: ["Yes", "No"],
         answer: 0
       },
       {
-        question: "4. Which of the following variables are not included in the marketing environment (external factors)?",
-        options: [
-          "Economy",
-          "Product",
-          "Social and cultural",
-          "Physical/Natural",
-          "Legal and political",
-          "Technology"
-        ],
+        question: "4. Which is NOT part of marketing environment (external factors)?",
+        options: ["Economy", "Product", "Social & cultural", "Technology"],
         answer: 1
       },
       {
-        question: "5. Which of the followings is NOT the hallmark of a scientific marketing research?",
-        options: [
-          "A) Parsimonious",
-          "B) Cheap",
-          "C) Objective",
-          "D) Rigorous"
-        ],
+        question: "5. Which is NOT a hallmark of scientific marketing research?",
+        options: ["Parsimonious", "Cheap", "Objective", "Rigorous"],
         answer: 1
       },
       {
-        question: "6. There are ____ major steps in the marketing research process.",
-        options: [
-          "A) 4",
-          "B) 5",
-          "C) 6",
-          "D) 7"
-        ],
+        question: "6. There are ____ major steps in marketing research process.",
+        options: ["4", "5", "6", "7"],
         answer: 2
       },
       {
-        question: "7. Which of the following steps is considered as the most important in the entire marketing research process?",
-        options: [
-          "A) Reporting",
-          "B) Data analysis",
-          "C) Problem identification and definition",
-          "D) Research design"
-        ],
+        question: "7. Most important step in marketing research process is:",
+        options: ["Reporting", "Data analysis", "Problem definition", "Research design"],
         answer: 2
       },
       {
-        question: "8. Arrange the various research activities, in the right sequence, for a scientific marketing research process.",
+        question: "8. Arrange research steps in correct sequence.",
         options: [
-          "A) i, ii, iii, iv, v & vi",
-          "B) i, ii, iv, vi, v & iii",
-          "C) i, iii, ii, iv, v & vi",
-          "D) v, iv, vi, i, ii & iii"
+          "i, ii, iii, iv, v, vi",
+          "i, ii, iv, vi, v, iii",
+          "i, iii, ii, iv, v, vi",
+          "v, iv, vi, i, ii, iii"
         ],
         answer: 1
       }
@@ -191,48 +171,66 @@
       quizForm.innerHTML = "";
 
       quizData.forEach((q, index) => {
-        const qBox = document.createElement("div");
-        qBox.classList.add("question");
+        const div = document.createElement("div");
+        div.className = "question";
 
         let html = `<h3>${q.question}</h3>`;
 
-        q.options.forEach((option, i) => {
+        q.options.forEach((opt, i) => {
           html += `
             <label>
               <input type="radio" name="q${index}" value="${i}">
-              ${option}
+              ${opt}
             </label>
           `;
         });
 
-        html += `<div class="feedback" id="feedback${index}"></div>`;
-        qBox.innerHTML = html;
-        quizForm.appendChild(qBox);
+        html += `<div class="feedback" id="fb${index}"></div>`;
+        div.innerHTML = html;
+        quizForm.appendChild(div);
       });
     }
 
     function submitQuiz() {
       let score = 0;
 
-      quizData.forEach((q, index) => {
-        const selected = document.querySelector(`input[name="q${index}"]:checked`);
-        const feedback = document.getElementById(`feedback${index}`);
+      quizData.forEach((q, i) => {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        const fb = document.getElementById(`fb${i}`);
 
-        if (selected) {
-          if (parseInt(selected.value) === q.answer) {
-            score++;
-            feedback.innerHTML = `<span class="correct">Correct ✓</span>`;
-          } else {
-            feedback.innerHTML = `<span class="wrong">Wrong ✗</span> (Correct answer: ${q.options[q.answer]})`;
-          }
+        if (selected && parseInt(selected.value) === q.answer) {
+          score++;
+          fb.innerHTML = `<span class="correct">Correct ✓</span>`;
         } else {
-          feedback.innerHTML = `<span class="wrong">No answer selected</span> (Correct answer: ${q.options[q.answer]})`;
+          fb.innerHTML = `<span class="wrong">Incorrect ✗</span>`;
         }
       });
 
-      document.getElementById("resultBox").style.display = "block";
-      document.getElementById("resultBox").innerHTML = `Your Score: ${score} / ${quizData.length}`;
-      document.querySelector(".retry-btn").style.display = "block";
+      const resultBox = document.getElementById("resultBox");
+      resultBox.style.display = "block";
+
+      let gradeText = "";
+      let className = "";
+
+      const percent = (score / quizData.length) * 100;
+
+      if (percent >= 80) {
+        gradeText = "Excellent Performance";
+        className = "excellent";
+      } else if (percent >= 60) {
+        gradeText = "Good Performance";
+        className = "good";
+      } else if (percent >= 50) {
+        gradeText = "Pass";
+        className = "pass";
+      } else {
+        gradeText = "Needs Improvement";
+        className = "fail";
+      }
+
+      resultBox.className = "result " + className;
+      resultBox.innerHTML =
+        `Score: ${score} / ${quizData.length}<br>${gradeText}`;
     }
 
     loadQuiz();

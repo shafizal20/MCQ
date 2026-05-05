@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Topic 4 Quiz - Research Design</title>
+  <title>Topic 4: Research Design Quiz</title>
   <style>
     * {
       margin: 0;
@@ -13,7 +13,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: #f1f5f9;
+      background: #f2f5f9;
       padding: 24px 16px;
     }
 
@@ -21,256 +21,301 @@
       max-width: 900px;
       margin: 0 auto;
       background: white;
-      border-radius: 20px;
-      padding: 24px;
+      border-radius: 24px;
+      padding: 24px 28px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
     h1 {
-      font-size: 24px;
-      font-weight: 600;
-      color: #0f172a;
-      margin-bottom: 4px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #0a2b44;
+      text-align: center;
+      margin-bottom: 6px;
     }
 
     .sub {
-      color: #475569;
-      font-size: 14px;
-      margin-bottom: 24px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #e2e8f0;
+      text-align: center;
+      color: #4a627a;
+      font-size: 0.85rem;
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e9edf2;
     }
 
+    /* question card */
     .question {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 18px 20px;
-      margin-bottom: 20px;
-      transition: 0.1s ease;
+      border: 1px solid #e9edf2;
+      border-radius: 20px;
+      padding: 18px 22px;
+      margin-bottom: 18px;
+      transition: 0.1s;
     }
 
-    /* highlight after submit */
-    .question.correct-highlight {
+    .question.correct-bg {
       background: #f0fdf4;
       border-left: 5px solid #22c55e;
     }
 
-    .question.wrong-highlight {
+    .question.wrong-bg {
       background: #fef2f2;
       border-left: 5px solid #ef4444;
     }
 
-    .q-title {
-      font-weight: 600;
-      font-size: 16px;
-      color: #0f172a;
-      margin-bottom: 14px;
+    .q-header {
       display: flex;
       align-items: baseline;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
+      margin-bottom: 14px;
     }
 
     .q-num {
-      background: #e2e8f0;
-      padding: 2px 10px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #1e293b;
+      background: #e9edf2;
+      padding: 3px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #1a3e60;
     }
 
     .q-text {
-      flex: 1;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0f2b3d;
       line-height: 1.45;
+      flex: 1;
+    }
+
+    /* Remove any extra number inside q-text */
+    .q-text .question-number-hidden {
+      display: none;
     }
 
     .q-text p {
-      margin: 0;
+      margin: 0 0 4px;
+    }
+
+    .extra-list {
+      margin: 10px 0 12px 24px;
+      font-size: 0.9rem;
+      font-weight: normal;
+      color: #2c4c6e;
+    }
+
+    .extra-list li {
+      margin: 5px 0;
+    }
+
+    .question-img {
+      margin: 12px 0 16px;
+      text-align: center;
+    }
+
+    .question-img img {
+      max-width: 100%;
+      max-height: 180px;
+      border-radius: 14px;
+      border: 1px solid #e2edf7;
     }
 
     .options {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 8px;
+      margin: 12px 0 6px;
     }
 
-    label {
+    .option {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 8px 12px;
-      background: #f8fafc;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
+      padding: 8px 14px;
+      background: #fafcff;
+      border: 1px solid #e4e9f0;
+      border-radius: 14px;
       cursor: pointer;
       transition: 0.1s;
     }
 
-    label:hover {
-      background: #f1f5f9;
+    .option:hover {
+      background: #f0f5ff;
     }
 
     input[type="radio"] {
       width: 18px;
       height: 18px;
-      cursor: pointer;
       accent-color: #2563eb;
+      cursor: pointer;
+      margin: 0;
     }
 
     .option-text {
-      font-size: 15px;
-      color: #1e293b;
+      font-size: 0.94rem;
+      color: #1e2f44;
     }
 
     .feedback {
       margin-top: 12px;
-      font-size: 14px;
-      padding: 10px 12px;
+      padding: 8px 12px;
       border-radius: 12px;
+      font-size: 0.8rem;
       font-weight: 500;
-    }
-
-    .feedback-wrong {
-      background: #fee2e2;
-      color: #991b1b;
-      border-left: 4px solid #dc2626;
     }
 
     .feedback-correct {
       background: #dcfce7;
       color: #166534;
-      border-left: 4px solid #22c55e;
+      border-left: 3px solid #22c55e;
+    }
+
+    .feedback-wrong {
+      background: #fee2e2;
+      color: #991b1b;
+      border-left: 3px solid #ef4444;
     }
 
     .feedback-missing {
-      background: #fff7ed;
+      background: #fff1e6;
       color: #9a3412;
-      border-left: 4px solid #f97316;
+      border-left: 3px solid #f97316;
     }
 
-    button {
-      background: #2563eb;
-      color: white;
+    .btn-submit {
+      background: #1e4a8a;
       border: none;
-      padding: 12px 28px;
-      font-size: 16px;
-      font-weight: 500;
-      border-radius: 40px;
-      cursor: pointer;
       width: 100%;
-      margin-top: 16px;
+      padding: 14px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      margin-top: 12px;
+      margin-bottom: 20px;
       transition: 0.15s;
     }
 
-    button:hover {
-      background: #1d4ed8;
+    .btn-submit:hover {
+      background: #0f3a6e;
+      transform: translateY(-1px);
     }
 
-    .score {
+    .btn-submit:disabled {
+      background: #9bb5d0;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .score-area {
       text-align: center;
-      margin-top: 24px;
-      padding: 16px;
       background: #f8fafc;
       border-radius: 20px;
-      font-size: 22px;
-      font-weight: 700;
-      color: #0f172a;
+      padding: 16px;
+      margin-top: 8px;
+      border: 1px solid #e9edf2;
     }
 
-    hr {
-      margin: 16px 0;
-      border: none;
-      border-top: 1px solid #e2e8f0;
+    .score-number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #0a2b44;
     }
 
-    img {
-      max-width: 100%;
-      margin: 12px 0;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
+    footer {
+      text-align: center;
+      font-size: 0.7rem;
+      color: #7c8ea0;
+      margin-top: 24px;
     }
   </style>
 </head>
 <body>
 <div class="quiz-box">
   <h1>📊 Topic 4: Research Design</h1>
-  <div class="sub">12 questions · Select answers then submit</div>
+  <div class="sub">12 multiple choice questions · submit once</div>
 
-  <div id="quizArea"></div>
+  <div id="questionsContainer"></div>
 
-  <button id="submitBtn">✓ Submit Quiz</button>
-  <div id="scorePanel" class="score" style="display: none;"></div>
+  <button id="submitBtn" class="btn-submit">✓ Submit Quiz</button>
+  <div id="scorePanel" style="display: none;"></div>
+  <footer>Research methodology — core concepts</footer>
 </div>
 
 <script>
+  // --------------------------------------------------------------
+  // QUIZ DATA (questions 38 to 49) - numbers removed from text
+  // The number is shown ONLY in the bubble, not inside the question text
+  // --------------------------------------------------------------
   const quizData = [
-    { q: "38. The research design is like a blueprint and it describes the entire framework or plan for a research project.", options: ["Yes", "No"], answer: 0 },
-    { q: `39. The followings are the characteristics of ___ research:<br><br> i. To gain qualitative insights and understanding of the problem (e.g. underlying reasons and motivations)<br> ii. Sampling is less stringent on representativeness and randomness<br> iii. Sample size is generally small<br> iv. Unstructured and flexible in data collection`, options: ["Quantitative research", "Qualitative research", "Experimental research", "Survey research"], answer: 1 },
-    { q: "40. Quantitative research is more statistical in nature.", options: ["Yes", "No"], answer: 0 },
-    { q: `41. The following are characteristics of ____ data:<br><br> i. For the problem at hand<br> ii. Data collection process is complex and involved<br> iii. Cost incurred is relatively high<br> iv. Time consuming`, options: ["Secondary", "Tertiary", "Primary"], answer: 2 },
-    { q: "42. Which one of the followings is NOT the disadvantage of longitudinal research?", options: ["Information takes a considerable period of time to collect", "Need good cooperation from respondents", "Information is obtained more than once and usually is more reliable", "Relatively expensive to carry out"], answer: 2 },
-    { q: "43. The depth interview has the following advantages EXCEPT:", options: ["Uncover greater depth of insights", "Always better than focus group", "Direct attribution of responses", "Free exchange of information"], answer: 1 },
-    { q: "44. Which link for categorization of the type of research design is NOT true?", image: "https://raw.githubusercontent.com/shafizal20/MCQ/main/images/question44.png", options: ["A", "B", "C", "D"], answer: 1 },
-    { q: "45. Descriptive research usually will answer the 6 Ws questions.", options: ["Yes", "No"], answer: 0 },
-    { q: "46. Causal research includes the followings EXCEPT:", options: ["Experiment", "Cause-and-effect relationship", "Manipulation of variables", "Cross-sectional descriptive research"], answer: 3 },
-    { q: "47. The followings are the advantages of Focus Groups EXCEPT:", options: ["Speed", "Synergy", "Structure", "Size"], answer: 3 },
-    { q: `48. The conditions for causality includes: Logical time sequence, ____ and control for other causal factors.`, options: ["Commitment", "Concomitant variation", "Concise measurement", "Co-creation"], answer: 1 },
-    { q: "49. Which of the following is NOT a Projective Technique?", options: ["Word association", "Sentence completion", "Projection", "Construction"], answer: 2 }
+    { text: "The research design is like a blueprint and it describes the entire framework or plan for a research project.", options: ["Yes", "No"], answer: 0, image: null, listBefore: null, listItems: null },
+    { text: `The followings are the characteristics of ___ research.<br><br> i. To gain qualitative insights and understanding of the problem (e.g. underlying reasons and motivations).<br> ii. Sampling is less stringent on representativeness and randomness.<br> iii. Sample size is generally small.<br> iv. Unstructured and flexible in data collection`, options: ["A) Quantitative research", "B) Qualitative research", "C) Empirical research", "D) Hypothetical research"], answer: 1, image: null, listBefore: null, listItems: null },
+    { text: "Quantitative research is more statistical in nature.", options: ["Yes", "No"], answer: 0, image: null, listBefore: null, listItems: null },
+    { text: "The above are the characteristics of ____ data.", listItems: ["i. For the problem at hand", "ii. Data collection process is complex and involved", "iii. Cost incurred is relatively high", "iv. Time consuming"], options: ["A) Secondary", "B) Tertiary", "C) Primary"], answer: 2, image: null, listBefore: true },
+    { text: "Which one of the followings is NOT the disadvantage of longitudinal research?", options: ["A) Information takes a considerable period of time to collect.", "B) Need good cooperation from the respondents.", "C) Information is obtained for more than once and usually is more reliable.", "D) Relatively expensive to carry out since several studies will be conducted."], answer: 2, image: null, listBefore: null, listItems: null },
+    { text: "The depth interview has the following advantages EXCEPT:", options: ["A) it can uncover greater depth of insights.", "B) it is always much better than focus group.", "C) it attributes the responses directly to the respondents.", "D) it results in free exchange of information."], answer: 1, image: null, listBefore: null, listItems: null },
+    { text: "Which link for categorization of the type of research design is NOT true?", options: ["A", "B", "C", "D"], answer: 1, image: "https://raw.githubusercontent.com/shafizal20/MCQ/main/images/question44.png", listBefore: null, listItems: null },
+    { text: "Descriptive research usually will answer the 6 Ws questions.", options: ["Yes", "No"], answer: 0, image: null, listBefore: null, listItems: null },
+    { text: "Causal research includes the followings EXCEPT:", options: ["A) Experiment", "B) Cause-and-effect relationship", "C) Manipulation of variable(s)", "D) Cross-sectional descriptive research"], answer: 3, image: null, listBefore: null, listItems: null },
+    { text: "The followings are the advantages of Focus Groups EXCEPT:", options: ["A) Speed", "B) Synergy", "C) Structure", "D) Size"], answer: 3, image: null, listBefore: null, listItems: null },
+    { text: "The conditions for causality includes: Logical time sequence, ____ and control for other causal factor(s).", options: ["A) Commitment", "B) Concomitant variation", "C) Concise measurement", "D) Co-creation"], answer: 1, image: null, listBefore: null, listItems: null },
+    { text: "Which of the following is NOT a Projective Technique?", options: ["A) Word association", "B) Sentence completion", "C) Projection", "D) Construction"], answer: 2, image: null, listBefore: null, listItems: null }
   ];
 
-  // extract number from question text (e.g., "38." -> "38")
-  function getQuestionNumber(raw) {
-    const match = raw.match(/^(\d+)\./);
-    return match ? match[1] : null;
-  }
-
-  // clean question text (remove number prefix like "38. ")
-  function cleanQuestionText(raw) {
-    return raw.replace(/^\d+\.\s*/, '');
-  }
-
-  let selections = new Array(quizData.length).fill(null);
+  // user selections: -1 = unanswered
+  let selections = new Array(quizData.length).fill(-1);
   let submitted = false;
 
-  const quizArea = document.getElementById("quizArea");
+  const container = document.getElementById("questionsContainer");
   const submitBtn = document.getElementById("submitBtn");
   const scorePanel = document.getElementById("scorePanel");
 
-  function render() {
+  // render all questions
+  function renderQuestions() {
     let html = "";
     for (let i = 0; i < quizData.length; i++) {
-      const item = quizData[i];
-      const selectedIdx = selections[i];
-      const qNumber = getQuestionNumber(item.q);
-      const cleanQ = cleanQuestionText(item.q);
+      const q = quizData[i];
+      const selectedVal = selections[i];
+      const realNumber = 38 + i;
       
-      let cardClass = "question";
+      let questionClass = "question";
       if (submitted) {
-        const isCorrect = (selectedIdx !== null && selectedIdx === item.answer);
-        if (isCorrect) cardClass += " correct-highlight";
-        else cardClass += " wrong-highlight";
+        const isCorrect = (selectedVal !== -1 && selectedVal === q.answer);
+        if (isCorrect) questionClass += " correct-bg";
+        else questionClass += " wrong-bg";
       }
       
-      html += `<div class="${cardClass}">`;
-      html += `<div class="q-title">`;
-      if (qNumber) html += `<span class="q-num">${qNumber}</span>`;
-      html += `<div class="q-text">${cleanQ}</div>`;
-      html += `</div>`;
+      html += `<div class="${questionClass}">`;
+      html += `<div class="q-header">`;
+      html += `<span class="q-num">${realNumber}</span>`;
+      html += `<div class="q-text">`;
       
-      if (item.image) {
-        html += `<img src="${item.image}" alt="question diagram">`;
+      // handle special case: question 41 (index 3) shows list BEFORE text
+      if (q.listBefore && q.listItems) {
+        html += `<div class="extra-list"><ul>`;
+        q.listItems.forEach(li => { html += `<li>${li}</li>`; });
+        html += `</ul></div>`;
+        html += `<p>${q.text}</p>`;
+      } else {
+        html += `<div>${q.text}</div>`;
       }
       
+      html += `</div></div>`;
+      
+      // image if exists
+      if (q.image) {
+        html += `<div class="question-img"><img src="${q.image}" alt="diagram" loading="lazy"></div>`;
+      }
+      
+      // options
       html += `<div class="options">`;
-      item.options.forEach((opt, optIndex) => {
-        const isChecked = (selectedIdx === optIndex);
+      q.options.forEach((opt, optIdx) => {
+        const isChecked = (selectedVal === optIdx);
         const disabledAttr = submitted ? "disabled" : "";
         html += `
-          <label style="cursor: ${submitted ? "default" : "pointer"}">
-            <input type="radio" name="q${i}" value="${optIndex}" ${isChecked ? "checked" : ""} ${disabledAttr}>
+          <label class="option" style="cursor: ${submitted ? 'default' : 'pointer'}">
+            <input type="radio" name="q${i}" value="${optIdx}" ${isChecked ? 'checked' : ''} ${disabledAttr}>
             <span class="option-text">${opt}</span>
           </label>
         `;
@@ -279,10 +324,10 @@
       
       // after submit: show feedback
       if (submitted) {
-        if (selectedIdx === null) {
-          html += `<div class="feedback feedback-missing">⚠️ Not answered · Correct: ${item.options[item.answer]}</div>`;
-        } else if (selectedIdx !== item.answer) {
-          html += `<div class="feedback feedback-wrong">❌ Incorrect · Your answer: ${item.options[selectedIdx]}<br>✅ Correct: ${item.options[item.answer]}</div>`;
+        if (selectedVal === -1) {
+          html += `<div class="feedback feedback-missing">⚠️ Not answered · Correct: ${q.options[q.answer]}</div>`;
+        } else if (selectedVal !== q.answer) {
+          html += `<div class="feedback feedback-wrong">❌ Incorrect · Your answer: ${q.options[selectedVal]}<br>✅ Correct: ${q.options[q.answer]}</div>`;
         } else {
           html += `<div class="feedback feedback-correct">✓ Correct</div>`;
         }
@@ -290,9 +335,9 @@
       
       html += `</div>`;
     }
-    quizArea.innerHTML = html;
+    container.innerHTML = html;
     
-    // attach events only if not submitted
+    // attach change events only if not submitted
     if (!submitted) {
       for (let i = 0; i < quizData.length; i++) {
         const radios = document.querySelectorAll(`input[name="q${i}"]`);
@@ -300,54 +345,73 @@
           radio.addEventListener("change", (e) => {
             if (submitted) return;
             selections[i] = parseInt(e.target.value);
-            render(); // re-render to keep UI consistent
+            // re-render to keep visual state
+            renderQuestions();
           });
         });
       }
     }
   }
   
-  function calculateScore() {
+  // compute score
+  function getScore() {
     let correct = 0;
     for (let i = 0; i < quizData.length; i++) {
       const selected = selections[i];
-      if (selected !== null && selected === quizData[i].answer) correct++;
+      if (selected !== -1 && selected === quizData[i].answer) correct++;
     }
     return correct;
   }
   
-  function submitQuiz() {
+  // submit handler: one-time submission, no reset button
+  function handleSubmit() {
     if (submitted) {
-      const resetConfirm = confirm("Quiz already submitted. Reset and start over?");
-      if (resetConfirm) {
-        selections = new Array(quizData.length).fill(null);
-        submitted = false;
-        scorePanel.style.display = "none";
-        render();
-      }
       return;
     }
     
-    const answered = selections.filter(s => s !== null).length;
-    if (answered < quizData.length) {
-      if (!confirm(`You answered ${answered} of ${quizData.length}. Submit anyway?`)) {
+    const answeredCount = selections.filter(s => s !== -1).length;
+    if (answeredCount < quizData.length) {
+      if (!confirm(`You have answered ${answeredCount} out of ${quizData.length}. Submit anyway?`)) {
         return;
       }
     }
     
     submitted = true;
-    const correctCount = calculateScore();
-    render();
+    const correct = getScore();
+    const total = quizData.length;
     
+    // re-render with highlights & feedback
+    renderQuestions();
+    
+    // show score panel
     scorePanel.style.display = "block";
-    scorePanel.innerHTML = `🏆 Score: ${correctCount} / ${quizData.length}`;
+    let message = "";
+    if (correct === total) message = "Perfect! Mastery achieved. 🎉";
+    else if (correct >= 9) message = "Great job! Review the ones in red.";
+    else message = "Keep practicing. Review the explanations above.";
     
-    // scroll to score
-    scorePanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    scorePanel.innerHTML = `
+      <div class="score-area">
+        <div class="score-number">🏆 ${correct} / ${total}</div>
+        <div style="margin-top: 8px; font-size: 0.85rem; color: #2c5a6e;">${message}</div>
+      </div>
+    `;
+    
+    // disable submit button after submission
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = "0.6";
+    submitBtn.style.cursor = "default";
+    
+    // smooth scroll to score
+    setTimeout(() => {
+      scorePanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 80);
   }
   
-  submitBtn.addEventListener("click", submitQuiz);
-  render();
+  submitBtn.addEventListener("click", handleSubmit);
+  
+  // initial render
+  renderQuestions();
 </script>
 </body>
 </html>

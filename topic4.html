@@ -95,12 +95,7 @@ i. To gain qualitative insights
 ii. Sampling is less strict
 iii. Small sample size
 iv. Flexible data collection`,
-options: [
-"Quantitative",
-"Qualitative",
-"Experimental",
-"Survey"
-],
+options: ["Quantitative","Qualitative","Experimental","Survey"],
 answer: 1
 },
 {
@@ -149,7 +144,7 @@ answer: 2
 const quiz = document.getElementById("quiz");
 
 // BUILD QUIZ
-quizData.forEach((item, i) => {
+quizData.forEach((item,i)=>{
 let html = `<div class="question">`;
 html += `<p>${item.q.replace(/\n/g,"<br>")}</p>`;
 
@@ -170,7 +165,7 @@ html += `</div>`;
 quiz.innerHTML += html;
 });
 
-// SUBMIT FUNCTION
+// SUBMIT
 function submitQuiz(){
 let score = 0;
 

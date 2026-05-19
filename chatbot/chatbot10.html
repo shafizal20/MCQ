@@ -1,859 +1,550 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Topic 10: Data Collection & Preparation | Marketing Research Assistant</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Topic 10: Data Collection & Preparation | Chatbot</title>
 
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
-            background: #f5f7f0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        .chat-container {
-            width: 100%;
-            max-width: 750px;
-            height: 90vh;
-            min-height: 650px;
-            background: #ffffff;
-            border-radius: 24px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.02);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid #e8ece0;
-        }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .chat-header {
-            background: #2e7d32;
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #1b5e20;
-        }
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .avatar {
-            width: 42px;
-            height: 42px;
-            background: #ffffff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            color: #2e7d32;
-        }
-        .header-info h2 {
-            color: white;
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-        .header-info p {
-            color: #c8e6c9;
-            font-size: 0.65rem;
-        }
-        .badge {
-            background: rgba(255,255,255,0.2);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            color: white;
-        }
-        .clear-btn {
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 6px 12px;
-            border-radius: 20px;
-            color: white;
-            cursor: pointer;
-            font-size: 0.7rem;
-            transition: all 0.2s;
-        }
-        .clear-btn:hover {
-            background: rgba(255,255,255,0.25);
-        }
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(145deg, #eef2f5 0%, #dce5ec 100%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+}
 
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            background: #ffffff;
-        }
-        .chat-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-        .chat-messages::-webkit-scrollbar-track {
-            background: #f0f2e8;
-            border-radius: 10px;
-        }
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: #bdc9a4;
-            border-radius: 10px;
-        }
+.chat-app {
+    width: 100%;
+    max-width: 1300px;
+    height: 90vh;
+    background: #ffffff;
+    border-radius: 32px;
+    box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25);
+    display: flex;
+    overflow: hidden;
+}
 
-        .message {
-            display: flex;
-            flex-direction: column;
-            max-width: 85%;
-            animation: slideIn 0.3s ease-out;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .user-message { align-self: flex-end; }
-        .bot-message { align-self: flex-start; }
+.side-panel {
+    width: 290px;
+    background: linear-gradient(180deg, #1a3c2c 0%, #0f2a1e 100%);
+    padding: 28px 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
 
-        .bubble {
-            padding: 12px 18px;
-            border-radius: 20px;
-            line-height: 1.5;
-            font-size: 0.9rem;
-            word-wrap: break-word;
-        }
-        .user-bubble {
-            background: #2e7d32;
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-        .bot-bubble {
-            background: #f0f2e8;
-            color: #1a2e1f;
-            border-bottom-left-radius: 4px;
-        }
-        .message-time {
-            font-size: 0.65rem;
-            margin-top: 6px;
-            color: #8f9b7a;
-            padding-left: 12px;
-        }
+.side-panel::-webkit-scrollbar {
+    width: 5px;
+}
+.side-panel::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+}
+.side-panel::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.4);
+    border-radius: 10px;
+}
 
-        .typing-indicator {
-            display: flex;
-            gap: 5px;
-            align-items: center;
-            padding: 10px 16px;
-            background: #f0f2e8;
-            border-radius: 20px;
-            width: fit-content;
-        }
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background: #2e7d32;
-            border-radius: 50%;
-            animation: blink 1.3s infinite ease-in-out;
-        }
-        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes blink {
-            0%, 60%, 100% { opacity: 0.3; transform: scale(0.8);}
-            30% { opacity: 1; transform: scale(1.2);}
-        }
+.brand {
+    margin-bottom: 28px;
+    flex-shrink: 0;
+}
 
-        .streaming-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 1.1em;
-            background-color: #2e7d32;
-            margin-left: 2px;
-            vertical-align: middle;
-            animation: blinkCursor 1s step-end infinite;
-        }
-        @keyframes blinkCursor {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
+.brand h2 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    background: linear-gradient(135deg, #FFFFFF, #c7f0b2);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
 
-        .chat-input-area {
-            background: #ffffff;
-            padding: 16px;
-            border-top: 1px solid #e8ece0;
-        }
-        .input-wrapper {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            background: #f8faf3;
-            border: 1px solid #d4dbc8;
-            border-radius: 28px;
-            padding: 4px 6px 4px 18px;
-            transition: all 0.2s;
-        }
-        .input-wrapper:focus-within {
-            border-color: #2e7d32;
-            box-shadow: 0 0 0 2px rgba(46,125,50,0.1);
-        }
-        .input-wrapper input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            padding: 12px 0;
-            color: #1a2e1f;
-            font-size: 0.9rem;
-            outline: none;
-            font-family: inherit;
-        }
-        .input-wrapper input::placeholder {
-            color: #b0bba0;
-        }
-        .input-wrapper button {
-            background: #2e7d32;
-            border: none;
-            color: white;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: transform 0.1s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .input-wrapper button:hover:not(:disabled) {
-            background: #1b5e20;
-            transform: scale(1.02);
-        }
-        .input-wrapper button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+.brand p {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-top: 6px;
+}
 
-        .suggestions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
-        }
-        .suggestion-chip {
-            background: #f0f2e8;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: #2e7d32;
-            font-weight: 500;
-            border: 1px solid #d4dbc8;
-        }
-        .suggestion-chip:hover {
-            background: #2e7d32;
-            color: white;
-            border-color: #2e7d32;
-        }
+.topic-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
 
-        .footer {
-            font-size: 0.6rem;
-            text-align: center;
-            padding: 8px;
-            color: #b0bba0;
-            background: #ffffff;
-            border-top: 1px solid #e8ece0;
-        }
-        
-        .bot-bubble strong {
-            color: #2e7d32;
-        }
-        
-        .list-item {
-            margin: 4px 0;
-        }
-    </style>
+.topic-section h4 {
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 12px 0;
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.topic-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 5px;
+}
+
+.topic-list::-webkit-scrollbar {
+    width: 4px;
+}
+.topic-list::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+}
+.topic-list::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.4);
+    border-radius: 10px;
+}
+
+.topic-chip {
+    background: rgba(255,255,255,0.12);
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.topic-chip:hover {
+    background: #ffffff;
+    color: #1a3c2c;
+    transform: translateX(4px);
+}
+
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fefefe;
+    overflow: hidden;
+}
+
+.chat-header {
+    padding: 18px 28px;
+    border-bottom: 1px solid #e9edf2;
+    background: white;
+    flex-shrink: 0;
+}
+
+.chat-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2e3a;
+}
+
+.chat-header span {
+    font-size: 0.75rem;
+    color: #5c6f87;
+}
+
+.messages-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: #fafcff;
+}
+
+.messages-area::-webkit-scrollbar {
+    width: 6px;
+}
+.messages-area::-webkit-scrollbar-track {
+    background: #eef2f8;
+    border-radius: 8px;
+}
+.messages-area::-webkit-scrollbar-thumb {
+    background: #b9c8b2;
+    border-radius: 8px;
+}
+
+.message-bubble {
+    max-width: 80%;
+    padding: 12px 18px;
+    border-radius: 24px;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    word-break: break-word;
+}
+
+.bot-msg {
+    background: #f0f4f9;
+    border: 1px solid #e2e8f0;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+    color: #1e2a3a;
+}
+
+.user-msg {
+    background: #1a5d3c;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+.input-row {
+    padding: 16px 24px 24px 24px;
+    border-top: 1px solid #eef2f8;
+    background: white;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.input-row input {
+    flex: 1;
+    padding: 14px 18px;
+    border-radius: 60px;
+    border: 1px solid #cbd5e1;
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.input-row input:focus {
+    border-color: #1a5d3c;
+    box-shadow: 0 0 0 3px rgba(26,93,60,0.2);
+}
+
+.input-row button {
+    background: #1a5d3c;
+    border: none;
+    padding: 12px 26px;
+    border-radius: 60px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.input-row button:hover {
+    background: #0e3f28;
+}
+
+@media (max-width: 700px) {
+    .side-panel { display: none; }
+    .message-bubble { max-width: 90%; }
+}
+</style>
 </head>
 <body>
-<div class="chat-container">
-    <div class="chat-header">
-        <div class="header-left">
-            <div class="avatar">📊</div>
-            <div class="header-info">
-                <h2>Topic 10: Data Collection & Preparation</h2>
-                <p>Data Collection Methods • Fieldwork Management • Data Preparation Process</p>
-            </div>
+
+<div class="chat-app">
+    <div class="side-panel">
+        <div class="brand">
+            <h2>📊 Marketing Research<br>& Analytics AI</h2>
+            <p>Topic 10: Data Collection & Preparation</p>
         </div>
-        <div style="display: flex; gap: 8px;">
-            <div class="badge">Learning Activities</div>
-            <button id="clearChatBtn" class="clear-btn">Clear</button>
+        <div class="topic-section">
+            <h4>📚 TOPIC 10: KEY CONCEPTS</h4>
+            <div class="topic-list">
+                <div class="topic-chip" data-question="What is data collection in marketing research?">📋 Data Collection Definition & Importance</div>
+                <div class="topic-chip" data-question="What are the types of interviewing methods?">🎤 Interviewing Methods (Personal, Telephone, Mail, Electronic)</div>
+                <div class="topic-chip" data-question="What are the criteria for choosing data collection methods?">⚖️ Choice Criteria for Data Collection</div>
+                <div class="topic-chip" data-question="What are the steps in the data collection process?">🔄 5 Steps of Data Collection Process</div>
+                <div class="topic-chip" data-question="How to select and train fieldworkers?">👥 Selecting & Training Fieldworkers</div>
+                <div class="topic-chip" data-question="What are the qualities of good fieldworkers?">⭐ Qualities of Good Fieldworkers</div>
+                <div class="topic-chip" data-question="What are the interviewing techniques for professionals?">🎙️ Professional Interviewing Techniques</div>
+                <div class="topic-chip" data-question="What is data preparation? Steps in data preparation">📊 Data Preparation Process (7 Steps)</div>
+                <div class="topic-chip" data-question="How to treat missing data?">⚠️ Treating Missing Data (5 Methods)</div>
+                <div class="topic-chip" data-question="What is data cleaning?">🧹 Data Cleaning (Consistency & Missing)</div>
+                <div class="topic-chip" data-question="What is coding in data preparation?">🔢 Coding & Code Book</div>
+                <div class="topic-chip" data-question="Advantages and disadvantages of interviewing methods">✅❌ Pros & Cons of Interviewing Methods</div>
+            </div>
         </div>
     </div>
 
-    <div class="chat-messages" id="chatMessages">
-        <div class="message bot-message">
-            <div class="bubble bot-bubble">
-                📊 <strong>Welcome to Topic 10: Data Collection & Preparation!</strong><br><br>
-                I'm here to help you master the fieldwork and data preparation phases of marketing research.<br><br>
-                <strong>📌 Learning Outcomes:</strong><br><br>
-                ✅ <strong>Data collection methods</strong> – Know and use various methods (survey, observation, secondary)<br>
-                ✅ <strong>Manage data collection process</strong> – Select, train, supervise, validate, evaluate fieldworkers<br>
-                ✅ <strong>Prepare data for analysis</strong> – Editing, coding, transcribing, cleaning, treating missing data<br><br>
-                <strong>🔍 What I can help with:</strong><br><br>
-                • <strong>Interviewing Methods</strong> – Personal, telephone, mail, electronic, administered questionnaire<br>
-                • <strong>Fieldworker Management</strong> – Selection criteria, training, supervision, validation, evaluation<br>
-                • <strong>Data Preparation Steps</strong> – Editing, coding, transcribing, cleaning, adjustment<br>
-                • <strong>Missing Data Treatment</strong> – Strategies for handling missing responses<br>
-                • <strong>Choice Criteria</strong> – How to select the right data collection method<br><br>
-                <strong>💡 Click any suggestion below or type your question!</strong><br><br>
-                Just type your question or click a suggestion to get started! 🎯
+    <div class="chat-main">
+        <div class="chat-header">
+            <h3>📋 Topic 10: Data Collection & Preparation</h3>
+            <span>Based on your complete lecture notes | Fieldwork | Interviewing Methods | Data Preparation | Missing Data</span>
+        </div>
+        <div class="messages-area" id="chatMessages">
+            <div class="message-bubble bot-msg">
+                👋 <strong>Welcome to Topic 10!</strong> I'm your Marketing Research AI for <strong>Data Collection and Preparation</strong>.<br><br>
+                📖 Based on your lecture notes, I can teach you about:<br>
+                • <strong>Data Collection</strong> - Definition, importance, fieldwork activities<br>
+                • <strong>Interviewing Methods</strong> - Personal, telephone, mail, electronic, plus choice criteria<br>
+                • <strong>Data Collection Process</strong> - Selecting, training, supervising, validating, evaluating fieldworkers<br>
+                • <strong>Data Preparation</strong> - 7 steps: checking, editing, coding, transcribing, cleaning, adjusting, analysis strategy<br>
+                • <strong>Missing Data</strong> - 5 methods to treat missing responses<br><br>
+                Ask me anything from Topic 10, or click any topic on the left!
             </div>
-            <div class="message-time">Just now</div>
         </div>
-    </div>
-
-    <div class="chat-input-area">
-        <div class="input-wrapper">
-            <input type="text" id="userInput" placeholder="Ask about data collection methods, fieldworker training, data preparation, missing data..." autocomplete="off">
-            <button id="sendBtn">➤</button>
+        <div class="input-row">
+            <input type="text" id="userQuery" placeholder="e.g., What are the steps in data preparation? or How to treat missing data?..." autocomplete="off">
+            <button id="sendBtn">Send →</button>
         </div>
-        <div class="suggestions" id="suggestionsPanel">
-            <div class="suggestion-chip" data-question="What are the different types of interviewing methods in surveys?">📞 Types of interviewing methods</div>
-            <div class="suggestion-chip" data-question="What are the criteria for choosing a data collection method?">🎯 Criteria for choosing data collection method</div>
-            <div class="suggestion-chip" data-question="What are the critical requirements for good fieldworkers?">👥 Requirements for good fieldworkers</div>
-            <div class="suggestion-chip" data-question="What are the key areas for training fieldworkers?">📚 Key areas for training fieldworkers</div>
-            <div class="suggestion-chip" data-question="What are the 5 stages of the data collection process?">⚙️ The 5-stage data collection process</div>
-            <div class="suggestion-chip" data-question="What are the steps in data preparation?">📝 Steps in data preparation process</div>
-            <div class="suggestion-chip" data-question="How to treat missing data in survey research?">❓ How to treat missing data?</div>
-            <div class="suggestion-chip" data-question="Advantages and disadvantages of different interviewing methods">⚖️ Pros and cons of interviewing methods</div>
-            <div class="suggestion-chip" data-question="What are the interviewing techniques for professional interviewers?">🎤 Interviewing techniques for professionals</div>
-            <div class="suggestion-chip" data-question="What is data cleaning and why is it important?">🧹 Data cleaning and its importance</div>
-        </div>
-        <div class="footer">💡 Based on Topic 10: Data Collection & Preparation • Data Collection Methods • Fieldwork • Data Preparation</div>
     </div>
 </div>
 
 <script>
-    // ============================================================
-    // TOPIC 10: DATA COLLECTION AND PREPARATION
-    // Based on complete module content: Interviewing Methods, Fieldwork Management,
-    // Data Preparation Process, Missing Data Treatment
-    // ============================================================
-    
-    let conversationHistory = [];
-    let isThinking = false;
+    const messagesContainer = document.getElementById('chatMessages');
+    const userInput = document.getElementById('userQuery');
+    const sendButton = document.getElementById('sendBtn');
 
-    const messagesDiv = document.getElementById('chatMessages');
-    const userInput = document.getElementById('userInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const clearChatBtn = document.getElementById('clearChatBtn');
-
-    function getSmartResponse(userMessage, history) {
-        const q = userMessage.toLowerCase().trim();
-        
-        // ========== TYPES OF INTERVIEWING METHODS ==========
-        if ((q.includes("interviewing methods") || q.includes("types of survey") || q.includes("data collection methods")) && !q.includes("criteria")) {
-            return `📞 **Common Interviewing Methods in Surveys**\n\n` +
-                   `**1. PERSONAL INTERVIEWS**\n` +
-                   `• Face-to-face interaction with respondents\n` +
-                   `• Can be in-home, mall-intercept, or computer-assisted\n` +
-                   `• Advantages: High response rate, detailed responses, use of visual aids\n` +
-                   `• Disadvantages: Expensive, interviewer bias, time-consuming\n\n` +
-                   `**2. TELEPHONE INTERVIEWS**\n` +
-                   `• Interviews conducted via telephone\n` +
-                   `• Traditional or computer-assisted (CATI)\n` +
-                   `• Advantages: Fast, wide geographic coverage, good response rate\n` +
-                   `• Disadvantages: Limited duration, no visual aids, caller ID screening\n\n` +
-                   `**3. PERSONALLY ADMINISTERED QUESTIONNAIRE**\n` +
-                   `• Respondents complete questionnaire with researcher present\n` +
-                   `• Useful for group settings\n` +
-                   `• Advantages: Clarification possible, high completion rate\n\n` +
-                   `**4. MAIL QUESTIONNAIRE**\n` +
-                   `• Questionnaires sent and returned via postal mail\n` +
-                   `• Traditional mail or mail panel\n` +
-                   `• Advantages: Geographic flexibility, no interviewer bias, anonymity\n` +
-                   `• Disadvantages: Low response rate, slow, no clarification\n\n` +
-                   `**5. ELECTRONIC QUESTIONNAIRE**\n` +
-                   `• Email, internet/web-based, or mobile (SMS) surveys\n` +
-                   `• Advantages: Fast, low cost, easy data entry\n` +
-                   `• Disadvantages: Coverage bias, technical issues, spam filters\n\n` +
-                   `💡 *Choice depends on research objectives, budget, timeline, and respondent characteristics*`;
-        }
-        
-        // ========== CRITERIA FOR CHOOSING DATA COLLECTION METHOD ==========
-        if (q.includes("criteria for choosing") || (q.includes("choice criteria") && q.includes("method"))) {
-            return `🎯 **Criteria for Evaluating & Choosing Data Collection Methods**\n\n` +
-                   `**Key Criteria to Consider:**\n\n` +
-                   `• **Speed** – How quickly can data be collected?\n` +
-                   `• **Quantity of data** – How much data can be obtained?\n` +
-                   `• **Flexibility of data collection** – Can questions be adapted?\n` +
-                   `• **Anonymity** – Can respondent identity be protected?\n` +
-                   `• **Geographical coverage** – Can dispersed populations be reached?\n` +
-                   `• **Cost effectiveness** – Is it within budget?\n` +
-                   `• **Response rate** – What percentage will respond?\n` +
-                   `• **Respondent bias** – Will responses be truthful?\n` +
-                   `• **Interviewer bias** – Does interviewer influence answers?\n` +
-                   `• **Use of physical stimuli** – Can visuals/products be shown?\n` +
-                   `• **Effectiveness in obtaining sensitive data** – Can delicate topics be addressed?\n\n` +
-                   `**Decision Framework:**\n` +
-                   `Higher speed & lower cost → Telephone, Electronic\n` +
-                   `More detailed data & visual stimuli → Personal interviews\n` +
-                   `Wide coverage & anonymity → Mail surveys\n\n` +
-                   `💡 *Match the method to your specific research needs*`;
-        }
-        
-        // ========== ADVANTAGES & DISADVANTAGES ==========
-        if ((q.includes("advantages") || q.includes("disadvantages") || q.includes("pros and cons")) && (q.includes("interviewing") || q.includes("methods"))) {
-            return `⚖️ **Advantages & Disadvantages of Interviewing Methods**\n\n` +
-                   `**PERSONAL INTERVIEWS**\n` +
-                   `✓ High response rate, detailed data, visual aids, flexible\n` +
-                   `✗ Expensive, time-consuming, interviewer bias, geographic limits\n\n` +
-                   `**TELEPHONE INTERVIEWS**\n` +
-                   `✓ Fast, wide coverage, moderate cost, supervision possible\n` +
-                   `✗ Limited length, no visuals, call screening, unlisted numbers\n\n` +
-                   `**MAIL QUESTIONNAIRES**\n` +
-                   `✓ Wide coverage, no interviewer bias, anonymity, low cost\n` +
-                   `✗ Low response rate, slow, no clarification, literacy required\n\n` +
-                   `**ELECTRONIC QUESTIONNAIRES**\n` +
-                   `✓ Very fast, very low cost, easy data entry, convenient\n` +
-                   `✗ Coverage bias (digital divide), spam filters, technical issues\n\n` +
-                   `**PERSONALLY ADMINISTERED**\n` +
-                   `✓ High completion, clarification possible, group administration\n` +
-                   `✗ Requires presence, limited to group settings\n\n` +
-                   `💡 *No single method is perfect – often a mixed-method approach is best*`;
-        }
-        
-        // ========== DATA COLLECTION PROCESS (5 STAGES) ==========
-        if ((q.includes("data collection process") || q.includes("fieldwork") || q.includes("5 stages")) && !q.includes("preparation")) {
-            return `⚙️ **The 5-Stage Data Collection Process (Fieldwork)**\n\n` +
-                   `**Stage 1: SELECTING Fieldworkers**\n` +
-                   `• Specify tasks and responsibilities\n` +
-                   `• Recruit suitable candidates with good personal qualities\n\n` +
-                   `**Stage 2: TRAINING Fieldworkers**\n` +
-                   `• Train before sending to the field\n` +
-                   `• Cover: making contact, asking questions, probing, recording answers, terminating interviews\n\n` +
-                   `**Stage 3: SUPERVISING Fieldworkers**\n` +
-                   `• Monitor quality of data collection\n` +
-                   `• Ensure correct sampling (sampling control)\n` +
-                   `• Monitor and minimize unethical practices (cheating)\n` +
-                   `• Control cost effectiveness\n` +
-                   `• Respond to data collection problems\n\n` +
-                   `**Stage 4: VALIDATING Fieldwork**\n` +
-                   `• Manage progress report submission\n` +
-                   `• Ensure accuracy and validity of data\n` +
-                   `• Cross-check with randomly sampled respondents\n` +
-                   `• Verify interviewers are performing correctly and ethically\n\n` +
-                   `**Stage 5: EVALUATING Fieldworkers**\n` +
-                   `• Continuous performance appraisal\n` +
-                   `• Obtain regular feedback\n` +
-                   `• Ensure cost and time effectiveness\n` +
-                   `• Monitor response rate and quality\n\n` +
-                   `💡 *Proper management ensures reliable and valid data*`;
-        }
-        
-        // ========== REQUIREMENTS FOR GOOD FIELDWORKERS ==========
-        if (q.includes("fieldworkers") || (q.includes("requirements") && q.includes("data collection")) || (q.includes("qualities") && q.includes("interviewer"))) {
-            return `👥 **Critical Requirements for Good Fieldworkers**\n\n` +
-                   `A good fieldworker must possess the following qualities:\n\n` +
-                   `✅ **HONEST** – Trustworthy and ethical in data collection\n` +
-                   `✅ **HEALTHY** – Physically fit for fieldwork demands\n` +
-                   `✅ **SOCIABLE** – Comfortable interacting with diverse respondents\n` +
-                   `✅ **GOOD COMMUNICATION SKILLS** – Clear verbal and written abilities\n` +
-                   `✅ **HARDWORKING** – Diligent and persistent\n` +
-                   `✅ **EXPERIENCED** – Prior fieldwork experience preferred\n` +
-                   `✅ **QUALIFIED** – Appropriate education and training\n` +
-                   `✅ **PLEASANT APPEARANCE** – Professional and approachable\n\n` +
-                   `**Why these matter:**\n` +
-                   `• Honest fieldworkers produce valid data\n` +
-                   `• Sociable and communicative interviewers get better response rates\n` +
-                   `• Healthy and hardworking individuals complete assignments on time\n` +
-                   `• Experienced and qualified fieldworkers handle challenges effectively\n` +
-                   `• Pleasant appearance creates positive first impressions\n\n` +
-                   `💡 *Selecting the right fieldworkers is the first step to quality data*`;
-        }
-        
-        // ========== TRAINING AREAS FOR FIELDWORKERS ==========
-        if (q.includes("training") && (q.includes("fieldworkers") || q.includes("interviewers"))) {
-            return `📚 **Key Areas for Training Fieldworkers (Interviews)**\n\n` +
-                   `**1. Making Initial Contact or Appointment**\n` +
-                   `• How to introduce themselves properly\n` +
-                   `• How to establish rapport\n` +
-                   `• How to schedule appointments when needed\n\n` +
-                   `**2. Asking Questions During an Interview**\n` +
-                   `• Read each question exactly as written\n` +
-                   `• Follow the sequence stated in the questionnaire\n` +
-                   `• Speak slowly and clearly\n\n` +
-                   `**3. Probing Interviewees**\n` +
-                   `• How to ask follow-up questions neutrally\n` +
-                   `• How to encourage elaboration without leading\n` +
-                   `• Clarify questions in a neutral way\n\n` +
-                   `**4. Recording Answers**\n` +
-                   `• Record all replies verbatim\n` +
-                   `• Write down answers neatly and accurately\n` +
-                   `• Avoid summarizing or paraphrasing\n\n` +
-                   `**5. Terminating an Interview**\n` +
-                   `• End interviews in a neutral, polite way\n` +
-                   `• Thank respondents for their time\n` +
-                   `• Maintain confidentiality assurance\n\n` +
-                   `💡 *Properly trained fieldworkers are much more effective and efficient*`;
-        }
-        
-        // ========== INTERVIEWING TECHNIQUES (CASRO Guidelines) ==========
-        if (q.includes("interviewing techniques") || q.includes("professional interviewers") || q.includes("casro")) {
-            return `🎤 **Professional Interviewing Techniques (CASRO Guidelines)**\n\n` +
-                   `**Based on Council of American Survey Research Organizations (CASRO):**\n\n` +
-                   `✓ Show full name and affiliation before and during interviews\n` +
-                   `✓ Read each question exactly as written (no paraphrasing)\n` +
-                   `✓ Read questions according to the sequence in the questionnaire\n` +
-                   `✓ Clarify any questions raised in a NEUTRAL way\n` +
-                   `✓ Do NOT mislead or influence respondents\n` +
-                   `✓ Always remain neutral – do NOT indicate agreement/disagreement\n` +
-                   `✓ Speak slowly and clearly to ensure good understanding\n` +
-                   `✓ Record all replies and answers VERBATIM (word-for-word)\n` +
-                   `✓ Avoid unnecessary conversations with respondents\n` +
-                   `✓ Write down all answers neatly and accurately\n` +
-                   `✓ Terminate interviews in a neutral way (e.g., "Thank you for your time")\n` +
-                   `✓ Keep all data strictly confidential\n\n` +
-                   `💡 *Neutrality is the golden rule of professional interviewing*`;
-        }
-        
-        // ========== DATA PREPARATION STEPS ==========
-        if ((q.includes("data preparation") || q.includes("preparing data") || q.includes("steps in data preparation")) && !q.includes("missing")) {
-            return `📝 **Steps in the Data Preparation Process**\n\n` +
-                   `**1. Preliminary Plan of Data Analysis**\n` +
-                   `• Plan analysis strategies before preparing data\n\n` +
-                   `**2. Questionnaire Checking**\n` +
-                   `• Review completed questionnaires for completeness\n\n` +
-                   `**3. Editing the Data**\n` +
-                   `• Inspect and correct questionnaires/observation forms\n` +
-                   `• Identify and resolve inconsistencies\n\n` +
-                   `**4. Coding the Data**\n` +
-                   `• Assign numbers or letter codes to responses\n` +
-                   `• Develop a Code Book if necessary\n\n` +
-                   `**5. Transcribing or Data Entry**\n` +
-                   `• Enter coded data into computer software\n` +
-                   `• Use spreadsheet or statistical software\n\n` +
-                   `**6. Data Cleaning**\n` +
-                   `• Check for consistency in responses\n` +
-                   `• Identify and handle missing responses\n` +
-                   `• Verify data accuracy\n\n` +
-                   `**7. Adjusting the Data (if necessary)**\n` +
-                   `• Weight data if needed\n` +
-                   `• Re-specify certain values\n\n` +
-                   `**8. Selecting the Appropriate Analysis Strategy**\n` +
-                   `• Non-statistical (qualitative) or Statistical (quantitative)\n` +
-                   `• Based on research objectives and scale types\n\n` +
-                   `💡 *Proper preparation ensures the goodness of data collected*`;
-        }
-        
-        // ========== MISSING DATA TREATMENT ==========
-        if (q.includes("missing data") || (q.includes("missing") && q.includes("responses"))) {
-            return `❓ **Treating Missing Data in Survey Research**\n\n` +
-                   `**Rule of Thumb:**\n` +
-                   `If missing items are INSIGNIFICANT (less than 5% of total items), the following strategies are recommended:\n\n` +
-                   `**1. Assign the Midpoint of the Item**\n` +
-                   `• Use the neutral/central value of the scale\n` +
-                   `• Example: For 5-point Likert, assign value 3\n\n` +
-                   `**2. Allow Computer to Ignore the Blank Response**\n` +
-                   `• Software handles missing cases listwise or pairwise\n` +
-                   `• Common in SPSS, Excel, etc.\n\n` +
-                   `**3. Use Mean of the Item from All Respondents**\n` +
-                   `• Calculate average response for that item\n` +
-                   `• Substitute missing value with this mean\n\n` +
-                   `**4. Use Mean of Related Responses**\n` +
-                   `• For items measuring the same variable\n` +
-                   `• Calculate average of respondent's other responses\n\n` +
-                   `**5. Give a Random Number Within Range**\n` +
-                   `• Randomly assign a value within the scale range\n` +
-                   `• Use with caution\n\n` +
-                   `**Important Note:**\n` +
-                   `• If missing data exceeds 5-10%, consider more serious remedies\n` +
-                   `• Document how missing data was handled in the report\n\n` +
-                   `💡 *Treating missing data properly preserves statistical power*`;
-        }
-        
-        // ========== DATA CLEANING ==========
-        if (q.includes("data cleaning") || (q.includes("cleaning") && q.includes("data"))) {
-            return `🧹 **Data Cleaning – Ensuring Data Quality**\n\n` +
-                   `**What is Data Cleaning?**\n` +
-                   `The process of detecting and correcting errors and inconsistencies in data to improve its quality.\n\n` +
-                   `**Key Activities in Data Cleaning:**\n\n` +
-                   `**1. Consistency Checking**\n` +
-                   `• Verify logical relationships between answers\n` +
-                   `• Example: Age 15 but "years of experience" 20 years – inconsistent\n\n` +
-                   `**2. Missing Response Identification**\n` +
-                   `• Identify blank or invalid responses\n` +
-                   `• Determine if missing data is random or systematic\n\n` +
-                   `**3. Outlier Detection**\n` +
-                   `• Identify extreme values that may be errors\n` +
-                   `• Decide whether to keep, correct, or remove\n\n` +
-                   `**4. Duplicate Checking**\n` +
-                   `• Remove duplicate records/respondents\n\n` +
-                   `**Why Data Cleaning is Important:**\n` +
-                   `• Ensures analysis accuracy\n` +
-                   `• Prevents misleading conclusions\n` +
-                   `• Improves reliability and validity of findings\n\n` +
-                   `💡 *Clean data is the foundation of meaningful analysis*`;
-        }
-        
-        // ========== SUPERVISION AND VALIDATION ==========
-        if (q.includes("supervision") || q.includes("validation") || (q.includes("monitoring") && q.includes("fieldwork"))) {
-            return `🔍 **Supervision and Validation of Fieldwork**\n\n` +
-                   `**SUPERVISION – Areas of Concern:**\n\n` +
-                   `• **Quality of data collection implementation** – Are procedures followed?\n` +
-                   `• **Sampling control** – Ensuring correct selection of respondents\n` +
-                   `• **Unethical practices** – Monitoring and minimizing cheating\n` +
-                   `• **Cost effectiveness** – Controlling expenses\n` +
-                   `• **Problem responsiveness** – Quickly rectifying data collection issues\n\n` +
-                   `**VALIDATION – Key Activities:**\n\n` +
-                   `• Manage data collection progress report submission\n` +
-                   `• Ensure accuracy and validity of data\n` +
-                   `• Cross-check with randomly sampled respondents\n` +
-                   `• Verify interviewers are performing correctly and ethically\n` +
-                   `• Confirm that sampling procedures were followed\n\n` +
-                   `**Best Practice:**\n` +
-                   `Validate at least 10-20% of interviews through re-contact\n\n` +
-                   `💡 *Continuous supervision and validation ensure data integrity*`;
-        }
-        
-        // ========== SURVEY DATA COLLECTION OVERVIEW ==========
-        if (q.includes("survey") && (q.includes("data collection") || q.includes("overview"))) {
-            return `📋 **Survey Data Collection Overview**\n\n` +
-                   `**What is a Survey?**\n` +
-                   `Data collection from sampled respondents to make inferences on population parameters.\n\n` +
-                   `**The Survey Data Collection Process Includes:**\n\n` +
-                   `**Before Fieldwork:**\n` +
-                   `• Questionnaire design and pre-testing\n` +
-                   `• Selection and training of fieldworkers\n` +
-                   `• Pilot testing of procedures\n\n` +
-                   `**During Fieldwork:**\n` +
-                   `• Making contact with respondents\n` +
-                   `• Administering questionnaires\n` +
-                   `• Recording data\n` +
-                   `• Supervision and validation\n\n` +
-                   `**After Fieldwork:**\n` +
-                   `• Checking completed questionnaires\n` +
-                   `• Editing and coding\n` +
-                   `• Data entry and cleaning\n` +
-                   `• Preparing for analysis\n\n` +
-                   `**Key Success Factors:**\n` +
-                   `• Well-trained fieldworkers\n` +
-                   `• Clear procedures\n` +
-                   `• Continuous supervision\n` +
-                   `• Thorough validation\n\n` +
-                   `💡 *Proper planning ensures reliable and valid data*`;
-        }
-        
-        // ========== GREETINGS ==========
-        if (q.match(/^(hi|hello|hey|gm|good morning|good afternoon)/i)) {
-            return `📊 **Hello! Welcome to Topic 10: Data Collection & Preparation Assistant**\n\n` +
-                   `I'm here to help you master the fieldwork and data preparation phases of marketing research.\n\n` +
-                   `**📌 What I can help with:**\n\n` +
-                   `📞 **Interviewing Methods** – Personal, telephone, mail, electronic, administered\n` +
-                   `🎯 **Choice Criteria** – Speed, cost, response rate, bias, coverage\n` +
-                   `⚖️ **Pros and Cons** – Advantages and disadvantages of each method\n` +
-                   `👥 **Fieldworker Management** – Selection, training, supervision, validation, evaluation\n` +
-                   `🎤 **Interviewing Techniques** – CASRO guidelines for professionals\n` +
-                   `📝 **Data Preparation Steps** – Editing, coding, transcribing, cleaning\n` +
-                   `❓ **Missing Data Treatment** – Strategies for handling missing responses\n` +
-                   `🧹 **Data Cleaning** – Consistency, outliers, duplicates\n\n` +
-                   `**Click a suggestion chip above or type your question!** 🎯`;
-        }
-        
-        // ========== HELP ==========
-        if (q.includes("what can you do") || q.includes("help") || q === "?" || q === "help me")) {
-            return `📋 **Topic 10: Data Collection & Preparation – What I Can Help With**\n\n` +
-                   `**Data Collection Methods:**\n` +
-                   `• 5 types of interviewing methods (personal, telephone, mail, electronic, administered)\n` +
-                   `• Criteria for choosing the right method\n` +
-                   `• Advantages and disadvantages of each method\n\n` +
-                   `**Fieldwork Management (The 5 Stages):**\n` +
-                   `• SELECTING – Requirements for good fieldworkers\n` +
-                   `• TRAINING – Key areas and CASRO guidelines\n` +
-                   `• SUPERVISING – Quality, sampling control, ethics, cost\n` +
-                   `• VALIDATING – Progress reports, cross-checking, verification\n` +
-                   `• EVALUATING – Performance appraisal and feedback\n\n` +
-                   `**Data Preparation:**\n` +
-                   `• 8 steps in data preparation (editing, coding, transcribing, cleaning, etc.)\n` +
-                   `• Missing data treatment strategies\n` +
-                   `• Data cleaning (consistency, outliers, duplicates)\n\n` +
-                   `**Try asking specific questions!** 🎯`;
-        }
-        
-        // ========== DEFAULT ==========
-        return `📘 **Topic 10: Data Collection & Preparation**\n\n` +
-               `I can help you understand:\n\n` +
-               `📞 **Interviewing Methods** – Personal, telephone, mail, electronic, personally administered\n` +
-               `🎯 **Choice Criteria** – Speed, cost, data quantity, flexibility, anonymity, coverage, response rate, bias\n` +
-               `⚖️ **Pros & Cons** – Advantages and disadvantages of each interviewing method\n` +
-               `👥 **Fieldworker Requirements** – Honest, healthy, sociable, good communicator, hardworking, experienced, qualified, pleasant appearance\n` +
-               `📚 **Training Areas** – Making contact, asking questions, probing, recording, terminating\n` +
-               `🎤 **Interviewing Techniques** – CASRO guidelines for professional interviewers\n` +
-               `⚙️ **5-Stage Data Collection Process** – Select → Train → Supervise → Validate → Evaluate\n` +
-               `📝 **Data Preparation Steps** – Planning → Checking → Editing → Coding → Transcribing → Cleaning → Adjusting → Analysis\n` +
-               `❓ **Missing Data Treatment** – Midpoint assignment, computer ignore, mean substitution, random assignment\n` +
-               `🧹 **Data Cleaning** – Consistency checking, outlier detection, duplicate removal\n\n` +
-               `**Try asking:**\n` +
-               `• "What are the different interviewing methods?"\n` +
-               `• "What are the requirements for good fieldworkers?"\n` +
-               `• "What are the steps in data preparation?"\n` +
-               `• "How should I treat missing data?"\n` +
-               `• "What is the data collection process?"\n\n` +
-               `**Click a suggestion chip above or type your question!** 🎯`;
-    }
-    
-    // Streaming effect for typing
-    async function streamResponse(bubbleElement, fullText) {
-        bubbleElement.innerHTML = '';
-        let currentText = '';
-        
-        for (let i = 0; i < fullText.length; i++) {
-            currentText += fullText[i];
-            let formatted = currentText
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\n/g, '<br>');
-            bubbleElement.innerHTML = formatted + '<span class="streaming-cursor"></span>';
-            scrollToBottom();
-            const delay = fullText[i] === '\n' ? 35 : (fullText[i] === ' ' ? 12 : 22);
-            await new Promise(r => setTimeout(r, delay));
-        }
-        bubbleElement.innerHTML = currentText
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\n/g, '<br>');
-    }
-    
-    function addUserMessageToUI(text) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'message user-message';
-        messageDiv.innerHTML = `
-            <div class="bubble user-bubble">${escapeHtml(text)}</div>
-            <div class="message-time">${getTime()}</div>
-        `;
-        messagesDiv.appendChild(messageDiv);
-        scrollToBottom();
-    }
-    
-    function addTypingIndicator() {
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'message bot-message';
-        typingDiv.id = 'typingIndicator';
-        typingDiv.innerHTML = `
-            <div class="typing-indicator">
-                <span></span><span></span><span></span>
-                <span style="width:auto; background:transparent; margin-left:8px; color:#8f9b7a;">Thinking...</span>
-            </div>
-        `;
-        messagesDiv.appendChild(typingDiv);
-        scrollToBottom();
-    }
-    
-    function removeTypingIndicator() {
-        const indicator = document.getElementById('typingIndicator');
-        if (indicator) indicator.remove();
-    }
-    
-    function createStreamingMessage() {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'message bot-message';
-        messageDiv.id = 'streamingMessage';
-        messageDiv.innerHTML = `
-            <div class="bubble bot-bubble" id="streamingBubble"></div>
-            <div class="message-time">${getTime()}</div>
-        `;
-        messagesDiv.appendChild(messageDiv);
-        scrollToBottom();
-        return document.getElementById('streamingBubble');
-    }
-    
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-    
-    function getTime() {
-        return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
-    
     function scrollToBottom() {
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
-    
-    async function sendMessage() {
-        if (isThinking) return;
-        const message = userInput.value.trim();
-        if (!message) return;
+
+    function appendMessage(text, sender) {
+        const msgDiv = document.createElement('div');
+        msgDiv.classList.add('message-bubble');
+        msgDiv.classList.add(sender === 'user' ? 'user-msg' : 'bot-msg');
+        msgDiv.innerHTML = text;
+        messagesContainer.appendChild(msgDiv);
+        scrollToBottom();
+    }
+
+    function getBotAnswer(questionText) {
+        const q = questionText.toLowerCase();
         
-        isThinking = true;
-        userInput.disabled = true;
-        sendBtn.disabled = true;
+        // Data Collection Definition
+        if ((q.includes('data collection') && (q.includes('definition') || q.includes('what is'))) || (q.includes('fieldwork') && !q.includes('process'))) {
+            return `<b>📋 Data Collection in Marketing Research</b><br><br>
+            The data collection or <b>fieldwork phase</b> involves the actual collection of required data from the field or necessary sources.<br><br>
+            <b>Key points:</b><br>
+            • For a questionnaire survey, real data collection starts after questionnaire has been pre-tested<br>
+            • Fieldwork activities encompass: making contact with respondents, administering questionnaires/observation forms, recording data, preparing usable forms for further processing<br>
+            • Data collection needs to be <b>properly planned, implemented and monitored</b> to get reliable and valid data<br>
+            • This phase directly affects the <b>reliability and validity</b> of research data`;
+        }
         
-        addUserMessageToUI(message);
-        conversationHistory.push({ role: "user", content: message });
+        // Types of Interviewing Methods
+        if ((q.includes('interviewing methods') || q.includes('types of survey')) && !q.includes('advantages')) {
+            return `<b>🎤 Interviewing Methods in Marketing Research</b><br><br>
+            <b>Common interviewing methods:</b><br>
+            • <b>Personal interviews</b> - Face-to-face (in-home, mall-intercept, computer-assisted)<br>
+            • <b>Telephone interviews</b> - Traditional or computer-assisted telephone interviewing<br>
+            • <b>Personally administered questionnaire</b> - Self-administered with researcher present<br>
+            • <b>Mail questionnaire</b> - Postal mail or mail panel surveys<br>
+            • <b>Electronic questionnaire</b> - Email, internet, mobile (SMS)<br><br>
+            Surveys involve data collection from sampled respondents to make inferences on population parameters.`;
+        }
+        
+        // Choice Criteria for Data Collection
+        if (q.includes('choice criteria') || (q.includes('evaluate') && q.includes('methods')) || q.includes('criteria for choosing')) {
+            return `<b>⚖️ Criteria for Choosing Data Collection Methods</b><br><br>
+            <b>Key evaluation criteria include:</b><br>
+            • <b>Speed</b> - How quickly can data be collected?<br>
+            • <b>Quantity of data</b> - How much information can be obtained?<br>
+            • <b>Flexibility of data collection</b> - Ability to adapt during collection<br>
+            • <b>Anonymity</b> - Can respondent identity be protected?<br>
+            • <b>Geographical coverage</b> - Reach across locations<br>
+            • <b>Cost effectiveness</b> - Budget considerations<br>
+            • <b>Response rate</b> - Likelihood of obtaining responses<br>
+            • <b>Respondent or researcher bias</b> - Minimizing bias<br>
+            • <b>Use of physical stimuli</b> - Ability to show products/materials<br>
+            • <b>Effectiveness in obtaining sensitive data</b> - Handling delicate topics`;
+        }
+        
+        // Data Collection Process (5 steps)
+        if ((q.includes('data collection process') || q.includes('steps in data collection')) && !q.includes('preparation')) {
+            return `<b>🔄 The Data Collection Process (5 Steps)</b><br><br>
+            <b>Step 1: Selecting</b> - Selection of suitable and good fieldworkers. Specify tasks, responsibilities, and personal qualities required.<br><br>
+            <b>Step 2: Training</b> - Proper training before field deployment. Areas: making initial contact, asking questions, probing, recording answers, terminating interviews.<br><br>
+            <b>Step 3: Supervising</b> - Monitor quality of data collection, sampling control, minimize unethical practices (cheating), cost effectiveness control.<br><br>
+            <b>Step 4: Validating</b> - Verify fieldwork tasks, cross-check with randomly sampled respondents to ensure correct and ethical data collection.<br><br>
+            <b>Step 5: Evaluation</b> - Continuous fieldworker evaluation/performance appraisal. Obtain feedback for cost/time effectiveness, response rate, quality interviews.`;
+        }
+        
+        // Selecting and Training Fieldworkers
+        if (q.includes('fieldworkers') || (q.includes('selecting') && q.includes('training'))) {
+            return `<b>👥 Selecting & Training Fieldworkers</b><br><br>
+            <b>Critical requirements for good fieldworkers:</b><br>
+            • Honest • Healthy • Sociable • Good communication skills<br>
+            • Hardworking • Experienced • Qualified • Pleasant appearance<br><br>
+            <b>Key training areas (for interviews):</b><br>
+            1. Making initial contact or appointment<br>
+            2. Asking questions during an interview<br>
+            3. Probing interviewees<br>
+            4. Recording answers<br>
+            5. Terminating an interview<br><br>
+            <i>An appropriately trained fieldworker will be much more effective and efficient in data collection.</i>`;
+        }
+        
+        // Professional Interviewing Techniques
+        if (q.includes('interviewing techniques') || q.includes('professional interviewers') || (q.includes('how to interview') && !q.includes('methods'))) {
+            return `<b>🎙️ Professional Interviewing Techniques (CASRO Guidelines)</b><br><br>
+            • Show full name and affiliation before and during interviews<br>
+            • Read each question <b>exactly as written</b><br>
+            • Read questions according to sequence stated in questionnaire<br>
+            • Clarify any questions/problems raised in a <b>neutral way</b><br>
+            • <b>Do not mislead or influence respondents</b><br>
+            • Always remain neutral (do not indicate agreement)<br>
+            • Speak slowly and clearly to ensure good understanding<br>
+            • Record all replies and answers <b>verbatim</b><br>
+            • Avoid unnecessary conversations with respondents<br>
+            • Write down all answers neatly and accurately<br>
+            • Terminate interview neutrally ("Thank you")<br>
+            • Keep all data <b>strictly confidential</b>`;
+        }
+        
+        // Data Preparation Steps
+        if ((q.includes('data preparation') && (q.includes('steps') || q.includes('process'))) || q.includes('preparing data')) {
+            return `<b>📊 Data Preparation Process (7 Tasks)</b><br><br>
+            <b>1. Preliminary plan of data analysis</b> - Plan before processing<br>
+            <b>2. Questionnaire checking</b> - Review completed questionnaires<br>
+            <b>3. Editing the data</b> - Correct errors and inconsistencies<br>
+            <b>4. Coding the data</b> - Use Code Book if necessary; assign numerical values<br>
+            <b>5. Transcribing or data entry</b> - Enter data into analysis software<br>
+            <b>6. Data cleaning</b> - Check consistency and handle missing responses<br>
+            <b>7. Adjusting the data</b> - Weight/re-specification if necessary<br>
+            <b>8. Selecting appropriate analysis strategy</b> - Non-statistical or statistical<br><br>
+            <i>One of the most challenging tasks is treating missing data.</i>`;
+        }
+        
+        // Treating Missing Data
+        if (q.includes('missing data') || q.includes('missing responses') || (q.includes('treat') && q.includes('missing'))) {
+            return `<b>⚠️ Treating Missing Data (5 Methods)</b><br><br>
+            If the number of missing items is <b>insignificant (less than 5% of total items)</b>, the following strategies are recommended:<br><br>
+            <b>1.</b> Assign the <b>midpoint of the item</b> (e.g., 3 on a 5-point scale)<br>
+            <b>2.</b> Allow computer to <b>ignore the blank response</b><br>
+            <b>3.</b> Use the <b>mean of the item from all respondents</b><br>
+            <b>4.</b> Use the <b>mean of related responses</b> (of that particular respondent) for items measuring the variable<br>
+            <b>5.</b> Give the missing response a <b>random number within the range</b> for that scale<br><br>
+            <i>Note: If missing data exceeds 5%, consider more sophisticated imputation methods or investigate patterns of missingness.</i>`;
+        }
+        
+        // Data Cleaning
+        if (q.includes('data cleaning') || (q.includes('cleaning') && q.includes('data'))) {
+            return `<b>🧹 Data Cleaning</b><br><br>
+            Data cleaning is a crucial step in data preparation that involves:<br><br>
+            <b>1. Consistency checks</b> - Verify that responses are logical and consistent across questions. Example: A respondent who reports age 20 but years of work experience 25 would be inconsistent.<br><br>
+            <b>2. Handling missing responses</b> - Identify and treat missing data using appropriate methods (midpoint, mean substitution, etc.)<br><br>
+            <b>3. Outlier detection</b> - Identify extreme values that may distort analysis<br><br>
+            <b>4. Duplicate checks</b> - Remove duplicate entries if any<br><br>
+            <i>Proper data cleaning ensures the quality and reliability of subsequent statistical analysis.</i>`;
+        }
+        
+        // Coding
+        if (q.includes('coding') || (q.includes('code book'))) {
+            return `<b>🔢 Coding in Data Preparation</b><br><br>
+            Coding is the process of assigning <b>numerical values or symbols</b> to responses for data entry and analysis.<br><br>
+            <b>Code Book:</b><br>
+            • A document that contains all variable names, descriptions, and coding instructions<br>
+            • Essential for maintaining consistency across researchers<br>
+            • Includes value labels (e.g., 1=Male, 2=Female)<br><br>
+            <b>Example:</b><br>
+            Gender: 1=Male, 2=Female<br>
+            Satisfaction: 1=Very Dissatisfied, 2=Dissatisfied, 3=Neutral, 4=Satisfied, 5=Very Satisfied<br><br>
+            <i>Coding transforms raw responses into analyzable data format.</i>`;
+        }
+        
+        // Advantages and Disadvantages of Interviewing Methods
+        if ((q.includes('advantages') && q.includes('disadvantages')) || (q.includes('pros') && q.includes('cons')) || (q.includes('interviewing methods') && (q.includes('advantage') || q.includes('disadvantage')))) {
+            return `<b>✅❌ Advantages & Disadvantages of Interviewing Methods</b><br><br>
+            <b>Personal Interviews:</b><br>
+            ✓ High response rate, use of physical stimuli, detailed data<br>
+            ✗ Expensive, time-consuming, interviewer bias, geographical limitations<br><br>
+            <b>Telephone Interviews:</b><br>
+            ✓ Faster, wider coverage, lower cost than personal<br>
+            ✗ No visual stimuli, limited interview length, call screening issues<br><br>
+            <b>Mail Questionnaires:</b><br>
+            ✓ Low cost, no interviewer bias, anonymity, convenient for respondents<br>
+            ✗ Low response rate, slow, no control over who answers, no probing<br><br>
+            <b>Electronic/Internet Surveys:</b><br>
+            ✓ Very fast, low cost, wide reach, automated data entry<br>
+            ✗ Sampling frame issues, technical problems, low response for some populations<br><br>
+            <i>Choice depends on research objectives, budget, timeline, and target population.</i>`;
+        }
+        
+        // Supervising and Validating
+        if ((q.includes('supervising') || q.includes('validating')) && q.includes('fieldwork')) {
+            return `<b>📋 Supervising & Validating Fieldwork</b><br><br>
+            <b>Supervision areas:</b><br>
+            • Quality of data collection implementation<br>
+            • Sampling control to ensure correct selection of respondents<br>
+            • Monitoring and minimizing unethical practices such as cheating<br>
+            • Cost effectiveness control<br>
+            • Responsiveness in rectifying data collection related problems<br><br>
+            <b>Validation activities:</b><br>
+            • Manage data collection progress report submission<br>
+            • Verify accuracy and validity of data<br>
+            • Cross-check with randomly sampled respondents<br>
+            • Ensure interviewers are performing data collection correctly and ethically`;
+        }
+        
+        // Default
+        return `<b>📘 Topic 10: Data Collection and Preparation</b><br><br>
+        Based on your lecture notes, I can help you with:<br><br>
+        📋 <b>Data Collection</b> - Definition, fieldwork, importance for reliability/validity<br>
+        🎤 <b>Interviewing Methods</b> - Personal, telephone, mail, electronic<br>
+        ⚖️ <b>Choice Criteria</b> - Speed, cost, anonymity, response rate, bias, geographical coverage<br>
+        🔄 <b>5-Step Data Collection Process</b> - Select → Train → Supervise → Validate → Evaluate<br>
+        👥 <b>Fieldworkers</b> - Qualities, training areas, professional techniques (CASRO guidelines)<br>
+        📊 <b>Data Preparation</b> - 7 tasks: checking, editing, coding, transcribing, cleaning, adjusting, analysis strategy<br>
+        ⚠️ <b>Missing Data</b> - 5 methods to treat missing responses<br>
+        🧹 <b>Data Cleaning</b> - Consistency checks, missing handling, outlier detection<br>
+        🔢 <b>Coding</b> - Assigning numerical values, code book<br>
+        ✅❌ <b>Pros & Cons</b> - Advantages/disadvantages of each interviewing method<br><br>
+        Try asking: <i>"What are the steps in data preparation?"</i> or <i>"How to treat missing data?"</i> or <i>"What are the qualities of good fieldworkers?"</i>`;
+    }
+
+    function escapeHtmlSimple(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function handleSend() {
+        let query = userInput.value.trim();
+        if (query === "") return;
+        
+        appendMessage(escapeHtmlSimple(query), 'user');
         userInput.value = '';
         
-        addTypingIndicator();
-        await new Promise(r => setTimeout(r, 250 + Math.random() * 250));
-        
-        const response = getSmartResponse(message, conversationHistory);
-        
-        removeTypingIndicator();
-        
-        const bubbleElement = createStreamingMessage();
-        await streamResponse(bubbleElement, response);
-        
-        conversationHistory.push({ role: "assistant", content: response });
-        
-        const streamingDiv = document.getElementById('streamingMessage');
-        if (streamingDiv) streamingDiv.removeAttribute('id');
-        
-        isThinking = false;
-        userInput.disabled = false;
-        sendBtn.disabled = false;
-        userInput.focus();
+        const answerHtml = getBotAnswer(query);
+        appendMessage(answerHtml, 'bot');
     }
     
-    clearChatBtn.addEventListener('click', () => {
-        conversationHistory = [];
-        messagesDiv.innerHTML = '';
-        const welcomeDiv = document.createElement('div');
-        welcomeDiv.className = 'message bot-message';
-        welcomeDiv.innerHTML = `
-            <div class="bubble bot-bubble">
-                🧹 Chat cleared! I'm ready to help with Topic 10: Data Collection & Preparation.<br><br>
-                <strong>Click any suggestion chip below or type your question!</strong><br><br>
-                Ask me about interviewing methods, fieldworker requirements, data preparation steps, or missing data treatment!
-            </div>
-            <div class="message-time">${getTime()}</div>
-        `;
-        messagesDiv.appendChild(welcomeDiv);
-        scrollToBottom();
-    });
-    
-    sendBtn.addEventListener('click', sendMessage);
+    sendButton.addEventListener('click', handleSend);
     userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && !isThinking && userInput.value.trim()) {
-            sendMessage();
-        }
+        if (e.key === 'Enter') handleSend();
     });
     
-    // Suggestion chips event listener
-    document.querySelectorAll('.suggestion-chip').forEach(chip => {
+    const topicChips = document.querySelectorAll('.topic-chip');
+    topicChips.forEach(chip => {
         chip.addEventListener('click', () => {
-            if (isThinking) return;
-            const question = chip.getAttribute('data-question') || chip.textContent;
-            userInput.value = question;
-            sendMessage();
+            const preQuestion = chip.getAttribute('data-question');
+            if (preQuestion) {
+                appendMessage(preQuestion, 'user');
+                const botAns = getBotAnswer(preQuestion);
+                appendMessage(botAns, 'bot');
+            }
         });
     });
     
-    userInput.focus();
+    window.addEventListener('load', () => {
+        scrollToBottom();
+    });
 </script>
 </body>
 </html>

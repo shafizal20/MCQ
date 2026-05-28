@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketing Research AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MR Tutor: Marketing Research AI Assistant</title>
     <style>
         * {
             margin: 0;
@@ -12,8 +12,8 @@
         }
 
         body {
-            background: #eef2f7;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(145deg, #e2e8f0 0%, #d4dee8 100%);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -22,49 +22,55 @@
         }
 
         .chat-card {
-            max-width: 480px;
+            max-width: 520px;
             width: 100%;
-            background: white;
+            background: #ffffff;
             border-radius: 2rem;
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.2);
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.35);
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            transition: all 0.2s ease;
         }
 
         .header {
             padding: 1.2rem 1.5rem 0.8rem;
-            border-bottom: 1px solid #eef2f5;
+            background: white;
+            border-bottom: 1px solid #eef2f8;
         }
 
         .header h1 {
-            font-size: 1.65rem;
+            font-size: 1.7rem;
             font-weight: 700;
-            color: #1A2C3E;
+            color: #0A2B38;
             display: inline;
+            letter-spacing: -0.2px;
         }
 
         .badge {
-            background: #eef2ff;
-            color: #2c5f7a;
+            background: #e1ecf4;
+            color: #1c6f9c;
             font-size: 0.7rem;
             font-weight: 600;
-            padding: 2px 10px;
-            border-radius: 30px;
-            margin-left: 8px;
+            padding: 3px 12px;
+            border-radius: 40px;
+            margin-left: 10px;
+            vertical-align: middle;
         }
 
         .sub {
             font-size: 0.75rem;
-            color: #6a7e9e;
-            margin-top: 6px;
+            color: #5a6e8a;
+            margin-top: 8px;
+            border-left: 3px solid #2c7da0;
+            padding-left: 10px;
         }
 
         .messages {
-            height: 420px;
+            height: 500px;
             overflow-y: auto;
-            padding: 1rem;
-            background: #fbfdff;
+            padding: 1.2rem 1rem;
+            background: #FCFDFF;
             display: flex;
             flex-direction: column;
             gap: 0.9rem;
@@ -73,7 +79,7 @@
         .msg {
             display: flex;
             flex-direction: column;
-            max-width: 88%;
+            max-width: 86%;
         }
 
         .user-msg {
@@ -86,242 +92,284 @@
 
         .bubble {
             padding: 0.7rem 1rem;
-            border-radius: 1.5rem;
+            border-radius: 1.4rem;
             font-size: 0.88rem;
-            line-height: 1.4;
+            line-height: 1.45;
             white-space: pre-wrap;
+            word-break: break-word;
         }
 
         .user-bubble {
             background: #0F2C3D;
             color: white;
-            border-bottom-right-radius: 5px;
+            border-bottom-right-radius: 6px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.05);
         }
 
         .bot-bubble {
-            background: #eef2f7;
+            background: #EFF3F8;
             color: #1f2f3e;
-            border-bottom-left-radius: 5px;
+            border-bottom-left-radius: 6px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.03);
         }
 
         .time {
             font-size: 0.6rem;
-            color: #8b9ab0;
-            margin-top: 4px;
+            color: #8f9eb2;
+            margin-top: 5px;
             margin-left: 12px;
         }
 
-        .typing {
+        .typing-indicator {
             display: flex;
             gap: 5px;
-            padding: 0.5rem 1rem;
-            background: #eef2f7;
+            padding: 0.6rem 1rem;
+            background: #EFF3F8;
             width: fit-content;
             border-radius: 2rem;
-            border-bottom-left-radius: 5px;
+            border-bottom-left-radius: 6px;
+            align-items: center;
         }
-        .typing span {
-            width: 6px;
-            height: 6px;
-            background: #8f9eb2;
+        .typing-indicator span {
+            width: 7px;
+            height: 7px;
+            background: #8a9bb0;
             border-radius: 50%;
             display: inline-block;
-            animation: blink 1.2s infinite;
+            animation: wave 1.3s infinite ease-in-out;
         }
-        .typing span:nth-child(2) { animation-delay: 0.2s; }
-        .typing span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes blink {
-            0%, 60%, 100% { opacity: 0.3; transform: translateY(0);}
-            30% { opacity: 1; transform: translateY(-3px);}
-        }
-
-        .chips {
-            padding: 0.6rem 1rem;
-            background: white;
-            border-top: 1px solid #edeff4;
-            border-bottom: 1px solid #edeff4;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .chip {
-            background: #f0f3f9;
-            padding: 5px 14px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            color: #1f496e;
-            cursor: pointer;
-        }
-        .chip:hover {
-            background: #e3e9f2;
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes wave {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+            30% { transform: translateY(-4px); opacity: 1; }
         }
 
         .input-area {
             display: flex;
-            gap: 8px;
-            padding: 0.9rem 1rem;
+            gap: 10px;
+            padding: 0.9rem 1.2rem;
             background: white;
-            border-top: 1px solid #edf2f7;
+            border-top: 1px solid #eef2f7;
         }
         .input-area input {
             flex: 1;
             border: 1px solid #e2e8f0;
-            padding: 10px 16px;
-            border-radius: 40px;
+            padding: 12px 18px;
+            border-radius: 50px;
             font-size: 0.85rem;
             outline: none;
+            transition: 0.2s;
+            background: #fefefe;
         }
         .input-area input:focus {
-            border-color: #2c5f7a;
+            border-color: #2c7da0;
+            box-shadow: 0 0 0 2px rgba(44,125,160,0.2);
         }
         .input-area button {
             background: #0F2C3D;
             border: none;
             color: white;
-            padding: 8px 18px;
-            border-radius: 40px;
+            padding: 0 22px;
+            border-radius: 50px;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 0.3px;
         }
         .input-area button:hover {
-            background: #204e69;
+            background: #1f526b;
+            transform: scale(0.97);
         }
         .footer {
             font-size: 0.6rem;
             text-align: center;
-            padding: 8px;
+            padding: 8px 12px;
             color: #7c8ea0;
-            border-top: 1px solid #eff3f8;
+            background: #fafcff;
+            border-top: 1px solid #edf2f8;
         }
+
         .messages::-webkit-scrollbar {
             width: 4px;
         }
         .messages::-webkit-scrollbar-track {
             background: #eef2f7;
+            border-radius: 10px;
         }
         .messages::-webkit-scrollbar-thumb {
-            background: #becddc;
+            background: #cbd9e6;
             border-radius: 10px;
+        }
+
+        @media (max-width: 480px) {
+            .chat-card { max-width: 100%; border-radius: 1.5rem; }
+            .messages { height: 460px; }
+            .bubble { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
 <div class="chat-card">
     <div class="header">
-        <h1>Marketing Research AI</h1><span class="badge">assistant</span>
-        <div class="sub">Hello! How can I assist you today? 😊</div>
+        <h1>Marketing Research AI</h1><span class="badge">Topic 1 expert</span>
+        <div class="sub">📊 Systematic • Objective • Scientific — Ask me anything from the MR introduction!</div>
     </div>
 
     <div class="messages" id="messages">
         <div class="msg bot-msg">
-            <div class="bubble bot-bubble">Hello! I'm your marketing research assistant. Feel free to ask me about definitions, importance, the 6-step process, problem identification vs solving, scientific research, researcher qualities, environment variables, or internal/external researchers.</div>
+            <div class="bubble bot-bubble">Hi! I'm your marketing research assistant.</div>
             <div class="time">now</div>
         </div>
     </div>
 
-    <div class="chips">
-        <div class="chip" data-q="What is marketing research?">📘 Definition</div>
-        <div class="chip" data-q="Explain the marketing research process steps">📋 6 steps</div>
-        <div class="chip" data-q="Difference between problem identification and problem solving research">🔎 Types</div>
-        <div class="chip" data-q="What are the qualities of a good marketing researcher?">⭐ Qualities</div>
-        <div class="chip" data-q="Scientific marketing research meaning">🧪 Scientific MR</div>
-        <div class="chip" data-q="Marketing environment variables">🌍 Environment</div>
-        <div class="chip" data-q="Why is marketing research important?">💡 Importance</div>
-    </div>
-
     <div class="input-area">
-        <input type="text" id="input" placeholder="Enter a message..." autocomplete="off">
+        <input type="text" id="input" placeholder="e.g., What is the marketing research process?" autocomplete="off">
         <button id="send">Send</button>
     </div>
-    <div class="footer">answers based on standard marketing research knowledge</div>
+    <div class="footer">📘 answers based on "Introduction to Marketing Research" (scientific & applied knowledge)</div>
 </div>
 
 <script>
-    function getAnswer(q) {
-        let query = q.toLowerCase().trim();
-
-        if (query.includes("what is marketing research") || (query.includes("marketing research") && (query.includes("define") || query.includes("definition")))) {
-            return "Marketing research is a systematic, objective process to identify marketing problems, develop an approach, design research, collect & analyze data, and report findings for sound decisions. It follows scientific principles to ensure reliability and validity.";
+    // Comprehensive knowledge base derived from the provided PDF material (Topic 1)
+    function getMarketingResearchAnswer(userQuery) {
+        let q = userQuery.toLowerCase().trim();
+        
+        // --- Definition & Core concepts ---
+        if (q.includes("what is marketing research") || (q.includes("marketing research") && (q.includes("define") || q.includes("definition") || q.includes("meaning")))) {
+            return "📌 **Marketing Research** is a systematic and objective process of identifying/defining marketing problems, developing an approach, designing research, collecting & analyzing data, and disseminating findings for effective marketing decisions. It follows a scientific methodology to ensure reliability, validity, and actionable insights.";
         }
-
-        if ((query.includes("importance") || query.includes("why is")) && (query.includes("marketing research") || query.includes("mr"))) {
-            return "Marketing research is vital: it reduces guesswork, reveals customer needs, prevents wasted resources, spots opportunities, and supports pricing, product, promotion & distribution strategies. It helps managers stay competitive and adapt to market shifts.";
+        
+        // --- Importance of Marketing Research ---
+        if ((q.includes("importance") || q.includes("why is") || q.includes("role of")) && (q.includes("marketing research") || q.includes("mr"))) {
+            return "🔑 **Importance** \n• Reduces guesswork & resource wastage.\n• Helps understand customer needs, wants & desires.\n• Identifies market opportunities & competitive threats.\n• Supports marketing mix decisions (product, price, promotion, distribution).\n• Provides timely information to adapt to environmental forces (economy, tech, legal, social).\n• Enables proactive vs reactive strategies.";
         }
-
-        if ((query.includes("steps") || query.includes("process")) && (query.includes("marketing research") || query.includes("research process"))) {
-            return "The 6-step marketing research process:\n1️⃣ Problem definition\n2️⃣ Approach development\n3️⃣ Research design\n4️⃣ Data collection\n5️⃣ Data preparation & analysis\n6️⃣ Reporting & presentation";
+        
+        // --- 6-step process ---
+        if ((q.includes("steps") || q.includes("process") || q.includes("phases")) && (q.includes("marketing research") || q.includes("research process"))) {
+            return "🔄 **The 6-step Marketing Research Process** (Scientific & systematic):\n\n1️⃣ **Identifying & Defining the Problem** – most critical step, discussions with managers, experts, secondary data.\n2️⃣ **Developing the Approach** – objectives, research questions, theoretical framework, hypotheses.\n3️⃣ **Research Design Formulation** – blueprint, includes info needed, data collection method, sampling, measurement.\n4️⃣ **Data Collection** – field force, personal/telephone/mail/electronic, error minimization via training.\n5️⃣ **Data Preparation & Analysis** – editing, coding, transcription, cleaning, statistical analysis.\n6️⃣ **Reporting & Presentation** – written report & oral presentation, actionable findings for decision makers.";
         }
-
-        if ((query.includes("problem identification") && query.includes("problem solving")) || (query.includes("types") && query.includes("marketing research"))) {
-            return "📌 Problem Identification Research (basic): uncovers marketing problems. Examples: market potential, feasibility, image, forecasting.\n\n⚙️ Problem Solving Research (applied): solves specific challenges like pricing, promotion, distribution.";
+        
+        // --- Problem identification vs problem solving ---
+        if ((q.includes("problem identification") && q.includes("problem solving")) || (q.includes("types of marketing research")) || (q.includes("basic research") && q.includes("applied"))) {
+            return "🧠 **Two main types of marketing research:**\n\n📘 **Problem-Identification Research (Basic/Pure)** – aims to identify & understand marketing problems/situations.\nExamples: market potential studies, feasibility analysis, market share research, image research, forecasting, sales analysis, business trends.\n\n⚙️ **Problem-Solving Research (Applied)** – helps solve specific marketing challenges.\nExamples: segmentation research, pricing research, promotion effectiveness, distribution research, product concept testing.\n\nBoth types are essential for strategic marketing excellence.";
         }
-
-        if ((query.includes("scientific") && query.includes("marketing research")) || query.includes("scientific approach")) {
-            return "Scientific marketing research demands empirical testing under controlled conditions. It is rigorous, objective, replicable, and precise. Key traits: purposive, testable, replicable, representative, and parsimonious.";
+        
+        // --- Scientific Marketing Research & characteristics ---
+        if ((q.includes("scientific") && q.includes("marketing research")) || q.includes("scientific approach") || q.includes("scientific investigation")) {
+            return "🧪 **Scientific Marketing Research** – all propositions must be subjected to empirical tests under controlled conditions; research is observable, evaluable, replicable by others.\n\n✅ **Key attributes:** purposive, rigorous, testable, replicable, precise, objective, representative, parsimonious.\n\nIt begins with analysis (breaking down complex problems) and ensures objectivity in gathering facts & testing creative ideas for marketing strategies. Avoids commercialization of non-customer-oriented products.";
         }
-
-        if ((query.includes("qualities") || query.includes("good marketing researcher")) && query.includes("researcher")) {
-            return "🌟 Top qualities: Knowledgeable in marketing, professional, competent in methodology, sociable, and persistent.";
+        
+        // --- Qualities of marketing researcher ---
+        if ((q.includes("qualities") || q.includes("good marketing researcher") || q.includes("desirable qualities")) && (q.includes("researcher") || q.includes("marketing researcher"))) {
+            return "🌟 **Desirable qualities of a marketing researcher** (from topic 1):\n\n📚 Knowledgeable in marketing (problem definition, data analysis, recommendations)\n🎓 Professional – overall project integrity\n🔬 Competent in research methodology\n🗣️ Sociable – for project solicitation, data collection & presentation\n⏳ Persistent – continuously working & performance-oriented\n\nAlso: ethical, objective, and up-to-date with analytical techniques.";
         }
-
-        if (query.includes("marketing environment") || query.includes("environment variables")) {
-            return "🌍 Uncontrollable: Economy, Technology, Competition, Legal/political, Social/cultural, Physical/Natural.\n\n🎯 Controllable (marketing mix): Product, Pricing, Promotion, Distribution, Service, People, Process.";
+        
+        // --- Marketing environment (controllable & uncontrollable) ---
+        if ((q.includes("marketing environment") || q.includes("environment variables") || q.includes("controllable") || q.includes("uncontrollable")) && (q.includes("variables") || q.includes("environment"))) {
+            return "🌎 **Marketing Environment Variables**\n\n🎯 **Controllable (Micro-environment / Marketing Mix)** – managed by organization:\n• Product • Pricing • Promotion • Distribution • Service • People • Process\n\n🌀 **Uncontrollable (Macro-environment)** – must be monitored & adapted:\n• Economy • Technology • Competition • Legal & political • Social & cultural • Physical/Natural\n\nMarketing research provides crucial intelligence to respond to uncontrollable forces and optimize controllable elements.";
         }
-
-        if (query.includes("internal researcher") || query.includes("external researcher")) {
-            return "Internal researchers: employees with deep company knowledge. External researchers: third-party experts, unbiased, bring fresh methods. Choice depends on budget and need for neutrality.";
+        
+        // --- Internal vs external researchers ---
+        if ((q.includes("internal researcher") || q.includes("external researcher") || q.includes("internal vs external")) && (q.includes("researcher") || q.includes("researchers"))) {
+            return "🏢 **Internal researchers** – employees of the firm; deep knowledge of company culture/products, lower cost, but may suffer from internal bias or ‘stereotyped’ views.\n\n🔍 **External researchers** – third-party agencies/consultants; bring objectivity, fresh perspective, advanced statistical expertise, and no internal politics. Ideal for unbiased findings.\n\nChoice depends on urgency, budget, expertise needed, and requirement for neutrality. Often firms combine both for robust insights.";
         }
-
-        return "Ask me about: definition, 6-step process, types, scientific MR, researcher qualities, environment variables, or internal/external researchers.";
+        
+        // --- Customer groups & stakeholders ---
+        if ((q.includes("customers") || q.includes("stakeholders")) && (q.includes("marketing research") || q.includes("target"))) {
+            return "👥 **Customers & stakeholders** served by marketing research: consumers, employees, shareholders, suppliers, government & NGOs.\n\nMarket-oriented firms prioritize customers' interests first for long-term profitability. Understanding needs/wants/desires through proper MR leads to marketing excellence and competitive advantage.";
+        }
+        
+        // --- Why managers need MR (decision making) ---
+        if ((q.includes("managers need") || q.includes("decision making") || q.includes("marketing decisions")) && (q.includes("marketing research") || q.includes("research helps"))) {
+            return "📈 **Marketing research empowers managers** to:\n• Identify & satisfy customer needs\n• Select target markets & segmentation strategies\n• Plan marketing programs (4Ps)\n• Evaluate performance & control marketing activities\n• Respond to dynamic environmental factors (economy, tech, law, social changes)\n\nWithout MR, managers rely on guesswork, risking product failure and wasted resources.";
+        }
+        
+        // --- Research design brief ---
+        if ((q.includes("research design") && q.includes("steps")) || (q.includes("designing the research"))) {
+            return "📐 **Research design** – a blueprint for conducting the project. It includes:\n• Information needed\n• Type of investigation (exploratory, descriptive, causal)\n• Primary/secondary data + qualitative/quantitative approach\n• Unit of analysis (individuals, groups, etc.)\n• Data collection methods, measurement scales, sampling technique\n• Data analysis strategy\n\nProper design ensures the research answers decision questions reliably.";
+        }
+        
+        // --- Data collection methods ---
+        if ((q.includes("data collection") || q.includes("collecting data")) && !q.includes("process")) {
+            return "📋 **Data collection methods** from Topic 1:\n• Personal interviewing (home, mall intercept, computer-assisted)\n• Telephone interviewing (CATI)\n• Mail surveys (traditional & mail panels)\n• Electronic (email, internet surveys)\n\nProper selection, training & supervision of field staff minimizes errors.";
+        }
+        
+        // --- Reporting & presentation ---
+        if ((q.includes("reporting") || q.includes("presentation") || q.includes("report the findings")) && (q.includes("marketing research") || q.includes("step"))) {
+            return "📄 **Reporting & presenting** – final step in MR process: \n• Written documentation: problem statement, approach, research design, data collection procedures, analysis & findings.\n• Oral presentation with visual aids to enhance impact and clarity for management/clients.\n\nTranslates technical insights into actionable marketing strategies.";
+        }
+        
+        // --- Pure research vs applied context ---
+        if ((q.includes("basic research") && q.includes("applied research")) || (q.includes("pure research"))) {
+            return "🔬 **Basic (pure) research** – problem identification, builds theory, expands knowledge without immediate commercial goal. Example: cross-cultural customer analysis.\n\n🛠️ **Applied research** – problem-solving research intended to address specific real-world marketing problems (pricing, promotion, distribution). \n\nScientific method assures objectivity in both.";
+        }
+        
+        // --- default fallback but still helpful ---
+        return "📚 I'm specialized in **Topic 1: Introduction to Marketing Research**.\n\nYou can ask:\n• 'Define marketing research'\n• 'Importance of marketing research'\n• 'Explain the 6-step process'\n• 'Problem identification vs problem solving'\n• 'Scientific marketing research qualities'\n• 'Marketing environment variables'\n• 'Internal vs external researchers'\n• 'What are desirable qualities of a researcher?'\n\nFeel free to rephrase your question or ask something specific from the chapter!";
     }
 
+    // UI elements
     const messagesDiv = document.getElementById('messages');
     const inputEl = document.getElementById('input');
     const sendBtn = document.getElementById('send');
 
     function addMessage(text, isUser) {
-        const div = document.createElement('div');
-        div.className = `msg ${isUser ? 'user-msg' : 'bot-msg'}`;
-        div.innerHTML = `<div class="bubble ${isUser ? 'user-bubble' : 'bot-bubble'}">${text.replace(/\n/g, '<br>')}</div>
-                         <div class="time">${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>`;
-        messagesDiv.appendChild(div);
+        const messageWrapper = document.createElement('div');
+        messageWrapper.className = `msg ${isUser ? 'user-msg' : 'bot-msg'}`;
+        
+        // convert newlines to <br> for better formatting
+        const formattedText = text.replace(/\n/g, '<br>');
+        
+        messageWrapper.innerHTML = `
+            <div class="bubble ${isUser ? 'user-bubble' : 'bot-bubble'}">${formattedText}</div>
+            <div class="time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+        `;
+        messagesDiv.appendChild(messageWrapper);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
 
-    function showTypingAndReply(question) {
-        const typingDiv = document.createElement('div');
-        typingDiv.className = 'msg bot-msg';
-        typingDiv.id = 'typing';
-        typingDiv.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
-        messagesDiv.appendChild(typingDiv);
+    // typing simulation
+    function showTypingAndRespond(questionText) {
+        const typingWrapper = document.createElement('div');
+        typingWrapper.className = 'msg bot-msg';
+        typingWrapper.id = 'typingMsg';
+        typingWrapper.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+        messagesDiv.appendChild(typingWrapper);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
+        // simulate processing delay (realistic)
         setTimeout(() => {
-            document.getElementById('typing')?.remove();
-            addMessage(getAnswer(question), false);
-        }, 350);
+            const typingElem = document.getElementById('typingMsg');
+            if (typingElem) typingElem.remove();
+            
+            const answer = getMarketingResearchAnswer(questionText);
+            addMessage(answer, false);
+        }, 420);
     }
-
+    
     function handleSend() {
-        const text = inputEl.value.trim();
-        if (!text) return;
-        addMessage(text, true);
+        const rawText = inputEl.value.trim();
+        if (rawText === "") return;
+        
+        // display user message
+        addMessage(rawText, true);
         inputEl.value = '';
-        showTypingAndReply(text);
+        
+        // show bot typing + answer
+        showTypingAndRespond(rawText);
     }
-
+    
     sendBtn.addEventListener('click', handleSend);
-    inputEl.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
-
-    document.querySelectorAll('.chip').forEach(chip => {
-        chip.addEventListener('click', () => {
-            inputEl.value = chip.getAttribute('data-q');
+    inputEl.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
             handleSend();
-        });
+        }
     });
-
+    
+    // initial focus
     inputEl.focus();
 </script>
 </body>

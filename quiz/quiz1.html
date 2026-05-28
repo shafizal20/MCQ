@@ -107,7 +107,7 @@
             display: flex;
             gap: 2rem;
             padding: 2rem;
-            min-height: 350px;
+            min-height: 380px;
         }
 
         .col {
@@ -287,10 +287,10 @@
 
 <script>
     (function() {
-        // ============= UPDATED QUESTIONS (5 questions) =============
+        // ============= FIVE QUESTIONS (no "according to document" phrasing) =============
         const questions = [
             {
-                text: "According to the document, which of the following best describes the primary purpose of problem identification research?",
+                text: "Which of the following best describes the primary purpose of problem identification research?",
                 answers: [
                     { text: "A) To test hypotheses using controlled empirical experiments", correct: false, id: "q1_a" },
                     { text: "B) To identify and understand marketing problems and situations, such as market potential and image research", correct: true, id: "q1_b" },
@@ -308,7 +308,7 @@
                 correctId: "q2_b"
             },
             {
-                text: "Which of the following is NOT classified as a marketing variable (micro-environment factor) according to Figure 1.1 and the text?",
+                text: "Which of the following is NOT classified as a marketing variable (micro-environment factor)?",
                 answers: [
                     { text: "A) Service", correct: false, id: "q3_a" },
                     { text: "B) Economy", correct: true, id: "q3_b" },
@@ -321,12 +321,12 @@
                 answers: [
                     { text: "A) They are always cheaper and faster than internal researchers", correct: false, id: "q4_a" },
                     { text: "B) They can objectively look at the problem without concern for internal politics and bring a fresh perspective", correct: true, id: "q4_b" },
-                    { text: "C) They are more knowledgeable about the company's internal product specifications", correct: false, id: "q4_c" }
+                    { text: "C) They are more knowledgeable about the company’s internal product specifications", correct: false, id: "q4_c" }
                 ],
                 correctId: "q4_b"
             },
             {
-                text: "According to the section on scientific marketing research, which characteristic means that the research can be observed, evaluated, and replicated by others?",
+                text: "Which characteristic of scientific marketing research means that the research can be observed, evaluated, and replicated by others?",
                 answers: [
                     { text: "A) Parsimonious", correct: false, id: "q5_a" },
                     { text: "B) Replicable", correct: true, id: "q5_b" },
@@ -336,7 +336,7 @@
             }
         ];
 
-        const total = questions.length; // = 5
+        const total = questions.length;
         let currentIdx = 0;
         let matches = [];        // { qIdx, answerId }
         let quizCompleted = false;
@@ -500,7 +500,7 @@
                 if (correct) {
                     fb += `<div style="margin-bottom:8px; color:#2b6e3b;">✓ Question ${i+1}: Correct</div>`;
                 } else {
-                    fb += `<div style="margin-bottom:8px; color:#b13b2d;">✗ Question ${i+1}: Incorrect.<br> <span style="margin-left: 16px; font-size:0.85rem;">✔ Correct: ${correctText}</span></div>`;
+                    fb += `<div style="margin-bottom:8px; color:#b13b2d;">✗ Question ${i+1}: Incorrect.<br> <span style="margin-left: 16px; font-size:0.85rem;">✔ Correct answer: ${correctText}</span></div>`;
                 }
             }
             fb += `<div class="score-highlight">🏅 Final Score: ${score}/${total} · ${percent}%</div>`;

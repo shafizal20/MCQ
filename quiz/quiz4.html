@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Topic 4: Research Design | Quick Quiz</title>
     <style>
         * {
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Inter', sans-serif;
             background: #eef2f8;
             min-height: 100vh;
             display: flex;
@@ -22,7 +22,7 @@
         }
 
         .quiz-box {
-            max-width: 1100px;
+            max-width: 1000px;
             width: 100%;
             background: white;
             border-radius: 2rem;
@@ -107,7 +107,7 @@
             display: flex;
             gap: 2rem;
             padding: 2rem;
-            min-height: 350px;
+            min-height: 420px;
         }
 
         .col {
@@ -223,6 +223,22 @@
             margin-top: 0.7rem;
         }
 
+        .multiple-select-note {
+            background: #eef2fa;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #2c5a7a;
+            display: inline-block;
+            margin-left: 8px;
+        }
+
+        .match-pair-item {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
         @media (max-width: 750px) {
             .match-area {
                 flex-direction: column;
@@ -251,7 +267,7 @@
         </div>
         <div class="final-score-badge" id="finalScoreBadge" style="display: none;">
             <div class="final-score-label">FINAL SCORE</div>
-            <div class="final-score-value" id="finalScoreValue">0 <span>/ 3</span></div>
+            <div class="final-score-value" id="finalScoreValue">0 <span>/ 5</span></div>
         </div>
     </div>
 
@@ -259,6 +275,8 @@
         <span class="progress-item" data-qidx="0">1</span>
         <span class="progress-item" data-qidx="1">2</span>
         <span class="progress-item" data-qidx="2">3</span>
+        <span class="progress-item" data-qidx="3">4</span>
+        <span class="progress-item" data-qidx="4">5</span>
     </div>
 
     <div class="match-area" id="matchContainer">
@@ -285,39 +303,78 @@
 
 <script>
     (function() {
+        // ============= TOPIC 4: Research Design =============
         const questions = [
             {
-                text: "Which of the above are the commonly used survey methods?",
+                text: "Which of the following statements about qualitative and quantitative research are correct? (Select two correct answers)",
                 answers: [
-                    { text: "A) i, ii, iii, vi", correct: false, id: "q1_a" },
-                    { text: "B) ii, iii, iv, vi", correct: false, id: "q1_b" },
-                    { text: "C) i, ii, iii, iv", correct: true, id: "q1_c" },
-                    { text: "D) iii, iv, v, vi", correct: false, id: "q1_d" }
+                    { text: "A) Qualitative research is unstructured and exploratory, often based on small samples", correct: true, id: "q1_a" },
+                    { text: "B) Quantitative research should never be preceded by qualitative research", correct: false, id: "q1_b" },
+                    { text: "C) Findings from qualitative research can be generalized to the population of interest", correct: false, id: "q1_c" },
+                    { text: "D) Qualitative and quantitative research should be viewed as complementary, not competitive", correct: true, id: "q1_d" },
+                    { text: "E) Quantitative research never uses statistical analysis", correct: false, id: "q1_e" }
                 ],
-                correctId: "q1_c"
+                correctIds: ["q1_a", "q1_d"],
+                isMultiCorrect: true
             },
             {
-                text: "Which of the above are about Depth Interview?",
+                text: "A researcher plans to measure the same group of respondents every six months for three years to track changes in brand loyalty. This is an example of:",
                 answers: [
-                    { text: "A) i, ii, iii, vi", correct: false, id: "q2_a" },
-                    { text: "B) vii, viii, ix, x", correct: true, id: "q2_b" },
-                    { text: "C) vi, vii, viii, iv", correct: false, id: "q2_c" },
-                    { text: "D) iii, iv, v, vii", correct: false, id: "q2_d" }
+                    { text: "A) Single cross-sectional design", correct: false, id: "q2_a" },
+                    { text: "B) Multiple cross-sectional design", correct: false, id: "q2_b" },
+                    { text: "C) Cohort analysis", correct: false, id: "q2_c" },
+                    { text: "D) Longitudinal research", correct: true, id: "q2_d" },
+                    { text: "E) Exploratory research", correct: false, id: "q2_e" }
                 ],
-                correctId: "q2_b"
+                correctIds: ["q2_d"],
+                isMultiCorrect: false
             },
             {
-                text: "In marketing research, the unit of analysis can be individual, dyad or group/organization.",
+                text: "Which of the following are projective techniques as described in the document? (Select two correct answers)",
                 answers: [
-                    { text: "✅ Yes — Unit of analysis includes individuals, dyads, and groups", correct: true, id: "q3_yes" },
-                    { text: "❌ No — Only individuals can be units of analysis", correct: false, id: "q3_no" }
+                    { text: "A) Word association", correct: true, id: "q3_a" },
+                    { text: "B) Laddering", correct: false, id: "q3_b" },
+                    { text: "C) Sentence completion", correct: true, id: "q3_c" },
+                    { text: "D) Focus group interview", correct: false, id: "q3_d" },
+                    { text: "E) Computer-assisted telephone interview", correct: false, id: "q3_e" }
                 ],
-                correctId: "q3_yes"
+                correctIds: ["q3_a", "q3_c"],
+                isMultiCorrect: true
+            },
+            {
+                text: "For a causal research design to infer causality, which three conditions must be met? (Select three correct answers)",
+                answers: [
+                    { text: "A) Logical time sequence", correct: true, id: "q4_a" },
+                    { text: "B) Concomitant variation", correct: true, id: "q4_b" },
+                    { text: "C) High sample size", correct: false, id: "q4_c" },
+                    { text: "D) Control for other possible causal factors", correct: true, id: "q4_d" },
+                    { text: "E) Use of mail interviews", correct: false, id: "q4_e" }
+                ],
+                correctIds: ["q4_a", "q4_b", "q4_d"],
+                isMultiCorrect: true
+            },
+            {
+                text: "Match each research design to its primary purpose:\n\n• Exploratory research\n• Descriptive research\n• Causal research",
+                answers: [
+                    { text: "A) To describe characteristics or functions of variables (e.g., Who? What? When?)", correct: false, id: "q5_a" },
+                    { text: "B) To obtain evidence of cause-and-effect relationships through manipulation", correct: false, id: "q5_b" },
+                    { text: "C) To provide insights, understanding, and help define problems more clearly", correct: false, id: "q5_c" }
+                ],
+                // Special matching question: user must assign each design (left side items) to a right answer.
+                // We'll handle this as a "matching set" where left side has 3 sub-items.
+                isMatchingSet: true,
+                matchPairs: [
+                    { leftText: "📌 Exploratory research", correctRightId: "q5_c", label: "→ C" },
+                    { leftText: "📌 Descriptive research", correctRightId: "q5_a", label: "→ A" },
+                    { leftText: "📌 Causal research", correctRightId: "q5_b", label: "→ B" }
+                ],
+                correctMapping: { "exploratory": "q5_c", "descriptive": "q5_a", "causal": "q5_b" }
             }
         ];
 
         const total = questions.length;
         let currentIdx = 0;
+        // matches store for each qIdx: { answerIds: [] } or for matching set: { leftItemSelections: { leftKey: selectedRightId } }
         let matches = [];
         let quizCompleted = false;
         let confettiTriggered = false;
@@ -331,27 +388,72 @@
         const resultArea = document.getElementById("resultArea");
         const progressItems = document.querySelectorAll(".progress-item");
 
-        function getAnswer(qIdx) {
+        function getMatchForQuestion(qIdx) {
             const m = matches.find(m => m.qIdx === qIdx);
-            return m ? m.answerId : null;
+            return m ? m.data : null;
         }
 
-        function isAnswered(qIdx) {
-            return matches.some(m => m.qIdx === qIdx);
+        function setMatchForQuestion(qIdx, data) {
+            const existingIdx = matches.findIndex(m => m.qIdx === qIdx);
+            if (existingIdx !== -1) {
+                matches[existingIdx].data = data;
+            } else {
+                matches.push({ qIdx, data });
+            }
+        }
+
+        function isQuestionAnswered(qIdx) {
+            const q = questions[qIdx];
+            if (q.isMatchingSet) {
+                const selections = getMatchForQuestion(qIdx);
+                if (!selections) return false;
+                // need all three left items mapped to a valid answer (not empty)
+                const keys = Object.keys(q.correctMapping);
+                for (let key of keys) {
+                    if (!selections[key] || selections[key] === "") return false;
+                }
+                return true;
+            } else if (q.isMultiCorrect) {
+                const selected = getMatchForQuestion(qIdx);
+                return selected && selected.length === q.correctIds.length;
+            } else {
+                const selected = getMatchForQuestion(qIdx);
+                return selected && selected.length === 1;
+            }
+        }
+
+        function isAnswerCorrectForQuestion(qIdx, data) {
+            const q = questions[qIdx];
+            if (q.isMatchingSet) {
+                if (!data) return false;
+                for (let [leftKey, correctId] of Object.entries(q.correctMapping)) {
+                    if (data[leftKey] !== correctId) return false;
+                }
+                return true;
+            } else if (q.isMultiCorrect) {
+                if (!data || data.length !== q.correctIds.length) return false;
+                const correctSet = new Set(q.correctIds);
+                for (let id of data) {
+                    if (!correctSet.has(id)) return false;
+                }
+                return true;
+            } else {
+                return data && data.length === 1 && data[0] === q.correctIds[0];
+            }
         }
 
         function computeScore() {
             let score = 0;
             for (let i = 0; i < total; i++) {
-                const match = matches.find(m => m.qIdx === i);
-                if (match && match.answerId === questions[i].correctId) score++;
+                const data = getMatchForQuestion(i);
+                if (isAnswerCorrectForQuestion(i, data)) score++;
             }
             return score;
         }
 
         function updateProgress() {
             progressItems.forEach((item, idx) => {
-                const answered = isAnswered(idx);
+                const answered = isQuestionAnswered(idx);
                 if (idx === currentIdx && !quizCompleted) {
                     item.classList.add("active-progress");
                     item.classList.remove("completed-progress");
@@ -379,93 +481,261 @@
             }
         }
 
-        function drawLine() {
+        function drawLinesForMatchingSet() {
             svg.innerHTML = "";
-            const answerId = getAnswer(currentIdx);
-            if (!answerId) return;
+            const selections = getMatchForQuestion(currentIdx);
+            if (!selections) return;
             
+            const leftItems = document.querySelectorAll(".left-subcard");
+            if (leftItems.length === 0) return;
+            const containerRect = container.getBoundingClientRect();
+            
+            for (let leftItem of leftItems) {
+                const leftKey = leftItem.dataset.leftKey;
+                const selectedRightId = selections[leftKey];
+                if (selectedRightId) {
+                    const rightCard = document.querySelector(`.right .card[data-aid='${selectedRightId}']`);
+                    if (rightCard && leftItem) {
+                        const leftRect = leftItem.getBoundingClientRect();
+                        const rightRect = rightCard.getBoundingClientRect();
+                        const x1 = leftRect.right - containerRect.left;
+                        const y1 = leftRect.top + leftRect.height/2 - containerRect.top;
+                        const x2 = rightRect.left - containerRect.left;
+                        const y2 = rightRect.top + rightRect.height/2 - containerRect.top;
+                        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                        line.setAttribute("x1", x1);
+                        line.setAttribute("y1", y1);
+                        line.setAttribute("x2", x2);
+                        line.setAttribute("y2", y2);
+                        line.setAttribute("stroke", "#4499bb");
+                        line.setAttribute("stroke-width", "3");
+                        svg.appendChild(line);
+                    }
+                }
+            }
+        }
+
+        function drawLinesForStandard() {
+            svg.innerHTML = "";
+            const selectedIds = getMatchForQuestion(currentIdx) || [];
+            if (selectedIds.length === 0) return;
             const leftCard = document.querySelector(".left .card");
-            const rightCard = document.querySelector(`.right .card[data-aid='${answerId}']`);
-            if (!leftCard || !rightCard) return;
-            
+            if (!leftCard) return;
             const containerRect = container.getBoundingClientRect();
             const leftRect = leftCard.getBoundingClientRect();
-            const rightRect = rightCard.getBoundingClientRect();
-            
             const x1 = leftRect.right - containerRect.left;
             const y1 = leftRect.top + leftRect.height/2 - containerRect.top;
-            const x2 = rightRect.left - containerRect.left;
-            const y2 = rightRect.top + rightRect.height/2 - containerRect.top;
+            for (let aid of selectedIds) {
+                const rightCard = document.querySelector(`.right .card[data-aid='${aid}']`);
+                if (rightCard) {
+                    const rightRect = rightCard.getBoundingClientRect();
+                    const x2 = rightRect.left - containerRect.left;
+                    const y2 = rightRect.top + rightRect.height/2 - containerRect.top;
+                    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                    line.setAttribute("x1", x1);
+                    line.setAttribute("y1", y1);
+                    line.setAttribute("x2", x2);
+                    line.setAttribute("y2", y2);
+                    line.setAttribute("stroke", "#4499bb");
+                    line.setAttribute("stroke-width", "3");
+                    svg.appendChild(line);
+                }
+            }
+        }
+
+        function drawLine() {
+            const q = questions[currentIdx];
+            if (q.isMatchingSet) drawLinesForMatchingSet();
+            else drawLinesForStandard();
+        }
+
+        // For standard/multi-correct toggle
+        function toggleStandardAnswer(answerId) {
+            let currentSelected = getMatchForQuestion(currentIdx) || [];
+            const q = questions[currentIdx];
+            if (q.isMultiCorrect) {
+                if (currentSelected.includes(answerId)) {
+                    currentSelected = currentSelected.filter(id => id !== answerId);
+                } else {
+                    currentSelected.push(answerId);
+                }
+            } else {
+                currentSelected = [answerId];
+            }
+            setMatchForQuestion(currentIdx, currentSelected);
+            renderCurrentQuestion();
+        }
+
+        // For matching set: assign a right answer to a left item
+        function assignMatchingPair(leftKey, rightId) {
+            let selections = getMatchForQuestion(currentIdx);
+            if (!selections) {
+                selections = {};
+                for (let key of Object.keys(questions[currentIdx].correctMapping)) {
+                    selections[key] = "";
+                }
+            }
+            selections[leftKey] = rightId;
+            setMatchForQuestion(currentIdx, selections);
+            renderCurrentQuestion();
+        }
+
+        function renderCurrentQuestion() {
+            const q = questions[currentIdx];
             
-            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            line.setAttribute("x1", x1);
-            line.setAttribute("y1", y1);
-            line.setAttribute("x2", x2);
-            line.setAttribute("y2", y2);
-            line.setAttribute("stroke", "#4499bb");
-            line.setAttribute("stroke-width", "3");
-            svg.appendChild(line);
+            if (q.isMatchingSet) {
+                const selections = getMatchForQuestion(currentIdx) || {};
+                let leftHtml = `<div class="card" style="margin-bottom: 12px;"><strong>${currentIdx+1}.</strong> ${q.text.split('\n')[0]}</div>`;
+                leftHtml += `<div style="margin-top: 8px;">`;
+                for (let pair of q.matchPairs) {
+                    const leftKey = pair.leftText.includes("Exploratory") ? "exploratory" : (pair.leftText.includes("Descriptive") ? "descriptive" : "causal");
+                    const selectedId = selections[leftKey] || "";
+                    const matchedText = selectedId ? q.answers.find(a => a.id === selectedId)?.text : "— Not assigned —";
+                    leftHtml += `
+                        <div class="card left-subcard" data-left-key="${leftKey}" style="margin-bottom: 12px; background: #f9f5eb;">
+                            <div style="font-weight: 600;">${pair.leftText}</div>
+                            <div style="font-size: 0.8rem; margin-top: 6px; color: #2c7da0;">✓ Matched: ${matchedText}</div>
+                        </div>
+                    `;
+                }
+                leftHtml += `</div>`;
+                document.getElementById("leftQuestionContainer").innerHTML = leftHtml;
+                
+                let answersHtml = `<div class="col-title">SELECT MATCH FOR EACH LEFT ITEM</div>`;
+                q.answers.forEach(ans => {
+                    answersHtml += `<div class="card ans-card" data-aid="${ans.id}" style="cursor: pointer;">${ans.text}</div>`;
+                });
+                document.getElementById("rightAnswersContainer").innerHTML = answersHtml;
+                
+                // attach click to right cards for assignment
+                document.querySelectorAll(".ans-card").forEach(card => {
+                    card.onclick = () => {
+                        if (quizCompleted) return;
+                        const rightId = card.dataset.aid;
+                        // which left item is currently "active"? we need a way: simplest: ask via prompt or highlight? 
+                        // Better: on right click, select left item? But UI: we'll make left cards clickable to assign. 
+                        // Instead: make left cards clickable to select, then click right to assign. Let's do: left cards highlight on click.
+                        // For simplicity: display instruction: Click a left item, then click an answer.
+                    };
+                });
+                // Add left card listeners
+                const leftSubCards = document.querySelectorAll(".left-subcard");
+                leftSubCards.forEach(card => {
+                    card.onclick = (e) => {
+                        e.stopPropagation();
+                        if (quizCompleted) return;
+                        // remove previous active
+                        document.querySelectorAll(".left-subcard").forEach(c => c.classList.remove("active-left"));
+                        card.classList.add("active-left");
+                        hintMsg.innerHTML = `Now click an answer to assign to "${card.querySelector('div:first-child')?.innerText || 'item'}"`;
+                        window._pendingLeftKey = card.dataset.leftKey;
+                    };
+                });
+                // right click now uses pending left key
+                const rightCards = document.querySelectorAll(".ans-card");
+                rightCards.forEach(rcard => {
+                    rcard.onclick = () => {
+                        if (quizCompleted) return;
+                        const pendingKey = window._pendingLeftKey;
+                        if (!pendingKey) {
+                            hintMsg.innerHTML = "⚠️ First click on a left item (Exploratory/Descriptive/Causal) to select it, then click an answer.";
+                            return;
+                        }
+                        const rightId = rcard.dataset.aid;
+                        assignMatchingPair(pendingKey, rightId);
+                        window._pendingLeftKey = null;
+                        document.querySelectorAll(".left-subcard").forEach(c => c.classList.remove("active-left"));
+                        hintMsg.innerHTML = `✓ Assigned! Continue matching.`;
+                    };
+                });
+                setTimeout(() => drawLinesForMatchingSet(), 30);
+            } 
+            else {
+                // standard or multi-correct
+                const selectedIds = getMatchForQuestion(currentIdx) || [];
+                document.getElementById("leftQuestionContainer").innerHTML = `
+                    <div class="card">
+                        <strong>${currentIdx + 1}.</strong> ${q.text}
+                        ${q.isMultiCorrect ? '<span class="multiple-select-note">🔹 Select ' + q.correctIds.length + ' correct answers</span>' : ''}
+                    </div>
+                `;
+                let answersHtml = '';
+                q.answers.forEach(ans => {
+                    const isMatched = selectedIds.includes(ans.id);
+                    answersHtml += `
+                        <div class="card ans-card ${isMatched ? 'matched-answer' : ''}" data-aid="${ans.id}">
+                            ${ans.text}
+                        </div>
+                    `;
+                });
+                document.getElementById("rightAnswersContainer").innerHTML = answersHtml;
+                document.querySelectorAll(".ans-card").forEach(card => {
+                    card.onclick = () => {
+                        if (quizCompleted) return;
+                        toggleStandardAnswer(card.dataset.aid);
+                    };
+                });
+                setTimeout(() => drawLinesForStandard(), 30);
+            }
         }
 
         function render() {
-            const q = questions[currentIdx];
-            const storedId = getAnswer(currentIdx);
-            
-            document.getElementById("leftQuestionContainer").innerHTML = `
-                <div class="card">
-                    <strong>${currentIdx + 1}.</strong> ${q.text}
-                </div>
-            `;
-            
-            let answersHtml = '';
-            q.answers.forEach(ans => {
-                const isMatched = storedId === ans.id;
-                answersHtml += `
-                    <div class="card ans-card ${isMatched ? 'matched-answer' : ''}" data-aid="${ans.id}">
-                        ${ans.text}
-                    </div>
-                `;
-            });
-            document.getElementById("rightAnswersContainer").innerHTML = answersHtml;
-            
-            document.querySelectorAll(".ans-card").forEach(card => {
-                card.onclick = () => {
-                    if (quizCompleted) return;
-                    const aid = card.dataset.aid;
-                    matches = matches.filter(m => m.qIdx !== currentIdx);
-                    matches.push({ qIdx: currentIdx, answerId: aid });
-                    
-                    document.querySelectorAll(".ans-card").forEach(c => c.classList.remove("matched-answer"));
-                    card.classList.add("matched-answer");
-                    
-                    drawLine();
-                    updateProgress();
-                    
-                    if (currentIdx === total - 1) {
-                        hintMsg.innerHTML = "✓ Ready to submit! Click Submit to see your score.";
-                    } else {
-                        hintMsg.innerHTML = "✓ Matched! Click Next →";
-                    }
-                };
-            });
-            
+            renderCurrentQuestion();
             updateButtonText();
-            setTimeout(() => drawLine(), 30);
         }
 
-        function nextOrSubmit() {
+        function finishQuiz() {
+            quizCompleted = true;
+            const score = computeScore();
+            const percent = Math.round(score/total*100);
+            const perfect = score === total;
+            finalValue.innerHTML = `${score} <span>/ ${total}</span>`;
+            finalBadge.style.display = "block";
+            if (perfect) {
+                finalBadge.classList.add("perfect-score-top");
+                if (!confettiTriggered) {
+                    confettiTriggered = true;
+                    burstConfetti();
+                }
+            }
+            nextBtn.classList.add("hidden");
+            let fb = `<div style="font-weight:600; margin-bottom:12px;">📊 Quiz Results — Topic 4: Research Design</div>`;
+            for (let i = 0; i < total; i++) {
+                const q = questions[i];
+                const data = getMatchForQuestion(i);
+                const correct = isAnswerCorrectForQuestion(i, data);
+                if (correct) {
+                    fb += `<div style="margin-bottom:8px; color:#2b6e3b;">✓ Question ${i+1}: Correct</div>`;
+                } else {
+                    fb += `<div style="margin-bottom:8px; color:#b13b2d;">✗ Question ${i+1}: Incorrect.</div>`;
+                    if (q.isMatchingSet) {
+                        fb += `<div style="margin-left: 16px; font-size:0.85rem;">✔ Correct: Exploratory → C | Descriptive → A | Causal → B</div>`;
+                    } else {
+                        const correctTexts = q.answers.filter(a => q.correctIds.includes(a.id)).map(a => a.text).join("  |  ");
+                        fb += `<div style="margin-left: 16px; font-size:0.85rem;">✔ Correct answer(s): ${correctTexts}</div>`;
+                    }
+                }
+            }
+            fb += `<div class="score-highlight">🏅 Final Score: ${score}/${total} · ${percent}%</div>`;
+            if (perfect) fb += `<div style="margin-top:12px; background:#ffe5b4; padding:8px 16px; border-radius:40px; display:inline-block;">🌟 Perfect! Congratulations! 🎊</div>`;
+            resultArea.style.display = "block";
+            resultArea.className = "result-panel";
+            resultArea.innerHTML = fb;
+            hintMsg.innerHTML = "Quiz completed! Final score above.";
+            updateProgress();
+        }
+
+        function nextOrFinish() {
             if (quizCompleted) return;
-            
-            if (!isAnswered(currentIdx)) {
-                hintMsg.innerHTML = "⚠️ Please select an answer first";
+            if (!isQuestionAnswered(currentIdx)) {
+                hintMsg.innerHTML = "⚠️ Please complete all selections for this question";
                 return;
             }
-            
             if (currentIdx + 1 < total) {
                 currentIdx++;
                 render();
                 updateProgress();
-                hintMsg.innerHTML = "Click any answer to match";
+                hintMsg.innerHTML = "Click any answer to match / assign pairs.";
             } else {
                 finishQuiz();
             }
@@ -473,7 +743,7 @@
 
         function navigateTo(idx) {
             if (quizCompleted) return;
-            if (idx > currentIdx && !isAnswered(currentIdx)) {
+            if (idx > currentIdx && !isQuestionAnswered(currentIdx)) {
                 hintMsg.innerHTML = "🔒 Answer current question first";
                 return;
             }
@@ -481,11 +751,7 @@
             currentIdx = idx;
             render();
             updateProgress();
-            if (currentIdx === total - 1) {
-                hintMsg.innerHTML = "Last question. Click any answer to match, then Submit.";
-            } else {
-                hintMsg.innerHTML = "Click any answer to match";
-            }
+            hintMsg.innerHTML = "Select answers (multi-select allowed) or match pairs by clicking left then right.";
         }
 
         // Confetti
@@ -493,14 +759,9 @@
         let ctx = canvas.getContext("2d");
         let animId = null;
         let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
-
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
@@ -527,7 +788,6 @@
                 ctx.restore();
             }
         }
-
         function burstConfetti() {
             if (animId) cancelAnimationFrame(animId);
             particles = [];
@@ -537,10 +797,7 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 let alive = false;
                 for (let i = 0; i < particles.length; i++) {
-                    if (particles[i].update()) {
-                        alive = true;
-                        particles[i].draw();
-                    }
+                    if (particles[i].update()) { alive = true; particles[i].draw(); }
                 }
                 if (!alive || now - start > 2500) {
                     cancelAnimationFrame(animId);
@@ -553,55 +810,9 @@
             animId = requestAnimationFrame(animate);
         }
 
-        function finishQuiz() {
-            quizCompleted = true;
-            const score = computeScore();
-            const percent = Math.round(score/total*100);
-            const perfect = score === total;
-            
-            finalValue.innerHTML = `${score} <span>/ ${total}</span>`;
-            finalBadge.style.display = "block";
-            if (perfect) {
-                finalBadge.classList.add("perfect-score-top");
-                if (!confettiTriggered) {
-                    confettiTriggered = true;
-                    burstConfetti();
-                }
-            }
-            
-            nextBtn.classList.add("hidden");
-            
-            let fb = `<div style="font-weight:600; margin-bottom:12px;">📊 Quiz Results — Topic 4: Research Design</div>`;
-            for (let i = 0; i < total; i++) {
-                const q = questions[i];
-                const match = matches.find(m => m.qIdx === i);
-                const correct = match && match.answerId === q.correctId;
-                const correctText = q.answers.find(a => a.id === q.correctId)?.text;
-                if (correct) {
-                    fb += `<div style="margin-bottom:8px; color:#2b6e3b;">✓ Question ${i+1}: Correct</div>`;
-                } else {
-                    fb += `<div style="margin-bottom:8px; color:#b13b2d;">✗ Question ${i+1}: Incorrect. Correct: ${correctText}</div>`;
-                }
-            }
-            fb += `<div class="score-highlight">🏅 Score: ${score}/${total} · ${percent}%</div>`;
-            if (perfect) fb += `<div style="margin-top:12px; background:#ffe5b4; padding:8px 16px; border-radius:40px; display:inline-block;">🌟 Perfect! Congratulations! 🎊</div>`;
-            
-            resultArea.style.display = "block";
-            resultArea.className = "result-panel";
-            resultArea.innerHTML = fb;
-            hintMsg.innerHTML = "Quiz completed! Your final score is shown above.";
-            
-            updateProgress();
-        }
-
-        progressItems.forEach((item, idx) => {
-            item.onclick = () => navigateTo(idx);
-        });
-        
-        nextBtn.onclick = nextOrSubmit;
-        
+        progressItems.forEach((item, idx) => { item.onclick = () => navigateTo(idx); });
+        nextBtn.onclick = nextOrFinish;
         window.addEventListener("resize", () => setTimeout(() => drawLine(), 100));
-        
         render();
         updateProgress();
     })();

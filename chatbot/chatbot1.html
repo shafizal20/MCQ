@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>MR Tutor: Marketing Research AI Assistant</title>
+    <title>MR Tutor: Introduction to Marketing Research (Topic 1)</title>
     <style>
         * {
             margin: 0;
@@ -213,7 +213,7 @@
 <body>
 <div class="chat-card">
     <div class="header">
-        <h1>Marketing Research AI</h1><span class="badge">Topic 1 expert</span>
+        <h1>Marketing Research AI</h1><span class="badge">Topic 1: Introduction to MR</span>
         <div class="sub">📊 Systematic • Objective • Scientific — Ask me anything from the MR introduction!</div>
     </div>
 
@@ -225,89 +225,94 @@
     </div>
 
     <div class="input-area">
-        <input type="text" id="input" placeholder="e.g., What is the marketing research process?" autocomplete="off">
+        <input type="text" id="input" placeholder="e.g., What is marketing research?" autocomplete="off">
         <button id="send">Send</button>
     </div>
-    <div class="footer">📘 answers based on "Introduction to Marketing Research" (scientific & applied knowledge)</div>
+    <div class="footer">📘 answers based on "Topic 1 - Introduction to Marketing Research" (scientific & applied knowledge)</div>
 </div>
 
 <script>
+    // Helper function to convert markdown-style **bold** to HTML <strong> tags
+    function formatBold(text) {
+        return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    }
+
     // Comprehensive knowledge base derived from the provided PDF material (Topic 1)
     function getMarketingResearchAnswer(userQuery) {
         let q = userQuery.toLowerCase().trim();
         
         // --- Definition & Core concepts ---
         if (q.includes("what is marketing research") || (q.includes("marketing research") && (q.includes("define") || q.includes("definition") || q.includes("meaning")))) {
-            return "📌 **Marketing Research** is a systematic and objective process of identifying/defining marketing problems, developing an approach, designing research, collecting & analyzing data, and disseminating findings for effective marketing decisions. It follows a scientific methodology to ensure reliability, validity, and actionable insights.";
+            return formatBold("**Marketing Research** is a systematic and objective process of identifying/defining marketing problems, developing an approach, designing research, collecting & analyzing data, and disseminating findings for effective marketing decisions. It follows a scientific methodology to ensure reliability, validity, and actionable insights.");
         }
         
         // --- Importance of Marketing Research ---
         if ((q.includes("importance") || q.includes("why is") || q.includes("role of")) && (q.includes("marketing research") || q.includes("mr"))) {
-            return "🔑 **Importance** \n• Reduces guesswork & resource wastage.\n• Helps understand customer needs, wants & desires.\n• Identifies market opportunities & competitive threats.\n• Supports marketing mix decisions (product, price, promotion, distribution).\n• Provides timely information to adapt to environmental forces (economy, tech, legal, social).\n• Enables proactive vs reactive strategies.";
+            return formatBold("**Importance of Marketing Research**\n\n• Reduces guesswork & resource wastage.\n• Helps understand customer needs, wants & desires.\n• Identifies market opportunities & competitive threats.\n• Supports marketing mix decisions (product, price, promotion, distribution).\n• Provides timely information to adapt to environmental forces (economy, tech, legal, social).\n• Enables proactive vs reactive strategies.");
         }
         
         // --- 6-step process ---
         if ((q.includes("steps") || q.includes("process") || q.includes("phases")) && (q.includes("marketing research") || q.includes("research process"))) {
-            return "🔄 **The 6-step Marketing Research Process** (Scientific & systematic):\n\n1️⃣ **Identifying & Defining the Problem** – most critical step, discussions with managers, experts, secondary data.\n2️⃣ **Developing the Approach** – objectives, research questions, theoretical framework, hypotheses.\n3️⃣ **Research Design Formulation** – blueprint, includes info needed, data collection method, sampling, measurement.\n4️⃣ **Data Collection** – field force, personal/telephone/mail/electronic, error minimization via training.\n5️⃣ **Data Preparation & Analysis** – editing, coding, transcription, cleaning, statistical analysis.\n6️⃣ **Reporting & Presentation** – written report & oral presentation, actionable findings for decision makers.";
+            return formatBold("**The 6-step Marketing Research Process** (Scientific & systematic):\n\n1️⃣ Identifying & Defining the Problem – most critical step, discussions with managers, experts, secondary data.\n2️⃣ Developing the Approach – objectives, research questions, theoretical framework, hypotheses.\n3️⃣ Research Design Formulation – blueprint, includes info needed, data collection method, sampling, measurement.\n4️⃣ Data Collection – field force, personal/telephone/mail/electronic, error minimization via training.\n5️⃣ Data Preparation & Analysis – editing, coding, transcription, cleaning, statistical analysis.\n6️⃣ Reporting & Presentation – written report & oral presentation, actionable findings for decision makers.");
         }
         
         // --- Problem identification vs problem solving ---
         if ((q.includes("problem identification") && q.includes("problem solving")) || (q.includes("types of marketing research")) || (q.includes("basic research") && q.includes("applied"))) {
-            return "🧠 **Two main types of marketing research:**\n\n📘 **Problem-Identification Research (Basic/Pure)** – aims to identify & understand marketing problems/situations.\nExamples: market potential studies, feasibility analysis, market share research, image research, forecasting, sales analysis, business trends.\n\n⚙️ **Problem-Solving Research (Applied)** – helps solve specific marketing challenges.\nExamples: segmentation research, pricing research, promotion effectiveness, distribution research, product concept testing.\n\nBoth types are essential for strategic marketing excellence.";
+            return formatBold("**Two main types of marketing research:**\n\n📘 Problem-Identification Research (Basic/Pure) – aims to identify & understand marketing problems/situations.\nExamples: market potential studies, feasibility analysis, market share research, image research, forecasting, sales analysis, business trends.\n\n⚙️ Problem-Solving Research (Applied) – helps solve specific marketing challenges.\nExamples: segmentation research, pricing research, promotion effectiveness, distribution research, product concept testing.\n\nBoth types are essential for strategic marketing excellence.");
         }
         
         // --- Scientific Marketing Research & characteristics ---
         if ((q.includes("scientific") && q.includes("marketing research")) || q.includes("scientific approach") || q.includes("scientific investigation")) {
-            return "🧪 **Scientific Marketing Research** – all propositions must be subjected to empirical tests under controlled conditions; research is observable, evaluable, replicable by others.\n\n✅ **Key attributes:** purposive, rigorous, testable, replicable, precise, objective, representative, parsimonious.\n\nIt begins with analysis (breaking down complex problems) and ensures objectivity in gathering facts & testing creative ideas for marketing strategies. Avoids commercialization of non-customer-oriented products.";
+            return formatBold("**Scientific Marketing Research** – all propositions must be subjected to empirical tests under controlled conditions; research is observable, evaluable, replicable by others.\n\n✅ Key attributes: purposive, rigorous, testable, replicable, precise, objective, representative, parsimonious.\n\nIt begins with analysis (breaking down complex problems) and ensures objectivity in gathering facts & testing creative ideas for marketing strategies. Avoids commercialization of non-customer-oriented products.");
         }
         
         // --- Qualities of marketing researcher ---
         if ((q.includes("qualities") || q.includes("good marketing researcher") || q.includes("desirable qualities")) && (q.includes("researcher") || q.includes("marketing researcher"))) {
-            return "🌟 **Desirable qualities of a marketing researcher** (from topic 1):\n\n📚 Knowledgeable in marketing (problem definition, data analysis, recommendations)\n🎓 Professional – overall project integrity\n🔬 Competent in research methodology\n🗣️ Sociable – for project solicitation, data collection & presentation\n⏳ Persistent – continuously working & performance-oriented\n\nAlso: ethical, objective, and up-to-date with analytical techniques.";
+            return formatBold("**Desirable qualities of a marketing researcher** (from topic 1):\n\n📚 Knowledgeable in marketing (problem definition, data analysis, recommendations)\n🎓 Professional – overall project integrity\n🔬 Competent in research methodology\n🗣️ Sociable – for project solicitation, data collection & presentation\n⏳ Persistent – continuously working & performance-oriented\n\nAlso: ethical, objective, and up-to-date with analytical techniques.");
         }
         
         // --- Marketing environment (controllable & uncontrollable) ---
         if ((q.includes("marketing environment") || q.includes("environment variables") || q.includes("controllable") || q.includes("uncontrollable")) && (q.includes("variables") || q.includes("environment"))) {
-            return "🌎 **Marketing Environment Variables**\n\n🎯 **Controllable (Micro-environment / Marketing Mix)** – managed by organization:\n• Product • Pricing • Promotion • Distribution • Service • People • Process\n\n🌀 **Uncontrollable (Macro-environment)** – must be monitored & adapted:\n• Economy • Technology • Competition • Legal & political • Social & cultural • Physical/Natural\n\nMarketing research provides crucial intelligence to respond to uncontrollable forces and optimize controllable elements.";
+            return formatBold("**Marketing Environment Variables**\n\n🎯 Controllable (Micro-environment / Marketing Mix) – managed by organization:\n• Product • Pricing • Promotion • Distribution • Service • People • Process\n\n🌀 Uncontrollable (Macro-environment) – must be monitored & adapted:\n• Economy • Technology • Competition • Legal & political • Social & cultural • Physical/Natural\n\nMarketing research provides crucial intelligence to respond to uncontrollable forces and optimize controllable elements.");
         }
         
         // --- Internal vs external researchers ---
         if ((q.includes("internal researcher") || q.includes("external researcher") || q.includes("internal vs external")) && (q.includes("researcher") || q.includes("researchers"))) {
-            return "🏢 **Internal researchers** – employees of the firm; deep knowledge of company culture/products, lower cost, but may suffer from internal bias or ‘stereotyped’ views.\n\n🔍 **External researchers** – third-party agencies/consultants; bring objectivity, fresh perspective, advanced statistical expertise, and no internal politics. Ideal for unbiased findings.\n\nChoice depends on urgency, budget, expertise needed, and requirement for neutrality. Often firms combine both for robust insights.";
+            return formatBold("**Internal vs External Researchers**\n\n🏢 Internal researchers – employees of the firm; deep knowledge of company culture/products, lower cost, but may suffer from internal bias or 'stereotyped' views.\n\n🔍 External researchers – third-party agencies/consultants; bring objectivity, fresh perspective, advanced statistical expertise, and no internal politics. Ideal for unbiased findings.\n\nChoice depends on urgency, budget, expertise needed, and requirement for neutrality. Often firms combine both for robust insights.");
         }
         
         // --- Customer groups & stakeholders ---
         if ((q.includes("customers") || q.includes("stakeholders")) && (q.includes("marketing research") || q.includes("target"))) {
-            return "👥 **Customers & stakeholders** served by marketing research: consumers, employees, shareholders, suppliers, government & NGOs.\n\nMarket-oriented firms prioritize customers' interests first for long-term profitability. Understanding needs/wants/desires through proper MR leads to marketing excellence and competitive advantage.";
+            return formatBold("**Customers & Stakeholders** served by marketing research: consumers, employees, shareholders, suppliers, government & NGOs.\n\nMarket-oriented firms prioritize customers' interests first for long-term profitability. Understanding needs/wants/desires through proper MR leads to marketing excellence and competitive advantage.");
         }
         
         // --- Why managers need MR (decision making) ---
         if ((q.includes("managers need") || q.includes("decision making") || q.includes("marketing decisions")) && (q.includes("marketing research") || q.includes("research helps"))) {
-            return "📈 **Marketing research empowers managers** to:\n• Identify & satisfy customer needs\n• Select target markets & segmentation strategies\n• Plan marketing programs (4Ps)\n• Evaluate performance & control marketing activities\n• Respond to dynamic environmental factors (economy, tech, law, social changes)\n\nWithout MR, managers rely on guesswork, risking product failure and wasted resources.";
+            return formatBold("**How Marketing Research Empowers Managers**\n\n• Identify & satisfy customer needs\n• Select target markets & segmentation strategies\n• Plan marketing programs (4Ps)\n• Evaluate performance & control marketing activities\n• Respond to dynamic environmental factors (economy, tech, law, social changes)\n\nWithout MR, managers rely on guesswork, risking product failure and wasted resources.");
         }
         
         // --- Research design brief ---
         if ((q.includes("research design") && q.includes("steps")) || (q.includes("designing the research"))) {
-            return "📐 **Research design** – a blueprint for conducting the project. It includes:\n• Information needed\n• Type of investigation (exploratory, descriptive, causal)\n• Primary/secondary data + qualitative/quantitative approach\n• Unit of analysis (individuals, groups, etc.)\n• Data collection methods, measurement scales, sampling technique\n• Data analysis strategy\n\nProper design ensures the research answers decision questions reliably.";
+            return formatBold("**Research Design** – a blueprint for conducting the project. It includes:\n• Information needed\n• Type of investigation (exploratory, descriptive, causal)\n• Primary/secondary data + qualitative/quantitative approach\n• Unit of analysis (individuals, groups, etc.)\n• Data collection methods, measurement scales, sampling technique\n• Data analysis strategy\n\nProper design ensures the research answers decision questions reliably.");
         }
         
         // --- Data collection methods ---
         if ((q.includes("data collection") || q.includes("collecting data")) && !q.includes("process")) {
-            return "📋 **Data collection methods** from Topic 1:\n• Personal interviewing (home, mall intercept, computer-assisted)\n• Telephone interviewing (CATI)\n• Mail surveys (traditional & mail panels)\n• Electronic (email, internet surveys)\n\nProper selection, training & supervision of field staff minimizes errors.";
+            return formatBold("**Data Collection Methods** from Topic 1:\n• Personal interviewing (home, mall intercept, computer-assisted)\n• Telephone interviewing (CATI)\n• Mail surveys (traditional & mail panels)\n• Electronic (email, internet surveys)\n\nProper selection, training & supervision of field staff minimizes errors.");
         }
         
         // --- Reporting & presentation ---
         if ((q.includes("reporting") || q.includes("presentation") || q.includes("report the findings")) && (q.includes("marketing research") || q.includes("step"))) {
-            return "📄 **Reporting & presenting** – final step in MR process: \n• Written documentation: problem statement, approach, research design, data collection procedures, analysis & findings.\n• Oral presentation with visual aids to enhance impact and clarity for management/clients.\n\nTranslates technical insights into actionable marketing strategies.";
+            return formatBold("**Reporting & Presenting** – final step in MR process: \n• Written documentation: problem statement, approach, research design, data collection procedures, analysis & findings.\n• Oral presentation with visual aids to enhance impact and clarity for management/clients.\n\nTranslates technical insights into actionable marketing strategies.");
         }
         
         // --- Pure research vs applied context ---
         if ((q.includes("basic research") && q.includes("applied research")) || (q.includes("pure research"))) {
-            return "🔬 **Basic (pure) research** – problem identification, builds theory, expands knowledge without immediate commercial goal. Example: cross-cultural customer analysis.\n\n🛠️ **Applied research** – problem-solving research intended to address specific real-world marketing problems (pricing, promotion, distribution). \n\nScientific method assures objectivity in both.";
+            return formatBold("**Basic vs Applied Research**\n\n🔬 Basic (pure) research – problem identification, builds theory, expands knowledge without immediate commercial goal. Example: cross-cultural customer analysis.\n\n🛠️ Applied research – problem-solving research intended to address specific real-world marketing problems (pricing, promotion, distribution).\n\nScientific method assures objectivity in both.");
         }
         
         // --- default fallback but still helpful ---
-        return "📚 I'm specialized in **Topic 1: Introduction to Marketing Research**.\n\nYou can ask:\n• 'Define marketing research'\n• 'Importance of marketing research'\n• 'Explain the 6-step process'\n• 'Problem identification vs problem solving'\n• 'Scientific marketing research qualities'\n• 'Marketing environment variables'\n• 'Internal vs external researchers'\n• 'What are desirable qualities of a researcher?'\n\nFeel free to rephrase your question or ask something specific from the chapter!";
+        return formatBold("**Topic 1: Introduction to Marketing Research**\n\nTry asking about:\n• Definition of marketing research\n• Importance of marketing research\n• The 6-step process\n• Problem identification vs problem solving\n• Scientific marketing research qualities\n• Marketing environment variables (controllable/uncontrollable)\n• Internal vs external researchers\n• Desirable qualities of a researcher\n\nJust type your question!");
     }
 
     // UI elements
@@ -319,7 +324,7 @@
         const messageWrapper = document.createElement('div');
         messageWrapper.className = `msg ${isUser ? 'user-msg' : 'bot-msg'}`;
         
-        // convert newlines to <br> for better formatting
+        // text already contains HTML <strong> tags from formatBold, so we don't escape it
         const formattedText = text.replace(/\n/g, '<br>');
         
         messageWrapper.innerHTML = `
@@ -339,7 +344,6 @@
         messagesDiv.appendChild(typingWrapper);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
-        // simulate processing delay (realistic)
         setTimeout(() => {
             const typingElem = document.getElementById('typingMsg');
             if (typingElem) typingElem.remove();
@@ -353,11 +357,9 @@
         const rawText = inputEl.value.trim();
         if (rawText === "") return;
         
-        // display user message
         addMessage(rawText, true);
         inputEl.value = '';
         
-        // show bot typing + answer
         showTypingAndRespond(rawText);
     }
     
@@ -369,7 +371,6 @@
         }
     });
     
-    // initial focus
     inputEl.focus();
 </script>
 </body>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Topic 2: Defining Problem and Research Objectives</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Marketing Research Quiz · Topic 2: Defining Problem & Research Objectives</title>
   <style>
     * {
       margin: 0;
@@ -49,6 +49,7 @@
       border-radius: 20px;
       padding: 18px 22px;
       margin-bottom: 18px;
+      transition: all 0.2s;
     }
 
     .question.correct-bg {
@@ -82,26 +83,38 @@
       font-size: 1rem;
       font-weight: 600;
       color: #0f2b3d;
-      line-height: 1.45;
+      line-height: 1.5;
       flex: 1;
+    }
+
+    .extra-list {
+      margin: 10px 0 12px 24px;
+      font-size: 0.92rem;
+      font-weight: normal;
+      color: #2c4c6e;
+    }
+
+    .extra-list li {
+      margin: 5px 0;
     }
 
     .options {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin: 12px 0 6px;
+      margin-top: 14px;
     }
 
     .option {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 8px 14px;
+      padding: 10px 14px;
       background: #fafcff;
       border: 1px solid #e4e9f0;
       border-radius: 14px;
       cursor: pointer;
+      transition: 0.2s ease;
     }
 
     .option:hover {
@@ -119,7 +132,7 @@
       margin-top: 12px;
       padding: 8px 12px;
       border-radius: 12px;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 500;
     }
 
@@ -153,6 +166,7 @@
       cursor: pointer;
       margin-top: 12px;
       margin-bottom: 20px;
+      transition: background 0.2s;
     }
 
     .btn-submit:hover {
@@ -201,226 +215,316 @@
 
     footer {
       text-align: center;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       color: #7c8ea0;
       margin-top: 24px;
-    }
-
-    #confetti-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1000;
     }
   </style>
 </head>
 <body>
-<canvas id="confetti-canvas"></canvas>
+
 <div class="quiz-box">
-  <h1>📊 Topic 2: Defining Problem and Research Objectives</h1>
-  <div class="sub">3 multiple choice questions · submit once</div>
+  <h1>🎯 Topic 2: Defining Problem & Research Objectives</h1>
+  <div class="sub">Questions 11–17 · problem definition · environmental context · research objectives</div>
   <div id="questionsContainer"></div>
   <button id="submitBtn" class="btn-submit">✓ Submit & Grade</button>
-  <div id="scorePanel" style="display: none;"></div>
-  <footer>Problem definition, research objectives, and key tasks</footer>
+  <div id="scorePanel" style="display:none;"></div>
+  <footer>Problem well-defined is half-solved · Marketing research process</footer>
 </div>
 
 <script>
-  const quizData = [
-    { text: "A/an ____ and ____ identified and defined problem enables research to be properly conducted.", options: ["nicely, beautifully", "clearly, accurately", "worldly, theoretically", "empirically, economically"], answer: 1 },
-    { text: "A good problem definition avoids unnecessary costs.", options: ["Yes", "No"], answer: 0 },
-    { text: "Which is NOT an important task in problem definition?", options: ["Search literature", "Discuss experts", "Doing qualitative research", "Reporting final research"], answer: 3 }
-  ];
-
-  let selections = new Array(quizData.length).fill(-1);
-  let submitted = false;
-  let confettiTriggered = false;
-
-  const container = document.getElementById("questionsContainer");
-  const submitBtn = document.getElementById("submitBtn");
-  const scorePanel = document.getElementById("scorePanel");
-  const canvas = document.getElementById("confetti-canvas");
-  let ctx = canvas.getContext("2d");
-  let animationId = null;
-  let particles = [];
-
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// --------------------------------------------------------------
+// QUIZ DATA for TOPIC 2: Defining Problem and Research Objectives
+// Questions start at 11 through 17 exactly as provided
+// --------------------------------------------------------------
+const quizData = [
+  {
+    id: 11,
+    text: "A/An ____ and ____ identified and defined problem enables a research to be properly conducted and accomplished.",
+    options: [
+      "A) nicely, beautifully",
+      "B) clearly, accurately",
+      "C) worldly, theoretically",
+      "D) empirically, economically"
+    ],
+    answer: 1,   // B) clearly, accurately
+    listBefore: false,
+    listItems: null
+  },
+  {
+    id: 12,
+    text: "A good problem definition can avoid irrelevant research and reduce unnecessary monetary or non-monetary costs.",
+    options: ["yes", "no"],
+    answer: 0,   // yes
+    listBefore: false
+  },
+  {
+    id: 13,
+    text: "Which of the following is NOT the important task in problem definition?",
+    options: [
+      "A) Search and review the related literature",
+      "B) Discuss with the experts and decision makers",
+      "C) Doing a qualitative research",
+      "D) Reporting the final research"
+    ],
+    answer: 3,   // D) Reporting the final research
+    listBefore: false
+  },
+  {
+    id: 14,
+    text: "Marketing researchers will tend to agree that 'A problem well-defined is half-solved'?",
+    options: ["yes", "no"],
+    answer: 0,   // yes
+    listBefore: false
+  },
+  {
+    id: 15,
+    text: "The important environmental aspects which the marketing researchers will consider when defining the problem are:",
+    listItems: [
+      "i) Past information",
+      "ii) Economic situation",
+      "iii) Behaviours of the customers/individuals",
+      "iv) Legal and political"
+    ],
+    options: [
+      "A) i, ii, iii",
+      "B) ii, iii, iv",
+      "C) i, ii, iv",
+      "D) i, ii, iii, iv"
+    ],
+    answer: 3,   // D) i, ii, iii, iv
+    listBefore: true
+  },
+  {
+    id: 16,
+    text: "i) To determine the level of patient satisfaction. ii) To determine the patients' experience with the hospitals. iii) To identify the determinants of patient satisfaction. The above are examples of ____ problem.",
+    options: [
+      "A) Critical",
+      "B) Research",
+      "C) Management decision",
+      "D) Social"
+    ],
+    answer: 1,   // B) Research
+    listBefore: false
+  },
+  {
+    id: 17,
+    text: "It is recommendable to define problem specifically, then broadly.",
+    options: ["yes", "no"],
+    answer: 1,   // no
+    listBefore: false
   }
-  window.addEventListener("resize", resizeCanvas);
+];
 
-  class ConfettiParticle {
-    constructor(x, y, size, color, vx, vy, rotation, rotSpeed) {
-      this.x = x; this.y = y; this.size = size; this.color = color;
-      this.velX = vx; this.velY = vy; this.rotation = rotation; this.rotationSpeed = rotSpeed;
-      this.gravity = 0.2; this.friction = 0.98; this.alpha = 1;
-    }
-    update() {
-      this.velY += this.gravity;
-      this.velX *= this.friction;
-      this.velY *= this.friction;
-      this.x += this.velX;
-      this.y += this.velY;
-      this.rotation += this.rotationSpeed;
-      this.alpha -= 0.008;
-      return this.alpha > 0.02 && this.y < canvas.height + 100;
-    }
-    draw(ctx) {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rotation);
-      ctx.globalAlpha = this.alpha;
-      ctx.fillStyle = this.color;
-      ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
-      ctx.restore();
-    }
+let selections = new Array(quizData.length).fill(-1);
+let submitted = false;
+let confettiTriggered = false;
+
+const container = document.getElementById("questionsContainer");
+const submitBtn = document.getElementById("submitBtn");
+const scorePanel = document.getElementById("scorePanel");
+
+// ---------- lightweight confetti celebration (perfect score only) ----------
+function startConfetti() {
+  if (confettiTriggered) return;
+  confettiTriggered = true;
+
+  const colors = ["#f44336", "#e91e63", "#9c27b0", "#3f51b5", "#2196f3", "#00bcd4", "#4caf50", "#ffeb3b", "#ff9800", "#ff5722"];
+  const confettiCount = 150;
+  const containerEl = document.body;
+
+  for (let i = 0; i < confettiCount; i++) {
+    const conf = document.createElement("div");
+    const size = Math.floor(Math.random() * 12 + 6);
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    conf.style.position = "fixed";
+    conf.style.width = size + "px";
+    conf.style.height = size + "px";
+    conf.style.backgroundColor = color;
+    conf.style.top = "-20px";
+    conf.style.left = Math.random() * window.innerWidth + "px";
+    conf.style.opacity = "0.9";
+    conf.style.borderRadius = Math.random() > 0.7 ? "50%" : "2px";
+    conf.style.pointerEvents = "none";
+    conf.style.zIndex = "9999";
+    conf.style.boxShadow = "0 2px 5px rgba(0,0,0,0.2)";
+    containerEl.appendChild(conf);
+
+    const duration = 1500 + Math.random() * 1500;
+    const destination = window.innerHeight + 50;
+    const rotate = Math.random() * 360;
+    conf.style.transition = `transform ${duration}ms cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity ${duration * 0.8}ms ease-out`;
+    requestAnimationFrame(() => {
+      conf.style.transform = `translateY(${destination}px) rotate(${rotate}deg)`;
+      conf.style.opacity = "0";
+    });
+
+    setTimeout(() => {
+      if (conf && conf.remove) conf.remove();
+    }, duration + 200);
   }
 
-  function startConfetti() {
-    if (confettiTriggered) return;
-    confettiTriggered = true;
-    resizeCanvas();
-    particles = [];
-    const colors = ["#f44336", "#e91e63", "#9c27b0", "#3f51b5", "#2196f3", "#00bcd4", "#4caf50", "#ffeb3b", "#ff9800", "#ff5722"];
-    
-    for (let i = 0; i < 220; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 4 + Math.random() * 9;
-      const vx = Math.cos(angle) * speed * (Math.random() * 1.5);
-      const vy = Math.sin(angle) * speed * 0.8 - 5;
-      const size = 6 + Math.random() * 12;
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const x = canvas.width / 2 + (Math.random() - 0.5) * 120;
-      const y = canvas.height / 2 - 80 + Math.random() * 80;
-      particles.push(new ConfettiParticle(x, y, size, color, vx, vy, Math.random() * Math.PI * 2, (Math.random() - 0.5) * 0.2));
-    }
-    
-    for (let i = 0; i < 80; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 3 + Math.random() * 7;
-      const vx = Math.cos(angle) * speed * (Math.random() * 1.2);
-      const vy = Math.sin(angle) * speed * 0.6 - 4;
-      const size = 5 + Math.random() * 9;
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const x = canvas.width * (Math.random() * 0.8 + 0.1);
-      const y = canvas.height * 0.7 + Math.random() * 100;
-      particles.push(new ConfettiParticle(x, y, size, color, vx, vy, Math.random() * Math.PI, (Math.random() - 0.5) * 0.15));
-    }
-    
-    if (animationId) cancelAnimationFrame(animationId);
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      let alive = false;
-      for (let p of particles) if (p.update()) { alive = true; p.draw(ctx); }
-      if (alive) animationId = requestAnimationFrame(animate);
-      else { cancelAnimationFrame(animationId); animationId = null; ctx.clearRect(0, 0, canvas.width, canvas.height); confettiTriggered = false; }
-    }
-    animate();
-  }
+  setTimeout(() => {
+    confettiTriggered = false;
+  }, 2800);
+}
 
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m] || m));
-  }
+// escape utility
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>]/g, m => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;'
+  }[m] || m));
+}
 
-  function renderQuestions() {
-    let html = "";
-    for (let i = 0; i < quizData.length; i++) {
-      const q = quizData[i];
-      const selectedVal = selections[i];
-      const realNumber = 11 + i;
-      let questionClass = "question";
-      if (submitted) questionClass += (selectedVal !== -1 && selectedVal === q.answer) ? " correct-bg" : " wrong-bg";
-      
-      html += `<div class="${questionClass}"><div class="q-header"><span class="q-num">${realNumber}</span><div class="q-text">${escapeHtml(q.text)}</div></div><div class="options">`;
-      
-      q.options.forEach((opt, idx) => {
-        html += `<label class="option" style="cursor: ${submitted ? 'default' : 'pointer'}">
-          <input type="radio" name="q${i}" value="${idx}" ${selectedVal === idx ? 'checked' : ''} ${submitted ? 'disabled' : ''}>
-          <span class="option-text">${escapeHtml(opt)}</span>
-        </label>`;
+// render all questions with dynamic state
+function renderQuestions() {
+  let html = "";
+  for (let i = 0; i < quizData.length; i++) {
+    const q = quizData[i];
+    const selectedVal = selections[i];
+    let questionClass = "question";
+
+    if (submitted) {
+      const isCorrect = (selectedVal !== -1 && selectedVal === q.answer);
+      if (isCorrect) {
+        questionClass += " correct-bg";
+      } else {
+        questionClass += " wrong-bg";
+      }
+    }
+
+    html += `<div class="${questionClass}"><div class="q-header"><span class="q-num">${q.id}</span><div class="q-text">`;
+
+    // Question text + optional list items (like in Q15)
+    if (q.listBefore && q.listItems && q.listItems.length) {
+      html += `<p>${escapeHtml(q.text)}</p><div class="extra-list"><ul>`;
+      q.listItems.forEach(li => {
+        html += `<li>${escapeHtml(li)}</li>`;
       });
-      html += `</div>`;
-      
-      if (submitted) {
-        if (selectedVal === -1) html += `<div class="feedback feedback-missing">⚠️ Not answered · Correct: ${escapeHtml(q.options[q.answer])}</div>`;
-        else if (selectedVal !== q.answer) html += `<div class="feedback feedback-wrong">❌ Incorrect · Your answer: ${escapeHtml(q.options[selectedVal])}<br>✅ Correct: ${escapeHtml(q.options[q.answer])}</div>`;
-        else html += `<div class="feedback feedback-correct">✓ Correct</div>`;
-      }
-      html += `</div>`;
+      html += `</ul></div>`;
+    } else {
+      // For question 16 we have a longer descriptive text, keep formatting clean
+      html += `<div>${escapeHtml(q.text)}</div>`;
     }
-    container.innerHTML = html;
-    
-    if (!submitted) {
-      for (let i = 0; i < quizData.length; i++) {
-        document.querySelectorAll(`input[name="q${i}"]`).forEach(radio => {
-          radio.addEventListener("change", (e) => { if (!submitted) { selections[i] = parseInt(e.target.value); renderQuestions(); } });
+
+    html += `</div></div><div class="options">`;
+
+    // render options
+    q.options.forEach((opt, idx) => {
+      html += `<label class="option">
+        <input type="radio" name="q${i}" value="${idx}" ${selectedVal === idx ? 'checked' : ''} ${submitted ? 'disabled' : ''}>
+        <span>${escapeHtml(opt)}</span>
+      </label>`;
+    });
+
+    html += `</div>`;
+
+    // feedback area after submission
+    if (submitted) {
+      if (selectedVal === -1) {
+        html += `<div class="feedback feedback-missing">⚠️ Not answered · Correct: ${escapeHtml(q.options[q.answer])}</div>`;
+      } else if (selectedVal !== q.answer) {
+        html += `<div class="feedback feedback-wrong">❌ Incorrect · Your answer: ${escapeHtml(q.options[selectedVal])}<br>✅ Correct: ${escapeHtml(q.options[q.answer])}</div>`;
+      } else {
+        html += `<div class="feedback feedback-correct">✓ Correct</div>`;
+      }
+    }
+    html += `</div>`; // close .question
+  }
+
+  container.innerHTML = html;
+
+  // attach change events only when quiz is not yet submitted
+  if (!submitted) {
+    for (let i = 0; i < quizData.length; i++) {
+      const radios = document.querySelectorAll(`input[name="q${i}"]`);
+      radios.forEach(radio => {
+        radio.addEventListener("change", (e) => {
+          if (!submitted) {
+            selections[i] = parseInt(e.target.value);
+            renderQuestions(); // re-render to keep UI consistent (preserves selection style)
+          }
         });
-      }
+      });
     }
   }
+}
 
-  function getScore() {
-    let correct = 0;
-    for (let i = 0; i < quizData.length; i++) if (selections[i] !== -1 && selections[i] === quizData[i].answer) correct++;
-    return correct;
+// compute score (correct answers)
+function getScore() {
+  let correct = 0;
+  for (let i = 0; i < quizData.length; i++) {
+    if (selections[i] !== -1 && selections[i] === quizData[i].answer) correct++;
+  }
+  return correct;
+}
+
+// dynamic result icon + label
+function getResultIcon(correct, total, isPerfect) {
+  const percent = (correct / total) * 100;
+  if (isPerfect) return { icon: "👑", label: "PERFECT MASTERY" };
+  if (percent >= 80) return { icon: "🏆", label: "EXCELLENT" };
+  if (percent >= 60) return { icon: "🎓", label: "GOOD" };
+  if (percent >= 50) return { icon: "📘", label: "PASS" };
+  return { icon: "📚", label: "NEEDS REVIEW" };
+}
+
+// main submit & grading
+function handleSubmit() {
+  if (submitted) return;
+
+  const answeredCount = selections.filter(s => s !== -1).length;
+  if (answeredCount < quizData.length && !confirm(`You answered ${answeredCount} out of ${quizData.length}. Submit anyway?`)) {
+    return;
   }
 
-  function getResultIcon(correct, total, isPerfect) {
-    const percent = (correct / total) * 100;
-    if (isPerfect) return { icon: "👑", label: "PERFECT MASTERY" };
-    if (percent >= 80) return { icon: "🏆", label: "EXCELLENT" };
-    if (percent >= 60) return { icon: "🎓", label: "GOOD" };
-    if (percent >= 50) return { icon: "📘", label: "PASS" };
-    return { icon: "📚", label: "NEEDS REVIEW" };
-  }
+  submitted = true;
+  const correct = getScore();
+  const total = quizData.length;
+  const isPerfect = correct === total;
 
-  function handleSubmit() {
-    if (submitted) return;
-    const answeredCount = selections.filter(s => s !== -1).length;
-    if (answeredCount < quizData.length && !confirm(`You have answered ${answeredCount} out of ${quizData.length}. Submit anyway?`)) return;
-    
-    submitted = true;
-    const correct = getScore();
-    const total = quizData.length;
-    const isPerfect = correct === total;
-    renderQuestions();
-    
-    const percent = (correct / total) * 100;
-    let message = isPerfect ? "Outstanding! Perfect score achieved! 🌟" :
-                  percent >= 80 ? "Excellent! Mastery achieved. 🎉" :
-                  percent >= 60 ? "Great job! Review the ones in red." :
-                  percent >= 50 ? "Pass. Keep practicing to improve." :
-                  "Needs improvement. Review the explanations above.";
-    
-    const { icon, label } = getResultIcon(correct, total, isPerfect);
-    
-    scorePanel.style.display = "block";
-    scorePanel.innerHTML = `<div class="score-area">
-      <div class="score-number"><span class="result-icon">${icon}</span><span>${correct} / ${total}</span></div>
-      <div style="margin-top: 6px; font-size: 0.9rem; font-weight: 600; color: #1e4a8a;">${label}</div>
-      <div style="margin-top: 8px; font-size: 0.85rem; color: #2c5a6e;">${message}</div>
-      ${isPerfect ? '<div class="perfect-badge">✨ PERFECT SCORE! ✨<br>🎉 Confetti celebration! 🎉</div>' : ''}
-    </div>`;
-    
-    if (isPerfect) startConfetti();
-    
-    submitBtn.disabled = true;
-    submitBtn.style.opacity = "0.6";
-    
-    let completed = JSON.parse(localStorage.getItem("completedTopics")) || [];
-    if (!completed.includes("topic2")) { completed.push("topic2"); localStorage.setItem("completedTopics", JSON.stringify(completed)); }
-    
-    setTimeout(() => scorePanel.scrollIntoView({ behavior: "smooth", block: "nearest" }), 80);
-  }
-  
-  submitBtn.addEventListener("click", handleSubmit);
+  // re-render with feedback and background colours
   renderQuestions();
-  resizeCanvas();
+
+  const percent = (correct / total) * 100;
+  let message = isPerfect
+    ? "Outstanding! Perfect score achieved! 🌟"
+    : percent >= 80
+      ? "Excellent! Mastery achieved. 🎉"
+      : percent >= 60
+        ? "Great job! Review the incorrect answers."
+        : percent >= 50
+          ? "Pass. Keep practicing to improve."
+          : "Needs improvement. Review the questions above.";
+
+  const { icon, label } = getResultIcon(correct, total, isPerfect);
+
+  scorePanel.style.display = "block";
+  scorePanel.innerHTML = `
+    <div class="score-area">
+      <div class="score-number">
+        <span class="result-icon">${icon}</span>
+        <span>${correct} / ${total}</span>
+      </div>
+      <div style="margin-top:6px; font-size:0.9rem; font-weight:600; color:#1e4a8a;">${label}</div>
+      <div style="margin-top:8px; font-size:0.85rem; color:#2c5a6e;">${message}</div>
+      ${isPerfect ? '<div class="perfect-badge">✨ PERFECT SCORE! ✨<br>🎉 Confetti celebration! 🎉</div>' : ''}
+    </div>
+  `;
+
+  if (isPerfect) {
+    startConfetti();
+  }
+
+  submitBtn.disabled = true;
+}
+
+// initialization
+submitBtn.addEventListener("click", handleSubmit);
+renderQuestions();
 </script>
 </body>
 </html>

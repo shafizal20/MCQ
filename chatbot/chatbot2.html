@@ -232,101 +232,106 @@
 </div>
 
 <script>
-    // Comprehensive knowledge base derived from the provided PDF material (Topic 2)
+    // Helper function to convert markdown-style **bold** to HTML <strong> tags
+    function formatBold(text) {
+        return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    }
+
+    // Comprehensive knowledge base derived from the provided PDF material (Topic 2) with proper bold formatting
     function getProblemDefinitionAnswer(userQuery) {
         let q = userQuery.toLowerCase().trim();
         
         // --- Importance of problem definition ---
         if ((q.includes("importance") || q.includes("critical") || q.includes("why is")) && (q.includes("problem definition") || q.includes("defining the problem"))) {
-            return "🔑 **Importance of Problem Definition**\n\nProblem identification and definition is one of the **most critical steps** in the marketing research process. A clearly defined problem enables the research to be properly conducted. If the problem is well-defined, the research can be designed and executed correctly. Poor problem definition leads to irrelevant research and wasted resources. As the material states: *'A well-identified and defined problem is possibly half-solved.'*";
+            return formatBold("**Importance of Problem Definition**\n\nProblem identification and definition is one of the **most critical steps** in the marketing research process. A clearly defined problem enables the research to be properly conducted. If the problem is well-defined, the research can be designed and executed correctly. Poor problem definition leads to irrelevant research and wasted resources. As the material states: 'A well-identified and defined problem is possibly half-solved.'");
         }
         
         // --- Iceberg principle (symptoms vs real problem) ---
         if ((q.includes("iceberg") || q.includes("symptom") || q.includes("symptoms") || q.includes("real problem")) && (q.includes("principle") || q.includes("iceberg principle"))) {
-            return "🧊 **Iceberg Principle**\n\nDecision makers are often aware of only **10% or less** of the actual problem — the observable symptoms (e.g., declining sales, employee complaints). The **real problem (90% or more)** is submerged below the surface, hidden from immediate observation.\n\n🔍 **Example**: High employee turnover (symptom) may be caused by low job satisfaction, poor management, or lack of motivation (real problems).\n\nResearchers must investigate comprehensively to uncover the true problem, not just treat symptoms.";
+            return formatBold("**Iceberg Principle**\n\nDecision makers are often aware of only **10% or less** of the actual problem — the observable symptoms (e.g., declining sales, employee complaints). The **real problem (90% or more)** is submerged below the surface, hidden from immediate observation.\n\n🔍 Example: High employee turnover (symptom) may be caused by low job satisfaction, poor management, or lack of motivation (real problems).\n\nResearchers must investigate comprehensively to uncover the true problem, not just treat symptoms.");
         }
         
         // --- Tasks involved in problem definition (4 tasks) ---
         if ((q.includes("tasks") || q.includes("steps to define") || q.includes("how to define")) && (q.includes("problem definition") || q.includes("define the problem"))) {
-            return "📋 **Tasks Involved in Problem Definition** (from Topic 2):\n\n1️⃣ **Discussions with decision makers** – formal/informal talks to understand the right problem and information needed.\n2️⃣ **Interviews with industry experts** – knowledgeable, experienced professionals from client organization or academia.\n3️⃣ **Literature search & secondary data analysis** – reliable published/unpublished sources provide economical, quick insights.\n4️⃣ **Qualitative research or pilot study** – focus groups, in-depth interviews, small-scale studies to gain insights and identify constraints.\n\nThese tasks help understand the environmental context and refine the research problem.";
+            return formatBold("**Tasks Involved in Problem Definition** (from Topic 2):\n\n1️⃣ Discussions with decision makers – formal/informal talks to understand the right problem and information needed.\n2️⃣ Interviews with industry experts – knowledgeable, experienced professionals from client organization or academia.\n3️⃣ Literature search & secondary data analysis – reliable published/unpublished sources provide economical, quick insights.\n4️⃣ Qualitative research or pilot study – focus groups, in-depth interviews, small-scale studies to gain insights and identify constraints.\n\nThese tasks help understand the environmental context and refine the research problem.");
         }
         
         // --- Environmental factors (list of 10 factors) ---
         if ((q.includes("environmental factors") || q.includes("environmental context") || q.includes("factors to consider")) && (q.includes("problem definition") || q.includes("define"))) {
-            return "🌍 **Environmental Factors in Problem Definition** (10 factors):\n\n1. Past information & forecasts\n2. Resources and constraints (money, time, expertise)\n3. Objectives (organizational or individual)\n4. Competitor environment\n5. Behaviours of consumers/individuals\n6. Legal and political environment\n7. Economic environment (interest rates, inflation, income)\n8. Technology environment\n9. Socio-cultural environment (cultural differences)\n10. Geographical and physical environment (infrastructure, climate)\n\nUnderstanding these helps translate management decision problems into researchable problems.";
+            return formatBold("**Environmental Factors in Problem Definition** (10 factors):\n\n1. Past information & forecasts\n2. Resources and constraints (money, time, expertise)\n3. Objectives (organizational or individual)\n4. Competitor environment\n5. Behaviours of consumers/individuals\n6. Legal and political environment\n7. Economic environment (interest rates, inflation, income)\n8. Technology environment\n9. Socio-cultural environment (cultural differences)\n10. Geographical and physical environment (infrastructure, climate)\n\nUnderstanding these helps translate management decision problems into researchable problems.");
         }
         
         // --- Specific environmental factor queries (e.g., competitor, economic, legal) ---
         if ((q.includes("competitor") || q.includes("competition")) && (q.includes("environment") || q.includes("factor"))) {
-            return "🏢 **Competitor Environment** – The actions and reactions of close and potential competitors must be understood. Competitor analysis reveals what problems the units of analysis face and facilitates the problem definition process. It helps identify threats and opportunities.";
+            return formatBold("**Competitor Environment** – The actions and reactions of close and potential competitors must be understood. Competitor analysis reveals what problems the units of analysis face and facilitates the problem definition process. It helps identify threats and opportunities.");
         }
         if ((q.includes("economic environment") || q.includes("interest rate") || q.includes("inflation")) && (q.includes("factor") || q.includes("environmental"))) {
-            return "💰 **Economic Environment** – Economic variables such as interest rates, unemployment, foreign exchange, international trade, inflation, and income are closely linked to the socio-economic wellbeing of the organization and individuals. These affect purchasing power and should be considered when defining the research problem.";
+            return formatBold("**Economic Environment** – Economic variables such as interest rates, unemployment, foreign exchange, international trade, inflation, and income are closely linked to the socio-economic wellbeing of the organization and individuals. These affect purchasing power and should be considered when defining the research problem.");
         }
         if ((q.includes("legal") || q.includes("political")) && (q.includes("environment") || q.includes("factor"))) {
-            return "⚖️ **Legal and Political Environment** – Includes public policies, laws, government agencies, and special interest groups that influence or regulate organizations. Example: An increase in income tax rates affects disposable income and purchasing power.";
+            return formatBold("**Legal and Political Environment** – Includes public policies, laws, government agencies, and special interest groups that influence or regulate organizations. Example: An increase in income tax rates affects disposable income and purchasing power.");
         }
         if ((q.includes("socio") || q.includes("cultural")) && (q.includes("environment") || q.includes("factor"))) {
-            return "👥 **Socio-cultural Environment** – Cultural characteristics and differences between potential units of analysis are crucial, especially for multicultural countries like Malaysia. These differences provide researchers with ideas about what problems should be investigated.";
+            return formatBold("**Socio-cultural Environment** – Cultural characteristics and differences between potential units of analysis are crucial, especially for multicultural countries like Malaysia. These differences provide researchers with ideas about what problems should be investigated.");
         }
         if ((q.includes("technology") || q.includes("tech")) && (q.includes("environment") || q.includes("factor"))) {
-            return "💻 **Technology Environment** – The technological ability of organizations or individuals affects the scope of research. It influences the use of appropriate research methods and thus influences the research problem component in problem definition.";
+            return formatBold("**Technology Environment** – The technological ability of organizations or individuals affects the scope of research. It influences the use of appropriate research methods and thus influences the research problem component in problem definition.");
         }
         if ((q.includes("resources") || q.includes("constraints")) && (q.includes("problem definition"))) {
-            return "⏳ **Resources and Constraints** – Resources like money, time, expertise, and research skills need to be considered in the problem definition process. Constraints force the problem to be defined into an appropriate scope, increasing relevance.";
+            return formatBold("**Resources and Constraints** – Resources like money, time, expertise, and research skills need to be considered in the problem definition process. Constraints force the problem to be defined into an appropriate scope, increasing relevance.");
         }
         if ((q.includes("past information") || q.includes("forecasts") || q.includes("historical"))) {
-            return "📊 **Past Information and Forecasts** – Historical data such as marketing performance records and past industry data put the current problem into context. For time-series studies, external sources like Statistical Reports and Economic Reports are also valuable.";
+            return formatBold("**Past Information and Forecasts** – Historical data such as marketing performance records and past industry data put the current problem into context. For time-series studies, external sources like Statistical Reports and Economic Reports are also valuable.");
         }
         if ((q.includes("objectives") && (q.includes("organizational") || q.includes("individual")))) {
-            return "🎯 **Objectives (Organizational or Individual)** – Decisions are made to accomplish objectives. Understanding the client's or organization's objectives helps pinpoint exact desired outcomes, especially important for external researchers who don't know the organization well.";
+            return formatBold("**Objectives (Organizational or Individual)** – Decisions are made to accomplish objectives. Understanding the client's or organization's objectives helps pinpoint exact desired outcomes, especially important for external researchers who don't know the organization well.");
         }
         if ((q.includes("geographical") || q.includes("physical environment") || q.includes("infrastructure") || q.includes("climate"))) {
-            return "🗺️ **Geographical and Physical Environment** – For unique situations, factors like infrastructure, accessibility, and climate may form a unique dimension of the problem and should be considered during problem definition.";
+            return formatBold("**Geographical and Physical Environment** – For unique situations, factors like infrastructure, accessibility, and climate may form a unique dimension of the problem and should be considered during problem definition.");
         }
         
         // --- Management decision problem vs research problem ---
         if ((q.includes("management decision") && q.includes("research problem")) || (q.includes("decision problem") && q.includes("research problem")) || (q.includes("difference between"))) {
-            return "📌 **Management Decision Problem vs Research Problem**\n\n| Aspect | Management Decision Problem | Research Problem |\n|--------|----------------------------|------------------|\n| **Focus** | What decision makers need to DO | What INFORMATION is needed |\n| **Question** | 'What should we do?' | 'What information is needed and how best to obtain it?' |\n| **Nature** | Action-oriented, managerial issues | Information/knowledge gaps |\n\n**Examples:**\n• 'Should employee salaries be increased?' → 'Determine employees' perception of current salary.'\n• 'What to do to improve job satisfaction?' → 'Determine determinants of job satisfaction.'";
+            return formatBold("**Management Decision Problem vs Research Problem**\n\nAspect | Management Decision Problem | Research Problem\nFocus | What decision makers need to DO | What INFORMATION is needed\nQuestion | 'What should we do?' | 'What information is needed and how best to obtain it?'\nNature | Action-oriented, managerial issues | Information/knowledge gaps\n\nExamples:\n• 'Should employee salaries be increased?' → 'Determine employees' perception of current salary.'\n• 'What to do to improve job satisfaction?' → 'Determine determinants of job satisfaction.'");
         }
         
         // --- Funnel technique (broad to specific) ---
         if ((q.includes("funnel") || q.includes("broad to specific") || q.includes("funnel technique"))) {
-            return "🔽 **Funnel Technique** (Broad → Specific Problems)\n\nStart with a **broad problem area** to gain perspective, then identify **specific components** for investigation.\n\n**Example:**\n• Broad: 'There are more and more employee complaints. High staff turnover.'\n• Specific (after refining): 'Determinants of service quality' and 'Effects of service quality on customer loyalty.'\n\nThe technique provides clear guidelines and focuses on key aspects of the problem.";
+            return formatBold("**Funnel Technique** (Broad → Specific Problems)\n\nStart with a **broad problem area** to gain perspective, then identify **specific components** for investigation.\n\nExample:\n• Broad: 'There are more and more employee complaints. High staff turnover.'\n• Specific (after refining): 'Determinants of service quality' and 'Effects of service quality on customer loyalty.'\n\nThe technique provides clear guidelines and focuses on key aspects of the problem.");
         }
         
         // --- Symptoms vs problem clarification ---
         if ((q.includes("symptom") && !q.includes("iceberg")) || (q.includes("signs") && q.includes("problem"))) {
-            return "⚠️ **Symptoms vs Real Problem**\n\nSymptoms are **observable conditions** that signal the presence of problems (e.g., declining sales, high turnover, low morale). However, symptoms are NOT the real problem — they are effects.\n\nResearchers must dig deeper to uncover the underlying causes. Treating symptoms without solving the real problem leads to temporary fixes and wasted resources. This is why the Iceberg Principle is so important!";
+            return formatBold("**Symptoms vs Real Problem**\n\nSymptoms are **observable conditions** that signal the presence of problems (e.g., declining sales, high turnover, low morale). However, symptoms are NOT the real problem — they are effects.\n\nResearchers must dig deeper to uncover the underlying causes. Treating symptoms without solving the real problem leads to temporary fixes and wasted resources. This is why the Iceberg Principle is so important!");
         }
         
         // --- Unit of analysis ---
         if ((q.includes("unit of analysis") || q.includes("units of analysis"))) {
-            return "🔍 **Unit of Analysis** – The 'who' or 'what' being studied (e.g., individuals, dyads, groups, organizations, departments). Determining the unit of analysis is part of the problem definition process and influences research design, data collection, and analysis.";
+            return formatBold("**Unit of Analysis** – The 'who' or 'what' being studied (e.g., individuals, dyads, groups, organizations, departments). Determining the unit of analysis is part of the problem definition process and influences research design, data collection, and analysis.");
         }
         
         // --- Relevant variables ---
         if ((q.includes("relevant variables") || q.includes("variables in problem definition"))) {
-            return "📊 **Relevant Variables** – During problem definition, researchers must identify and isolate the variables that are pertinent to the research problem. Variables can be independent, dependent, moderating, or confounding. Clear variable identification leads to precise research questions and hypotheses.";
+            return formatBold("**Relevant Variables** – During problem definition, researchers must identify and isolate the variables that are pertinent to the research problem. Variables can be independent, dependent, moderating, or confounding. Clear variable identification leads to precise research questions and hypotheses.");
         }
         
         // --- Research questions and objectives ---
         if ((q.includes("research questions") || q.includes("research objectives") || q.includes("hypotheses")) && (q.includes("problem definition"))) {
-            return "❓ **Research Questions, Hypotheses, and Objectives** – After defining the problem, researchers formulate:\n• **Research objectives** – what the study aims to achieve\n• **Research questions** – specific inquiries to be answered\n• **Hypotheses** – testable propositions about relationships between variables\n\nThese guide the entire research process and are part of Step 2 (Developing the Approach).";
+            return formatBold("**Research Questions, Hypotheses, and Objectives** – After defining the problem, researchers formulate:\n• Research objectives – what the study aims to achieve\n• Research questions – specific inquiries to be answered\n• Hypotheses – testable propositions about relationships between variables\n\nThese guide the entire research process and are part of Step 2 (Developing the Approach).");
         }
         
         // --- Why problem definition is critical (general) ---
         if ((q.includes("why important") || q.includes("critical step")) && !q.includes("importance")) {
-            return "⚠️ **Why Problem Definition is Critical**\n\n• Prevents irrelevant research and wasted resources\n• Provides clear direction for the entire marketing research process\n• Helps distinguish symptoms from real problems\n• Enables researchers to focus on what truly matters\n• As the material says: *'A well-identified and defined problem is possibly half-solved.'*\n\nWithout proper problem definition, even the most sophisticated research design will fail to deliver actionable insights.";
+            return formatBold("**Why Problem Definition is Critical**\n\n• Prevents irrelevant research and wasted resources\n• Provides clear direction for the entire marketing research process\n• Helps distinguish symptoms from real problems\n• Enables researchers to focus on what truly matters\n• As the material says: 'A well-identified and defined problem is possibly half-solved.'\n\nWithout proper problem definition, even the most sophisticated research design will fail to deliver actionable insights.");
         }
         
         // --- Broad problem examples / gaps ---
         if ((q.includes("gap") || q.includes("gaps") || q.includes("broad problem area")) && (q.includes("example") || q.includes("examples"))) {
-            return "🔎 **Example of Broad Problem → Specific Research Gaps**\n\n**Broad problem symptoms:**\n• More and more employee complaints\n• High staff turnover\n\n**After refining (specific problems to investigate):**\n1. The determinants of service quality\n2. The effects of service quality on customer loyalty\n\n**Gap to close:** Understanding how service quality influences loyalty in a specific organizational context.";
+            return formatBold("**Example of Broad Problem → Specific Research Gaps**\n\nBroad problem symptoms:\n• More and more employee complaints\n• High staff turnover\n\nAfter refining (specific problems to investigate):\n1. The determinants of service quality\n2. The effects of service quality on customer loyalty\n\nGap to close: Understanding how service quality influences loyalty in a specific organizational context.");
         }
         
         // --- default fallback (helpful but concise) ---
-        return "📘 I'm here to help with **Topic 2: Defining the Problem and Research Objectives**.\n\nTry asking about:\n• Iceberg principle\n• Tasks in problem definition\n• Environmental factors (economic, legal, competitive, etc.)\n• Management decision vs research problem\n• Funnel technique\n• Or just type a specific question from the chapter!";
+        return formatBold("**Topic 2: Defining the Problem and Research Objectives**\n\nTry asking about:\n• Iceberg principle\n• Tasks in problem definition\n• Environmental factors (economic, legal, competitive, etc.)\n• Management decision vs research problem\n• Funnel technique\n• Or just type a specific question from the chapter!");
     }
 
     // UI elements
@@ -338,7 +343,7 @@
         const messageWrapper = document.createElement('div');
         messageWrapper.className = `msg ${isUser ? 'user-msg' : 'bot-msg'}`;
         
-        // convert newlines to <br> for better formatting
+        // text already contains HTML <strong> tags from formatBold, so we don't escape it
         const formattedText = text.replace(/\n/g, '<br>');
         
         messageWrapper.innerHTML = `

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Topic 1: Intro to Marketing Research | Quick Quiz</title>
+    <title>Topic 1: Marketing Research | Quick Quiz</title>
     <style>
         * {
             margin: 0;
@@ -251,13 +251,16 @@
         </div>
         <div class="final-score-badge" id="finalScoreBadge" style="display: none;">
             <div class="final-score-label">FINAL SCORE</div>
-            <div class="final-score-value" id="finalScoreValue">0 <span>/ 2</span></div>
+            <div class="final-score-value" id="finalScoreValue">0 <span>/ 5</span></div>
         </div>
     </div>
 
     <div class="progress-text">
         <span class="progress-item" data-qidx="0">1</span>
         <span class="progress-item" data-qidx="1">2</span>
+        <span class="progress-item" data-qidx="2">3</span>
+        <span class="progress-item" data-qidx="3">4</span>
+        <span class="progress-item" data-qidx="4">5</span>
     </div>
 
     <div class="match-area" id="matchContainer">
@@ -284,30 +287,58 @@
 
 <script>
     (function() {
+        // ============= UPDATED QUESTIONS (5 questions) =============
         const questions = [
             {
-                text: "Marketing research should be done by external researchers",
+                text: "According to the document, which of the following best describes the primary purpose of problem identification research?",
                 answers: [
-                    { text: "❌ No — internal teams are often essential", correct: true, id: "no_q9" },
-                    { text: "✅ Yes — always external for objectivity", correct: false, id: "yes_q9" }
+                    { text: "A) To test hypotheses using controlled empirical experiments", correct: false, id: "q1_a" },
+                    { text: "B) To identify and understand marketing problems and situations, such as market potential and image research", correct: true, id: "q1_b" },
+                    { text: "C) To solve specific marketing problems like pricing or promotion issues", correct: false, id: "q1_c" }
                 ],
-                correctId: "no_q9"
+                correctId: "q1_b"
             },
             {
-                text: "NOT required quality attribute of a marketing researcher",
+                text: "In the marketing research process, why is Step 1 (Identifying and Defining the Problem) considered the most important?",
                 answers: [
-                    { text: "📊 Postgraduate & statistician (not mandatory)", correct: true, id: "B" },
-                    { text: "🎓 Professional and knowledgeable", correct: false, id: "A" },
-                    { text: "⚡ Ethical and energetic", correct: false, id: "C" },
-                    { text: "🏆 Experience and critical mindset", correct: false, id: "D" }
+                    { text: "A) Because it involves designing the questionnaire and sampling plan", correct: false, id: "q2_a" },
+                    { text: "B) Because proper problem definition ensures the research can be designed and conducted correctly", correct: true, id: "q2_b" },
+                    { text: "C) Because it includes data collection and field force management", correct: false, id: "q2_c" }
                 ],
-                correctId: "B"
+                correctId: "q2_b"
+            },
+            {
+                text: "Which of the following is NOT classified as a marketing variable (micro-environment factor) according to Figure 1.1 and the text?",
+                answers: [
+                    { text: "A) Service", correct: false, id: "q3_a" },
+                    { text: "B) Economy", correct: true, id: "q3_b" },
+                    { text: "C) People", correct: false, id: "q3_c" }
+                ],
+                correctId: "q3_b"
+            },
+            {
+                text: "An external marketing researcher is often preferred over an internal researcher because:",
+                answers: [
+                    { text: "A) They are always cheaper and faster than internal researchers", correct: false, id: "q4_a" },
+                    { text: "B) They can objectively look at the problem without concern for internal politics and bring a fresh perspective", correct: true, id: "q4_b" },
+                    { text: "C) They are more knowledgeable about the company's internal product specifications", correct: false, id: "q4_c" }
+                ],
+                correctId: "q4_b"
+            },
+            {
+                text: "According to the section on scientific marketing research, which characteristic means that the research can be observed, evaluated, and replicated by others?",
+                answers: [
+                    { text: "A) Parsimonious", correct: false, id: "q5_a" },
+                    { text: "B) Replicable", correct: true, id: "q5_b" },
+                    { text: "C) Objective", correct: false, id: "q5_c" }
+                ],
+                correctId: "q5_b"
             }
         ];
 
-        const total = questions.length;
+        const total = questions.length; // = 5
         let currentIdx = 0;
-        let matches = [];
+        let matches = [];        // { qIdx, answerId }
         let quizCompleted = false;
         let confettiTriggered = false;
 
@@ -464,14 +495,15 @@
                 const q = questions[i];
                 const match = matches.find(m => m.qIdx === i);
                 const correct = match && match.answerId === q.correctId;
-                const correctText = q.answers.find(a => a.id === q.correctId)?.text;
+                const correctAnswerObj = q.answers.find(a => a.id === q.correctId);
+                const correctText = correctAnswerObj ? correctAnswerObj.text : "Unknown";
                 if (correct) {
                     fb += `<div style="margin-bottom:8px; color:#2b6e3b;">✓ Question ${i+1}: Correct</div>`;
                 } else {
-                    fb += `<div style="margin-bottom:8px; color:#b13b2d;">✗ Question ${i+1}: Incorrect. Correct: ${correctText}</div>`;
+                    fb += `<div style="margin-bottom:8px; color:#b13b2d;">✗ Question ${i+1}: Incorrect.<br> <span style="margin-left: 16px; font-size:0.85rem;">✔ Correct: ${correctText}</span></div>`;
                 }
             }
-            fb += `<div class="score-highlight">🏅 Score: ${score}/${total} · ${percent}%</div>`;
+            fb += `<div class="score-highlight">🏅 Final Score: ${score}/${total} · ${percent}%</div>`;
             if (perfect) fb += `<div style="margin-top:12px; background:#ffe5b4; padding:8px 16px; border-radius:40px; display:inline-block;">🌟 Perfect! Congratulations! 🎊</div>`;
             
             resultArea.style.display = "block";
@@ -517,7 +549,7 @@
             }
         }
 
-        // Confetti
+        // ========== CONFETTI ==========
         const canvas = document.getElementById("confetti-canvas");
         let ctx = canvas.getContext("2d");
         let animId = null;
@@ -582,6 +614,7 @@
             animId = requestAnimationFrame(animate);
         }
 
+        // attach navigation
         progressItems.forEach((item, idx) => {
             item.onclick = () => navigateTo(idx);
         });

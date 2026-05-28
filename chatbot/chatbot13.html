@@ -1,577 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Topic 13: Communicating Research Findings | Chatbot</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MR Tutor: Communicating Research Findings (Topic 13)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+        body {
+            background: linear-gradient(145deg, #e2e8f0 0%, #d4dee8 100%);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        .chat-card {
+            max-width: 520px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.35);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s ease;
+        }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(145deg, #eef2f5 0%, #dce5ec 100%);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-}
+        .header {
+            padding: 1.2rem 1.5rem 0.8rem;
+            background: white;
+            border-bottom: 1px solid #eef2f8;
+        }
 
-.chat-app {
-    width: 100%;
-    max-width: 1300px;
-    height: 90vh;
-    background: #ffffff;
-    border-radius: 32px;
-    box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25);
-    display: flex;
-    overflow: hidden;
-}
+        .header h1 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #0A2B38;
+            display: inline;
+            letter-spacing: -0.2px;
+        }
 
-.side-panel {
-    width: 290px;
-    background: linear-gradient(180deg, #1a3c2c 0%, #0f2a1e 100%);
-    padding: 28px 20px;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-}
+        .badge {
+            background: #e1ecf4;
+            color: #1c6f9c;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 40px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
 
-.side-panel::-webkit-scrollbar {
-    width: 5px;
-}
-.side-panel::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-}
-.side-panel::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.4);
-    border-radius: 10px;
-}
+        .sub {
+            font-size: 0.75rem;
+            color: #5a6e8a;
+            margin-top: 8px;
+            border-left: 3px solid #2c7da0;
+            padding-left: 10px;
+        }
 
-.brand {
-    margin-bottom: 28px;
-    flex-shrink: 0;
-}
+        .messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 1.2rem 1rem;
+            background: #FCFDFF;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+        }
 
-.brand h2 {
-    font-size: 1.7rem;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-    background: linear-gradient(135deg, #FFFFFF, #c7f0b2);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-}
+        .msg {
+            display: flex;
+            flex-direction: column;
+            max-width: 86%;
+        }
 
-.brand p {
-    font-size: 12px;
-    opacity: 0.85;
-    margin-top: 6px;
-}
+        .user-msg {
+            align-self: flex-end;
+        }
 
-.topic-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-}
+        .bot-msg {
+            align-self: flex-start;
+        }
 
-.topic-section h4 {
-    font-weight: 600;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 0 0 12px 0;
-    opacity: 0.7;
-    flex-shrink: 0;
-}
+        .bubble {
+            padding: 0.7rem 1rem;
+            border-radius: 1.4rem;
+            font-size: 0.88rem;
+            line-height: 1.45;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
 
-.topic-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow-y: auto;
-    flex: 1;
-    padding-right: 5px;
-}
+        .user-bubble {
+            background: #0F2C3D;
+            color: white;
+            border-bottom-right-radius: 6px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+        }
 
-.topic-list::-webkit-scrollbar {
-    width: 4px;
-}
-.topic-list::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-}
-.topic-list::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.4);
-    border-radius: 10px;
-}
+        .bot-bubble {
+            background: #EFF3F8;
+            color: #1f2f3e;
+            border-bottom-left-radius: 6px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.03);
+        }
 
-.topic-chip {
-    background: rgba(255,255,255,0.12);
-    padding: 10px 14px;
-    border-radius: 18px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
+        .time {
+            font-size: 0.6rem;
+            color: #8f9eb2;
+            margin-top: 5px;
+            margin-left: 12px;
+        }
 
-.topic-chip:hover {
-    background: #ffffff;
-    color: #1a3c2c;
-    transform: translateX(4px);
-}
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 0.6rem 1rem;
+            background: #EFF3F8;
+            width: fit-content;
+            border-radius: 2rem;
+            border-bottom-left-radius: 6px;
+            align-items: center;
+        }
+        .typing-indicator span {
+            width: 7px;
+            height: 7px;
+            background: #8a9bb0;
+            border-radius: 50%;
+            display: inline-block;
+            animation: wave 1.3s infinite ease-in-out;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes wave {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+            30% { transform: translateY(-4px); opacity: 1; }
+        }
 
-.chat-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background: #fefefe;
-    overflow: hidden;
-}
+        .input-area {
+            display: flex;
+            gap: 10px;
+            padding: 0.9rem 1.2rem;
+            background: white;
+            border-top: 1px solid #eef2f7;
+        }
+        .input-area input {
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            padding: 12px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            outline: none;
+            transition: 0.2s;
+            background: #fefefe;
+        }
+        .input-area input:focus {
+            border-color: #2c7da0;
+            box-shadow: 0 0 0 2px rgba(44,125,160,0.2);
+        }
+        .input-area button {
+            background: #0F2C3D;
+            border: none;
+            color: white;
+            padding: 0 22px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 0.3px;
+        }
+        .input-area button:hover {
+            background: #1f526b;
+            transform: scale(0.97);
+        }
+        .footer {
+            font-size: 0.6rem;
+            text-align: center;
+            padding: 8px 12px;
+            color: #7c8ea0;
+            background: #fafcff;
+            border-top: 1px solid #edf2f8;
+        }
 
-.chat-header {
-    padding: 18px 28px;
-    border-bottom: 1px solid #e9edf2;
-    background: white;
-    flex-shrink: 0;
-}
+        .messages::-webkit-scrollbar {
+            width: 4px;
+        }
+        .messages::-webkit-scrollbar-track {
+            background: #eef2f7;
+            border-radius: 10px;
+        }
+        .messages::-webkit-scrollbar-thumb {
+            background: #cbd9e6;
+            border-radius: 10px;
+        }
 
-.chat-header h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1f2e3a;
-}
-
-.chat-header span {
-    font-size: 0.75rem;
-    color: #5c6f87;
-}
-
-.messages-area {
-    flex: 1;
-    overflow-y: auto;
-    padding: 24px 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    background: #fafcff;
-}
-
-.messages-area::-webkit-scrollbar {
-    width: 6px;
-}
-.messages-area::-webkit-scrollbar-track {
-    background: #eef2f8;
-    border-radius: 8px;
-}
-.messages-area::-webkit-scrollbar-thumb {
-    background: #b9c8b2;
-    border-radius: 8px;
-}
-
-.message-bubble {
-    max-width: 80%;
-    padding: 12px 18px;
-    border-radius: 24px;
-    line-height: 1.5;
-    font-size: 0.95rem;
-    word-break: break-word;
-}
-
-.bot-msg {
-    background: #f0f4f9;
-    border: 1px solid #e2e8f0;
-    align-self: flex-start;
-    border-bottom-left-radius: 5px;
-    color: #1e2a3a;
-}
-
-.user-msg {
-    background: #1a5d3c;
-    color: white;
-    align-self: flex-end;
-    border-bottom-right-radius: 5px;
-}
-
-.input-row {
-    padding: 16px 24px 24px 24px;
-    border-top: 1px solid #eef2f8;
-    background: white;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-.input-row input {
-    flex: 1;
-    padding: 14px 18px;
-    border-radius: 60px;
-    border: 1px solid #cbd5e1;
-    font-family: inherit;
-    font-size: 0.9rem;
-    outline: none;
-}
-
-.input-row input:focus {
-    border-color: #1a5d3c;
-    box-shadow: 0 0 0 3px rgba(26,93,60,0.2);
-}
-
-.input-row button {
-    background: #1a5d3c;
-    border: none;
-    padding: 12px 26px;
-    border-radius: 60px;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.input-row button:hover {
-    background: #0e3f28;
-}
-
-@media (max-width: 700px) {
-    .side-panel { display: none; }
-    .message-bubble { max-width: 90%; }
-}
-</style>
+        @media (max-width: 480px) {
+            .chat-card { max-width: 100%; border-radius: 1.5rem; }
+            .messages { height: 460px; }
+            .bubble { font-size: 0.85rem; }
+        }
+    </style>
 </head>
 <body>
+<div class="chat-card">
+    <div class="header">
+        <h1>Marketing Research AI</h1><span class="badge">Topic 13: Communicating Findings</span>
+        <div class="sub">📄 Research Report • Executive Summary • Oral Presentation • Principles</div>
+    </div>
 
-<div class="chat-app">
-    <div class="side-panel">
-        <div class="brand">
-            <h2>📊 Marketing Research<br>& Analytics AI</h2>
-            <p>Topic 13: Communicating Research Findings</p>
-        </div>
-        <div class="topic-section">
-            <h4>📚 TOPIC 13: KEY CONCEPTS</h4>
-            <div class="topic-list">
-                <div class="topic-chip" data-question="Why is reporting important in marketing research?">📋 Importance of Reporting (4 Reasons)</div>
-                <div class="topic-chip" data-question="What are the parts of a research report?">📑 3 Parts of a Research Report</div>
-                <div class="topic-chip" data-question="What is included in the preliminary pages?">📄 Part I: Preliminary Pages (Title, TOC, Executive Summary)</div>
-                <div class="topic-chip" data-question="What is an executive summary?">📝 Executive Summary (5 pages, major findings)</div>
-                <div class="topic-chip" data-question="What are the 5 chapters of a research report?">📚 Part II: 5 Chapters (Introduction to Conclusion)</div>
-                <div class="topic-chip" data-question="What to include in Chapter 1 Introduction?">📖 Chapter 1: Introduction (Problem, Objectives, Scope)</div>
-                <div class="topic-chip" data-question="What to include in Chapter 2 Literature Review?">📚 Chapter 2: Literature Review & Framework</div>
-                <div class="topic-chip" data-question="What to include in Chapter 3 Methodology?">🔬 Chapter 3: Research Methodology</div>
-                <div class="topic-chip" data-question="What to include in Chapter 4 Findings?">📊 Chapter 4: Data Analysis & Findings</div>
-                <div class="topic-chip" data-question="What to include in Chapter 5 Conclusion?">🎯 Chapter 5: Conclusions & Recommendations</div>
-                <div class="topic-chip" data-question="What are the 6 principles for writing a good report?">✍️ 6 Principles of Good Report Writing</div>
-                <div class="topic-chip" data-question="How to prepare for an oral presentation?">🎤 Oral Presentation Guidelines (7 Tips)</div>
-                <div class="topic-chip" data-question="What are visual aids in presentation?">📊 Visual Aids (Tables, Graphs, Charts)</div>
-                <div class="topic-chip" data-question="What is the difference between written report and oral presentation?">⚖️ Written Report vs Oral Presentation</div>
-                <div class="topic-chip" data-question="What to include in references and appendices?">📎 Part III: References & Appendices</div>
-            </div>
+    <div class="messages" id="messages">
+        <div class="msg bot-msg">
+            <div class="bubble bot-bubble">Hi! I'm your marketing research assistant.</div>
+            <div class="time">now</div>
         </div>
     </div>
 
-    <div class="chat-main">
-        <div class="chat-header">
-            <h3>📊 Topic 13: Communicating Research Findings</h3>
-            <span>Based on your lecture notes | Research Report Format | 3 Parts | 5 Chapters | Oral Presentation Guidelines</span>
-        </div>
-        <div class="messages-area" id="chatMessages">
-            <div class="message-bubble bot-msg">
-                👋 <strong>Welcome to Topic 13!</strong> I'm your Marketing Research AI for <strong>Communicating Research Findings: Comprehensive Marketing Research Report</strong>.<br><br>
-                📖 Based on your lecture notes, I can teach you about:<br>
-                • <strong>Importance of Reporting</strong> - Historical record, guide decisions, quality evaluation, research service<br>
-                • <strong>3 Parts of a Research Report</strong> - Preliminary pages, Contents (5 chapters), References<br>
-                • <strong>Executive Summary</strong> - Major findings, conclusions, recommendations (approx 5 pages)<br>
-                • <strong>5 Chapters</strong> - Introduction, Literature Review, Methodology, Findings, Conclusion<br>
-                • <strong>6 Principles of Report Writing</strong> - Audience, clarity, simplicity, organized, tenses, check<br>
-                • <strong>Oral Presentation Guidelines</strong> - Preparation, organization, voice, body language, language, time, visual aids<br><br>
-                Ask me anything from Topic 13, or click any topic on the left!
-            </div>
-        </div>
-        <div class="input-row">
-            <input type="text" id="userQuery" placeholder="e.g., What are the 5 chapters of a research report? or How to write an executive summary?..." autocomplete="off">
-            <button id="sendBtn">Send →</button>
-        </div>
+    <div class="input-area">
+        <input type="text" id="input" placeholder="e.g., What is executive summary?" autocomplete="off">
+        <button id="send">Send</button>
     </div>
+    <div class="footer">📘 answers based on "Topic 13 - Communicating Research Findings" (report writing & oral presentation)</div>
 </div>
 
 <script>
-    const messagesContainer = document.getElementById('chatMessages');
-    const userInput = document.getElementById('userQuery');
-    const sendButton = document.getElementById('sendBtn');
-
-    function scrollToBottom() {
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    // Helper function to convert markdown-style **bold** to HTML <strong> tags
+    function formatBold(text) {
+        return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     }
 
-    function appendMessage(text, sender) {
-        const msgDiv = document.createElement('div');
-        msgDiv.classList.add('message-bubble');
-        msgDiv.classList.add(sender === 'user' ? 'user-msg' : 'bot-msg');
-        msgDiv.innerHTML = text;
-        messagesContainer.appendChild(msgDiv);
-        scrollToBottom();
+    // Comprehensive knowledge base derived from Topic 13 PDF
+    function getCommunicationAnswer(userQuery) {
+        let q = userQuery.toLowerCase().trim();
+        
+        // --- Importance of report and presentation ---
+        if ((q.includes("importance") || q.includes("why")) && (q.includes("report") || q.includes("presentation")) && !q.includes("executive")) {
+            return formatBold("**Importance of Research Report and Presentation (4 Reasons)**\n\n1️⃣ **Historical Record** – Tangible proof of work done; reference for future research.\n\n2️⃣ **Guide Management Decisions** – Helps management understand the problem and make better decisions. Poor reporting can lead to organizational losses.\n\n3️⃣ **Quality Evaluation** – Managers evaluate the entire project based on report and presentation quality.\n\n4️⃣ **Research Service** – Determines whether clients will use the researcher's services again.\n\n**Key point:** An impressive report with a poor presentation (or vice versa) will not provide maximum satisfaction.");
+        }
+        
+        // --- Report Format / Structure (3 Parts) ---
+        if ((q.includes("report format") || q.includes("structure of report") || q.includes("parts of report"))) {
+            return formatBold("**Research Report Structure (3 Parts)**\n\n**PART I – Preliminary Pages**\n• Title page • Acknowledgements • Letter of transmittal • Letter of authorization • Table of contents • List of tables/graphs/appendices/exhibits • Executive Summary\n\n**PART II – Contents (5 Chapters)**\nChapter 1: Introduction (problem, objectives, significance)\nChapter 2: Literature Review & Theoretical Framework\nChapter 3: Research Methodology\nChapter 4: Data Analysis & Findings\nChapter 5: Conclusions & Recommendations\n\n**PART III – References & Appendices**\n• List of references • Sample questionnaire • Pictures, forms");
+        }
+        
+        // --- Executive Summary ---
+        if ((q.includes("executive summary") || (q.includes("summary") && q.includes("report")))) {
+            return formatBold("**Executive Summary**\n\nA concise overview of the entire research report, placed in the preliminary pages.\n\n**Must include:**\n• Major findings\n• Conclusions\n• Recommendations\n\n**Length:** About 5 pages (ideal)\n\n**Purpose:** Helps busy managers obtain a comprehensive explanation of overall findings without reading the whole report.\n\n**Important:** No new material should be added – only summarize what is in the report.");
+        }
+        
+        // --- Preliminary Pages elements ---
+        if ((q.includes("preliminary pages") || q.includes("title page") || q.includes("table of contents") || q.includes("letter of transmittal"))) {
+            return formatBold("**Preliminary Pages Elements**\n\n• **Title Page** – Study title, researcher name/address, recipient name, release date\n• **Acknowledgements** – Recognize parties who contributed to the research\n• **Letter of Transmittal** – Formally inform submission of report\n• **Letter of Authorization** – Gain approval from sponsors\n• **Table of Contents** – List of contents with page numbers\n• **List of Tables/Graphs/Appendices/Exhibits** – Help audience find references\n• **Executive Summary** – Major findings, conclusions, recommendations\n\nThese front pages create the first impression – they must be professionally done!");
+        }
+        
+        // --- Chapter 1: Introduction ---
+        if ((q.includes("chapter 1") || (q.includes("introduction") && q.includes("report"))) && !q.includes("executive")) {
+            return formatBold("**Chapter 1: Introduction**\n\nKey components:\n\n• **Problem Definition** – Identify and define the problem\n• **Problem Statement** – Clear statement of the issue\n• **Research Questions** – What the research seeks to answer\n• **Research Objectives** – What the research aims to achieve\n• **Significance of the Study** – Importance and contribution\n• **Definition of Terms** – Key terms with literature citations\n• **Scope of the Study** – Boundaries of the research\n• **Limitations** – Unavoidable constraints\n\nClear objectives serve as a measure of successful research completion.");
+        }
+        
+        // --- Chapter 2: Literature Review ---
+        if ((q.includes("chapter 2") || (q.includes("literature review") && q.includes("report")))) {
+            return formatBold("**Chapter 2: Literature Review**\n\nContents:\n\n• **Theoretical background** of the problem area\n• **Related literature** – Prior studies and findings\n• **Proper reasoning** supported by prior research\n• **Theoretical/Conceptual Framework** – Graphical model showing variables and relationships\n• **Hypotheses** – Testable propositions derived from the framework\n\nVariables, their roles, and relationships among variables are explained with relevant literature citations.");
+        }
+        
+        // --- Chapter 3: Research Methodology ---
+        if ((q.includes("chapter 3") || (q.includes("methodology") && q.includes("report")))) {
+            return formatBold("**Chapter 3: Research Methodology**\n\nComponents:\n\n• **Research Design** – Exploratory, descriptive, or causal\n• **Time Horizon** – Cross-sectional or longitudinal\n• **Unit of Analysis** – Individual, dyad, group, organization\n• **Measurement** – Scales and operational definitions\n• **Instrumentation** – Development or sources of measurement\n• **Sampling** – Technique, frame, and sample size\n• **Data Collection** – Methods and procedures\n• **Data Preparation** – Editing, coding, cleaning\n• **Data Analysis Strategies** – Statistical techniques to be used\n\nThis chapter informs readers HOW the research was conducted.");
+        }
+        
+        // --- Chapter 4: Data Analysis and Findings ---
+        if ((q.includes("chapter 4") || (q.includes("findings") && q.includes("chapter")))) {
+            return formatBold("**Chapter 4: Data Analysis and Findings**\n\nThe integral part of the report where results are revealed and interpreted.\n\n**Contents:**\n• Results of statistical analyses\n• Findings from the data\n• Interpretations of findings\n• Discussions in relation to theories and past research\n\n**Presentation tools:** Tables, charts, graphs\n\n**Software examples:** SPSS, AMOS, SmartPLS\n\nFindings should be properly and meaningfully interpreted to yield interesting insights.");
+        }
+        
+        // --- Chapter 5: Conclusions and Recommendations ---
+        if ((q.includes("chapter 5") || (q.includes("conclusions") && q.includes("recommendations")))) {
+            return formatBold("**Chapter 5: Conclusions and Recommendations**\n\nThe final chapter of the report.\n\n**Conclusions:**\n• Based on research objectives\n• Discuss findings in support of or against previous research\n• Writer's biases and desires should NOT influence conclusions\n\n**Recommendations:**\n• Practical suggestions for decision makers\n• How to address the problem\n• Strategic actions to overcome the problem\n\n**Future Research:** Directions for subsequent studies");
+        }
+        
+        // --- Principles of Report Writing (6 principles) ---
+        if ((q.includes("principles of report writing") || q.includes("report writing principles"))) {
+            return formatBold("**Principles of Report Writing (6 Criteria)**\n\n1️⃣ **Audience** – Write with particular audiences in mind. Busy managers focus on executive summary.\n\n2️⃣ **Clarity** – Without clarity, report is meaningless. Unclear reports can lead to wrong decisions.\n\n3️⃣ **Simplicity** – Use simple but comprehensive language. Avoid jargon. Quality over length.\n\n4️⃣ **Organized** – Sequential format showing research direction. Use tables/graphs. Professional appearance.\n\n5️⃣ **Tenses** – Consistent usage: past tense for past records, present tense for general truth or referring to tables.\n\n6️⃣ **Check** – Read and re-check by others to avoid mistakes and ensure intended meaning.");
+        }
+        
+        // --- Oral Presentation importance and timing ---
+        if ((q.includes("oral presentation") && (q.includes("importance") || q.includes("timing") || q.includes("duration")))) {
+            return formatBold("**Oral Presentation**\n\n**Duration:** 20-30 minutes (enough to cover important findings)\n\n**Why important:**\n• Highlights results of the lengthy report\n• Keeps audience attentive while delivering accurate facts\n• Great ideas have no value unless communicated well\n\n**What is graded:**\n• **Content** – Quality, logical flow, appropriateness, no mistakes\n• **Delivery** – Audience attentiveness, visual aids clarity, appearance, persuasiveness, body language\n\n**Warning:** A poor presentation can cause a well-researched project to be perceived as poorly done.");
+        }
+        
+        // --- Principles of Oral Presentation (7 principles) ---
+        if ((q.includes("oral presentation principles") || q.includes("principles of oral presentation") || q.includes("presentation guidelines"))) {
+            return formatBold("**Principles of Oral Presentation (7 Guidelines)**\n\n1️⃣ **Preparation** – Plan what to say, when to speak, how to use visual aids. Always have a backup plan.\n\n2️⃣ **Organizing Content** – Introduce yourself, provide clear outline. KISS (Keep It Short and Simple).\n\n3️⃣ **Voice** – Clear projection, no shouting. Voice variation for important points. Control speed.\n\n4️⃣ **Body Language** – Positive posture shows confidence. Eye contact is extremely important.\n\n5️⃣ **Language** – Explain technical terms if used. Avoid filler words. Use simple language.\n\n6️⃣ **Time Management** – Allocate time per topic (e.g., 5 min problem, 5 min lit review, 5 min methodology, 10 min findings, 5 min Q&A).\n\n7️⃣ **Visual Aids** – Tables and graphs help listeners see the whole picture and make quick comparisons.");
+        }
+        
+        // --- Body Language in presentation ---
+        if ((q.includes("body language") && q.includes("presentation"))) {
+            return formatBold("**Body Language in Oral Presentation**\n\nBody language speaks louder than words.\n\n**Types of gestures:**\n• **Descriptive gestures** – Clarify or enhance verbal communication\n• **Emphatic gestures** – Emphasize what has been said\n• **Prompting gestures** – Elicit desired response from audience\n\n**Key elements:**\n• Positive posture = Confidence\n• Good eye contact = Persuasion, gains continual commitment\n• Sense of humor = Keeps boredom away\n\nEye contact is one of the best ways to persuade the audience.");
+        }
+        
+        // --- Voice projection ---
+        if ((q.includes("voice") && q.includes("presentation"))) {
+            return formatBold("**Voice in Oral Presentation**\n\n**Guidelines:**\n• Project clearly – no shouting\n• If using microphone, control volume (no need to speak loudly)\n• Use voice variation to stress important points\n• Control speed – speaking too fast with repeated words shows nervousness\n\n**Warning:** Audiences psychologically 'reject' presentations with monotonous voice as if reading from text.");
+        }
+        
+        // --- Visual aids ---
+        if ((q.includes("visual aids") && q.includes("presentation"))) {
+            return formatBold("**Visual Aids in Oral Presentation**\n\n**Purpose:** Facilitate good understanding, especially for marketing practitioners.\n\n**Recommended:** Tables and graphs\n\n**Benefits:**\n• Help listeners see the whole picture\n• Enable quick comparisons and evaluations\n• Avoids audience having to evaluate results themselves during the short presentation\n\n**Preparation tip:** Have a backup plan if technology fails (e.g., handouts or transparencies).");
+        }
+        
+        // --- Time allocation for presentation ---
+        if ((q.includes("time allocation") || (q.includes("presentation") && q.includes("minutes")))) {
+            return formatBold("**Time Allocation for 30-Minute Presentation**\n\n• Problem statement, research questions/objectives – **5 minutes**\n• Literature review and research model – **5 minutes**\n• Methodology – **5 minutes**\n• Findings and conclusions – **10 minutes**\n• Questions and answers – **5 minutes**\n\nManaging time prevents audience distraction and avoids unnecessary content.");
+        }
+        
+        // --- References and Appendices ---
+        if ((q.includes("references") || q.includes("appendices")) && (q.includes("report") || q.includes("part iii"))) {
+            return formatBold("**Part III: References & Appendices**\n\n**References:**\n• List of all sources cited in the report\n• Use common formats: APA or Harvard system\n• Includes journals, periodicals, books, articles\n\n**Appendices:**\n• Sample questionnaire\n• Pictures\n• Forms\n• Other supporting documents for reader reference\n\nMany have problems writing references using the correct format according to source types.");
+        }
+        
+        // --- Difference between written report and oral presentation ---
+        if ((q.includes("difference") && (q.includes("written") && q.includes("oral"))) || (q.includes("report vs presentation"))) {
+            return formatBold("**Written Report vs Oral Presentation**\n\n**Written Report:**\n• More detailed in nature\n• Reports research process and findings with discussions\n• Serves as historical record\n\n**Oral Presentation:**\n• More straightforward\n• Stresses providing information that reveals what audience wants to know\n• Highlights results of lengthy report\n\nBoth are important – an impressive report with a poor presentation (or vice versa) will not provide maximum satisfaction.");
+        }
+        
+        // --- Q&A session ---
+        if ((q.includes("question and answer") || q.includes("q&a") || q.includes("answering questions"))) {
+            return formatBold("**Question and Answer Session**\n\n**Guidelines:**\n• Control your emotions – some questions may sound irrelevant or challenging\n• Keep calm\n• Answer questions based on results and findings\n• A good presentation limits the need for audience questions (presented well and clear)\n\n**Remember:** Great ideas have no value unless they are communicated well to the audience.");
+        }
+        
+        // --- Default fallback ---
+        return formatBold("**Topic 13: Communicating Research Findings**\n\nTry asking about:\n• Importance of research report and presentation (4 reasons)\n• Report format / structure (3 parts: preliminary, contents, references)\n• Executive summary (purpose, length, contents)\n• Preliminary pages elements\n• Chapter 1: Introduction (problem, objectives, significance)\n• Chapter 2: Literature Review & framework\n• Chapter 3: Research Methodology\n• Chapter 4: Data Analysis & Findings\n• Chapter 5: Conclusions & Recommendations\n• Principles of report writing (6 criteria: audience, clarity, simplicity, organized, tenses, check)\n• Oral presentation (duration, importance, what is graded)\n• Principles of oral presentation (7 guidelines: preparation, organizing, voice, body language, language, time management, visual aids)\n• Body language and eye contact\n• Visual aids and backup plans\n• Time allocation for presentation\n• Q&A session\n\nJust type your question!");
     }
 
-    function getBotAnswer(questionText) {
-        const q = questionText.toLowerCase();
-        
-        // Importance of Reporting
-        if ((q.includes('importance') && q.includes('reporting')) || (q.includes('why') && q.includes('report')) || q.includes('reasons for reporting')) {
-            return `<b>📋 Importance of Reporting in Marketing Research</b><br><br>
-            A useful research that is not communicated is equal to an incomplete work.<br><br>
-            <b>4 Major Reasons for Good Reporting:</b><br><br>
-            <b>1. Historical Record</b> - Tangible result/proof of work done. Reference for future research.<br><br>
-            <b>2. Guide Management Decisions</b> - Comprehensive report helps management understand problems better and make better decisions. Poor writing can lead to organizational losses.<br><br>
-            <b>3. Quality Evaluation</b> - Managers evaluate entire project based on quality of report and presentation.<br><br>
-            <b>4. Research Service</b> - Management's decision to use researcher again depends on perceived usefulness of report and presentation.`;
-        }
-        
-        // 3 Parts of Research Report
-        if ((q.includes('parts') && q.includes('report')) || q.includes('3 parts') || q.includes('structure of report')) {
-            return `<b>📑 3 Parts of a Comprehensive Research Report</b><br><br>
-            <b>PART I - Preliminary Pages:</b><br>
-            Title page, Acknowledgements, Letter of transmittal, Letter of authorization, Table of contents, List of tables, List of graphs, List of appendices, List of exhibits, Executive Summary (major findings, conclusions, recommendations)<br><br>
-            <b>PART II - The Contents (5 Chapters):</b><br>
-            Chapter 1: Introduction<br>
-            Chapter 2: Literature Review<br>
-            Chapter 3: Research Methodology<br>
-            Chapter 4: Data Analysis and Findings<br>
-            Chapter 5: Conclusions and Recommendations<br><br>
-            <b>PART III - References:</b><br>
-            List of references, Appendices (sample questionnaire, pictures, forms)`;
-        }
-        
-        // Preliminary Pages / Executive Summary
-        if (q.includes('preliminary') || q.includes('executive summary') || (q.includes('title page') && !q.includes('chapter'))) {
-            return `<b>📄 Part I: Preliminary Pages</b><br><br>
-            <b>Title Page:</b> Study title, researcher name/address, recipient name, date of release<br>
-            <b>Acknowledgements:</b> Recognize parties who contributed to the research<br>
-            <b>Letter of Transmittal & Authorization:</b> Formal submission and approval letters<br>
-            <b>Table of Contents:</b> List of contents with reference pages<br>
-            <b>Lists:</b> Tables, graphs, appendices, exhibits<br><br>
-            <b>Executive Summary (Critical!):</b><br>
-            • Must include major findings, conclusions, and recommendations<br>
-            • No addition of new material<br>
-            • Ideal length: <b>approximately 5 pages</b><br>
-            • Helps busy managers get comprehensive explanation without reading full report<br>
-            • First impression matters - these pages are what audiences flip through first!`;
-        }
-        
-        // 5 Chapters
-        if ((q.includes('5 chapters') || q.includes('chapters of report')) && !q.includes('chapter 1')) {
-            return `<b>📚 Part II: 5 Chapters of Research Report</b><br><br>
-            <b>Chapter 1: Introduction</b> - Problem definition, problem statement, research questions, research objectives, significance of study, definition of terms, scope, limitations<br><br>
-            <b>Chapter 2: Literature Review</b> - Theoretical background, prior research findings, theoretical framework, hypotheses development<br><br>
-            <b>Chapter 3: Research Methodology</b> - Research design, measurement, instrumentation, sampling, data collection, data preparation, analysis strategies<br><br>
-            <b>Chapter 4: Data Analysis & Findings</b> - Results, findings, interpretations, discussions (tables, charts, statistical outputs)<br><br>
-            <b>Chapter 5: Conclusions & Recommendations</b> - Conclusions based on research objectives, recommendations for decision makers, directions for future research`;
-        }
-        
-        // Chapter 1
-        if (q.includes('chapter 1') || (q.includes('introduction') && q.includes('report'))) {
-            return `<b>📖 Chapter 1: Introduction</b><br><br>
-            <b>Problem Definition & Problem Statement:</b> Clearly defined problem tells researcher what to do next. Succinct statement (1-2 paragraphs).<br><br>
-            <b>Research Questions:</b> What, why, how questions guiding the research.<br><br>
-            <b>Research Objectives:</b> Clear direction of what to achieve. Serves as measure of successful research completion.<br><br>
-            <b>Significance of the Study:</b> Importance and contributions of the research.<br><br>
-            <b>Definition of Terms:</b> List terms with short explanations and literature citations.<br><br>
-            <b>Scope & Limitations:</b> Boundaries of study and unavoidable constraints.`;
-        }
-        
-        // Chapter 2
-        if (q.includes('chapter 2') || q.includes('literature review') && q.includes('report')) {
-            return `<b>📚 Chapter 2: Literature Review</b><br><br>
-            • Theoretical background of the problem area presented with reference to related literature<br>
-            • Proper reasoning on findings with help of prior studies<br>
-            • <b>Theoretical Framework</b> - Schematic diagram showing variables and relationships<br>
-            • <b>Hypotheses Development</b> - Testable statements about relationships between variables<br>
-            • Meanings of variables, roles of variables, and associations/relationships explained with relevant literature citations<br><br>
-            <i>"The theoretical framework and hypotheses will follow suit."</i>`;
-        }
-        
-        // Chapter 3
-        if (q.includes('chapter 3') || q.includes('methodology') && q.includes('report')) {
-            return `<b>🔬 Chapter 3: Research Methodology</b><br><br>
-            <b>Research Design:</b> Exploratory, descriptive, or causal; qualitative or quantitative<br>
-            <b>Time Horizon:</b> Cross-sectional or longitudinal<br>
-            <b>Unit of Analysis:</b> Individual, dyad, group, or organization<br>
-            <b>Measurement & Instrumentation:</b> Development or sources of measurement used<br>
-            <b>Sampling:</b> Sampling technique, sampling frame, sample size<br>
-            <b>Data Collection:</b> Methods and procedures<br>
-            <b>Data Preparation & Analysis Strategies:</b> How data will be processed and analyzed<br><br>
-            <i>This chapter informs the reader of how the research was conducted.</i>`;
-        }
-        
-        // Chapter 4
-        if (q.includes('chapter 4') || q.includes('findings') || q.includes('data analysis') && q.includes('report')) {
-            return `<b>📊 Chapter 4: Data Analysis and Findings</b><br><br>
-            This is the <b>integral part</b> of the report where the researcher reveals results with interpretations.<br><br>
-            <b>Content:</b><br>
-            • Results from statistical analysis (using SPSS, AMOS, SmartPLS, etc.)<br>
-            • Data presented using tables and charts (most frequently used tools)<br>
-            • Proper and meaningful interpretation of findings<br>
-            • Discussions in relation to theories and relevant past research findings<br><br>
-            <i>The findings should be discussed in relation to the theories and the relevant past research findings.</i>`;
-        }
-        
-        // Chapter 5
-        if (q.includes('chapter 5') || q.includes('conclusion') || q.includes('recommendations')) {
-            return `<b>🎯 Chapter 5: Conclusions and Recommendations</b><br><br>
-            <b>Conclusions:</b><br>
-            • Based on research objectives<br>
-            • Discussions of findings (support of previous findings or otherwise)<br>
-            • Writer's biases and desires should NOT influence conclusions<br><br>
-            <b>Recommendations:</b><br>
-            • Researchers' ideas on how decision makers should address the problem<br>
-            • Actionable suggestions to overcome the problem at hand<br><br>
-            <b>Directions for Future Research:</b><br>
-            • Suggestions for further studies to extend or improve current research`;
-        }
-        
-        // 6 Principles of Report Writing
-        if ((q.includes('principles') || q.includes('criteria') || q.includes('guidelines')) && q.includes('report')) {
-            return `<b>✍️ 6 Principles for Writing a Good Report</b><br><br>
-            <b>1. Audience</b> - Write with particular audiences in mind. Busy managers concentrate on executive summary.<br><br>
-            <b>2. Clarity</b> - Without clarity, report is meaningless. Unclear reports can lead managers to wrong decisions.<br><br>
-            <b>3. Simplicity</b> - Keep language simple but comprehensive. Avoid difficult words/jargons. Quality counts, not length.<br><br>
-            <b>4. Organized</b> - Format must be in sequence. Use tables and graphs to visualize results. Professional appearance.<br><br>
-            <b>5. Tenses</b> - Consistent tenses: past tense for past records, present tense for general truth or referring to tables/figures.<br><br>
-            <b>6. Check</b> - Read through and re-check by others. Ensure content is understood as intended. Correct and rephrase if needed.`;
-        }
-        
-        // Oral Presentation Guidelines
-        if ((q.includes('oral presentation') || q.includes('presentation guidelines') || q.includes('how to present'))) {
-            return `<b>🎤 Oral Presentation Guidelines (7 Key Areas)</b><br><br>
-            <b>1. Preparation</b> - Plan what to say, when to speak, use of visual aids. Always have a backup plan (handouts if projector fails).<br><br>
-            <b>2. Organizing Content</b> - Introduce yourself, provide clear outline (KISS: Keep It Short and Simple). Don't reveal everything at introduction.<br><br>
-            <b>3. Voice</b> - Clear projection, avoid shouting. Voice variation for important points. Control speed; nervousness shows as fast speech/repetition.<br><br>
-            <b>4. Body Language</b> - Positive posture shows confidence. Gestures: descriptive (clarify), emphatic (emphasize), prompting (elicit response).<b> Eye contact</b> is extremely important for persuasion.<br><br>
-            <b>5. Language</b> - Explain technical terms. Avoid short forms and filler words. Use simple words.<br><br>
-            <b>6. Time Management</b> - Typical 30-min presentation: Problem/Objectives (5 min), Literature/Framework (5 min), Methodology (5 min), Findings/Conclusion (10 min), Q&A (5 min)<br><br>
-            <b>7. Visual Aids</b> - Tables and graphs help listeners see the whole picture and make quick comparisons.`;
-        }
-        
-        // Visual Aids
-        if (q.includes('visual aids') || (q.includes('tables') && q.includes('graphs'))) {
-            return `<b>📊 Visual Aids in Oral Presentation</b><br><br>
-            Visual aids facilitate good understanding for the audience, especially marketing practitioners.<br><br>
-            <b>Benefits:</b><br>
-            • Help listeners see the whole picture<br>
-            • Enable quick comparisons and evaluations<br>
-            • Make abstract data concrete and understandable<br><br>
-            <b>Types:</b><br>
-            • Tables - for precise numerical comparisons<br>
-            • Bar charts - for comparing categories<br>
-            • Line graphs - for showing trends over time<br>
-            • Pie charts - for showing proportions<br><br>
-            <i>Evaluating results during presentation is harder without visual aids given the short time.</i>`;
-        }
-        
-        // Written Report vs Oral Presentation
-        if ((q.includes('written report') && q.includes('oral')) || (q.includes('difference between') && (q.includes('report') || q.includes('presentation')))) {
-            return `<b>⚖️ Written Report vs Oral Presentation</b><br><br>
-            <b>Written Report:</b><br>
-            • More detailed in nature<br>
-            • Reports research process and findings with discussions<br>
-            • Includes all 3 parts (preliminary, 5 chapters, references)<br>
-            • Historical record and reference document<br>
-            • Can be re-read and studied<br><br>
-            <b>Oral Presentation:</b><br>
-            • More straightforward and concise<br>
-            • Stresses main concern: what audience wants to know<br>
-            • Typically 20-30 minutes<br>
-            • Emphasizes content quality AND delivery<br>
-            • Dress, mannerisms, gestures, voice modulation are important<br><br>
-            <i>"An impressive report with a poor presentation will not provide maximum satisfaction and vice versa."</i>`;
-        }
-        
-        // References and Appendices
-        if (q.includes('references') || q.includes('appendices')) {
-            return `<b>📎 Part III: References & Appendices</b><br><br>
-            <b>List of References:</b><br>
-            • Alphabetical list of all sources cited in report<br>
-            • Use proper format (APA or Harvard system)<br>
-            • Includes journals, periodicals, books, articles<br>
-            • Common problem: writing references using correct format according to source type<br><br>
-            <b>Appendices:</b><br>
-            • Sample questionnaire<br>
-            • Pictures<br>
-            • Forms<br>
-            • Supporting documents for reader's reference<br><br>
-            <i>Many have problems writing references using the right format according to the types of sources.</i>`;
-        }
-        
-        // Default
-        return `<b>📘 Topic 13: Communicating Research Findings</b><br><br>
-        Based on your lecture notes, I can help you with:<br><br>
-        📋 <b>Importance of Reporting</b> - 4 reasons: historical record, guide decisions, quality evaluation, research service<br>
-        📑 <b>3 Parts of Report</b> - Preliminary pages, 5 chapters, references/appendices<br>
-        📄 <b>Executive Summary</b> - ~5 pages, major findings, conclusions, recommendations (no new material)<br>
-        📚 <b>5 Chapters</b> - Introduction, Literature Review, Methodology, Findings, Conclusion<br>
-        📖 <b>Chapter 1</b> - Problem statement, objectives, significance, scope, limitations<br>
-        📚 <b>Chapter 2</b> - Literature review, theoretical framework, hypotheses<br>
-        🔬 <b>Chapter 3</b> - Research design, measurement, sampling, data collection<br>
-        📊 <b>Chapter 4</b> - Data analysis, findings, interpretations, discussions<br>
-        🎯 <b>Chapter 5</b> - Conclusions, recommendations, future research<br>
-        ✍️ <b>6 Principles</b> - Audience, clarity, simplicity, organized, tenses, check<br>
-        🎤 <b>Oral Presentation</b> - Preparation, organization, voice, body language, language, time, visual aids<br>
-        📊 <b>Visual Aids</b> - Tables, graphs, charts for better understanding<br>
-        ⚖️ <b>Written vs Oral</b> - Detailed vs straightforward<br><br>
-        Try asking: <i>"What are the 5 chapters of a research report?"</i> or <i>"How to prepare for an oral presentation?"</i> or <i>"What is an executive summary?"</i>`;
+    // UI elements
+    const messagesDiv = document.getElementById('messages');
+    const inputEl = document.getElementById('input');
+    const sendBtn = document.getElementById('send');
+
+    function addMessage(text, isUser) {
+        const messageWrapper = document.createElement('div');
+        messageWrapper.className = `msg ${isUser ? 'user-msg' : 'bot-msg'}`;
+        const formattedText = text.replace(/\n/g, '<br>');
+        messageWrapper.innerHTML = `
+            <div class="bubble ${isUser ? 'user-bubble' : 'bot-bubble'}">${formattedText}</div>
+            <div class="time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+        `;
+        messagesDiv.appendChild(messageWrapper);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
 
-    function escapeHtmlSimple(str) {
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
+    function showTypingAndRespond(questionText) {
+        const typingWrapper = document.createElement('div');
+        typingWrapper.className = 'msg bot-msg';
+        typingWrapper.id = 'typingMsg';
+        typingWrapper.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+        messagesDiv.appendChild(typingWrapper);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
+        setTimeout(() => {
+            const typingElem = document.getElementById('typingMsg');
+            if (typingElem) typingElem.remove();
+            const answer = getCommunicationAnswer(questionText);
+            addMessage(answer, false);
+        }, 420);
+    }
+    
     function handleSend() {
-        let query = userInput.value.trim();
-        if (query === "") return;
-        
-        appendMessage(escapeHtmlSimple(query), 'user');
-        userInput.value = '';
-        
-        const answerHtml = getBotAnswer(query);
-        appendMessage(answerHtml, 'bot');
+        const rawText = inputEl.value.trim();
+        if (rawText === "") return;
+        addMessage(rawText, true);
+        inputEl.value = '';
+        showTypingAndRespond(rawText);
     }
     
-    sendButton.addEventListener('click', handleSend);
-    userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') handleSend();
+    sendBtn.addEventListener('click', handleSend);
+    inputEl.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSend();
+        }
     });
     
-    const topicChips = document.querySelectorAll('.topic-chip');
-    topicChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            const preQuestion = chip.getAttribute('data-question');
-            if (preQuestion) {
-                appendMessage(preQuestion, 'user');
-                const botAns = getBotAnswer(preQuestion);
-                appendMessage(botAns, 'bot');
-            }
-        });
-    });
-    
-    window.addEventListener('load', () => {
-        scrollToBottom();
-    });
+    inputEl.focus();
 </script>
 </body>
 </html>

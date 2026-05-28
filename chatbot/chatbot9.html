@@ -1,640 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Topic 9: Marketing Research Proposal | Chatbot</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MR Tutor: Marketing Research Proposal (Topic 9)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+        body {
+            background: linear-gradient(145deg, #e2e8f0 0%, #d4dee8 100%);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        .chat-card {
+            max-width: 520px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.35);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s ease;
+        }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(145deg, #eef2f5 0%, #dce5ec 100%);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-}
+        .header {
+            padding: 1.2rem 1.5rem 0.8rem;
+            background: white;
+            border-bottom: 1px solid #eef2f8;
+        }
 
-.chat-app {
-    width: 100%;
-    max-width: 1300px;
-    height: 90vh;
-    background: #ffffff;
-    border-radius: 32px;
-    box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25);
-    display: flex;
-    overflow: hidden;
-}
+        .header h1 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #0A2B38;
+            display: inline;
+            letter-spacing: -0.2px;
+        }
 
-.side-panel {
-    width: 290px;
-    background: linear-gradient(180deg, #1a3c2c 0%, #0f2a1e 100%);
-    padding: 28px 20px;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-}
+        .badge {
+            background: #e1ecf4;
+            color: #1c6f9c;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 40px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
 
-.side-panel::-webkit-scrollbar {
-    width: 5px;
-}
-.side-panel::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-}
-.side-panel::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.4);
-    border-radius: 10px;
-}
+        .sub {
+            font-size: 0.75rem;
+            color: #5a6e8a;
+            margin-top: 8px;
+            border-left: 3px solid #2c7da0;
+            padding-left: 10px;
+        }
 
-.brand {
-    margin-bottom: 28px;
-    flex-shrink: 0;
-}
+        .messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 1.2rem 1rem;
+            background: #FCFDFF;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+        }
 
-.brand h2 {
-    font-size: 1.7rem;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-    background: linear-gradient(135deg, #FFFFFF, #c7f0b2);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-}
+        .msg {
+            display: flex;
+            flex-direction: column;
+            max-width: 86%;
+        }
 
-.brand p {
-    font-size: 12px;
-    opacity: 0.85;
-    margin-top: 6px;
-}
+        .user-msg {
+            align-self: flex-end;
+        }
 
-.topic-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-}
+        .bot-msg {
+            align-self: flex-start;
+        }
 
-.topic-section h4 {
-    font-weight: 600;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 0 0 12px 0;
-    opacity: 0.7;
-    flex-shrink: 0;
-}
+        .bubble {
+            padding: 0.7rem 1rem;
+            border-radius: 1.4rem;
+            font-size: 0.88rem;
+            line-height: 1.45;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
 
-.topic-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    overflow-y: auto;
-    flex: 1;
-    padding-right: 5px;
-}
+        .user-bubble {
+            background: #0F2C3D;
+            color: white;
+            border-bottom-right-radius: 6px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+        }
 
-.topic-list::-webkit-scrollbar {
-    width: 4px;
-}
-.topic-list::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-}
-.topic-list::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.4);
-    border-radius: 10px;
-}
+        .bot-bubble {
+            background: #EFF3F8;
+            color: #1f2f3e;
+            border-bottom-left-radius: 6px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.03);
+        }
 
-.topic-chip {
-    background: rgba(255,255,255,0.12);
-    padding: 10px 14px;
-    border-radius: 18px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
+        .time {
+            font-size: 0.6rem;
+            color: #8f9eb2;
+            margin-top: 5px;
+            margin-left: 12px;
+        }
 
-.topic-chip:hover {
-    background: #ffffff;
-    color: #1a3c2c;
-    transform: translateX(4px);
-}
+        .typing-indicator {
+            display: flex;
+            gap: 5px;
+            padding: 0.6rem 1rem;
+            background: #EFF3F8;
+            width: fit-content;
+            border-radius: 2rem;
+            border-bottom-left-radius: 6px;
+            align-items: center;
+        }
+        .typing-indicator span {
+            width: 7px;
+            height: 7px;
+            background: #8a9bb0;
+            border-radius: 50%;
+            display: inline-block;
+            animation: wave 1.3s infinite ease-in-out;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes wave {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+            30% { transform: translateY(-4px); opacity: 1; }
+        }
 
-.chat-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background: #fefefe;
-    overflow: hidden;
-}
+        .input-area {
+            display: flex;
+            gap: 10px;
+            padding: 0.9rem 1.2rem;
+            background: white;
+            border-top: 1px solid #eef2f7;
+        }
+        .input-area input {
+            flex: 1;
+            border: 1px solid #e2e8f0;
+            padding: 12px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            outline: none;
+            transition: 0.2s;
+            background: #fefefe;
+        }
+        .input-area input:focus {
+            border-color: #2c7da0;
+            box-shadow: 0 0 0 2px rgba(44,125,160,0.2);
+        }
+        .input-area button {
+            background: #0F2C3D;
+            border: none;
+            color: white;
+            padding: 0 22px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 0.3px;
+        }
+        .input-area button:hover {
+            background: #1f526b;
+            transform: scale(0.97);
+        }
+        .footer {
+            font-size: 0.6rem;
+            text-align: center;
+            padding: 8px 12px;
+            color: #7c8ea0;
+            background: #fafcff;
+            border-top: 1px solid #edf2f8;
+        }
 
-.chat-header {
-    padding: 18px 28px;
-    border-bottom: 1px solid #e9edf2;
-    background: white;
-    flex-shrink: 0;
-}
+        .messages::-webkit-scrollbar {
+            width: 4px;
+        }
+        .messages::-webkit-scrollbar-track {
+            background: #eef2f7;
+            border-radius: 10px;
+        }
+        .messages::-webkit-scrollbar-thumb {
+            background: #cbd9e6;
+            border-radius: 10px;
+        }
 
-.chat-header h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1f2e3a;
-}
-
-.chat-header span {
-    font-size: 0.75rem;
-    color: #5c6f87;
-}
-
-.messages-area {
-    flex: 1;
-    overflow-y: auto;
-    padding: 24px 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    background: #fafcff;
-}
-
-.messages-area::-webkit-scrollbar {
-    width: 6px;
-}
-.messages-area::-webkit-scrollbar-track {
-    background: #eef2f8;
-    border-radius: 8px;
-}
-.messages-area::-webkit-scrollbar-thumb {
-    background: #b9c8b2;
-    border-radius: 8px;
-}
-
-.message-bubble {
-    max-width: 80%;
-    padding: 12px 18px;
-    border-radius: 24px;
-    line-height: 1.5;
-    font-size: 0.95rem;
-    word-break: break-word;
-}
-
-.bot-msg {
-    background: #f0f4f9;
-    border: 1px solid #e2e8f0;
-    align-self: flex-start;
-    border-bottom-left-radius: 5px;
-    color: #1e2a3a;
-}
-
-.user-msg {
-    background: #1a5d3c;
-    color: white;
-    align-self: flex-end;
-    border-bottom-right-radius: 5px;
-}
-
-.input-row {
-    padding: 16px 24px 24px 24px;
-    border-top: 1px solid #eef2f8;
-    background: white;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-.input-row input {
-    flex: 1;
-    padding: 14px 18px;
-    border-radius: 60px;
-    border: 1px solid #cbd5e1;
-    font-family: inherit;
-    font-size: 0.9rem;
-    outline: none;
-}
-
-.input-row input:focus {
-    border-color: #1a5d3c;
-    box-shadow: 0 0 0 3px rgba(26,93,60,0.2);
-}
-
-.input-row button {
-    background: #1a5d3c;
-    border: none;
-    padding: 12px 26px;
-    border-radius: 60px;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.input-row button:hover {
-    background: #0e3f28;
-}
-
-@media (max-width: 700px) {
-    .side-panel { display: none; }
-    .message-bubble { max-width: 90%; }
-}
-</style>
+        @media (max-width: 480px) {
+            .chat-card { max-width: 100%; border-radius: 1.5rem; }
+            .messages { height: 460px; }
+            .bubble { font-size: 0.85rem; }
+        }
+    </style>
 </head>
 <body>
+<div class="chat-card">
+    <div class="header">
+        <h1>Marketing Research AI</h1><span class="badge">Topic 9: Research Proposal</span>
+        <div class="sub">📝 Plan • Guide • Contract • What • Why • How</div>
+    </div>
 
-<div class="chat-app">
-    <div class="side-panel">
-        <div class="brand">
-            <h2>📊 Marketing Research<br>& Analytics AI</h2>
-            <p>Topic 9: Marketing Research Proposal</p>
-        </div>
-        <div class="topic-section">
-            <h4>📚 TOPIC 9: KEY CONCEPTS</h4>
-            <div class="topic-list">
-                <div class="topic-chip" data-question="What is a marketing research proposal?">📄 Definition of Marketing Research Proposal</div>
-                <div class="topic-chip" data-question="What are the key functions of a research proposal?">🔑 4 Key Functions (Plan, Guide, Communication, Contract)</div>
-                <div class="topic-chip" data-question="What are the 3 Wh questions in proposal writing?">❓ 3 Wh Questions (What, Why, How)</div>
-                <div class="topic-chip" data-question="What are the key components of a research proposal?">📋 Key Components of a Proposal</div>
-                <div class="topic-chip" data-question="How to write a title or cover page for a proposal?">📄 Title/Cover Page Guidelines</div>
-                <div class="topic-chip" data-question="How to write the introduction of a proposal?">✍️ Introduction Section</div>
-                <div class="topic-chip" data-question="How to write a problem statement?">📝 Statement of the Problem</div>
-                <div class="topic-chip" data-question="How to write research questions and objectives?">❓ Research Questions & Objectives</div>
-                <div class="topic-chip" data-question="What is significance of the study?">⭐ Significance of the Study</div>
-                <div class="topic-chip" data-question="What are limitations and delimitations?">⚠️ Limitations vs Delimitations</div>
-                <div class="topic-chip" data-question="How to write literature review in a proposal?">📚 Literature Review in Proposal</div>
-                <div class="topic-chip" data-question="What is theoretical or conceptual framework?">🏗️ Theoretical/Conceptual Framework</div>
-                <div class="topic-chip" data-question="What to include in research design section?">📐 Research Design Section</div>
-                <div class="topic-chip" data-question="What to include in sampling section?">🎯 Sampling Technique & Sample Size</div>
-                <div class="topic-chip" data-question="What to include in data analysis strategy?">📊 Data Analysis Strategy</div>
-                <div class="topic-chip" data-question="What is the difference between limitations and delimitations?">⚖️ Limitations vs Delimitations Explained</div>
-            </div>
+    <div class="messages" id="messages">
+        <div class="msg bot-msg">
+            <div class="bubble bot-bubble">Hi! I'm your marketing research assistant.</div>
+            <div class="time">now</div>
         </div>
     </div>
 
-    <div class="chat-main">
-        <div class="chat-header">
-            <h3>📄 Topic 9: Marketing Research Proposal</h3>
-            <span>Based on your complete lecture notes | Proposal Writing | Key Components | 3 Wh Questions</span>
-        </div>
-        <div class="messages-area" id="chatMessages">
-            <div class="message-bubble bot-msg">
-                👋 <strong>Welcome to Topic 9!</strong> I'm your Marketing Research AI for <strong>Marketing Research Proposal</strong>.<br><br>
-                📖 Based on your lecture notes, I can teach you about:<br>
-                • <strong>Definition & Functions</strong> - What is a proposal, 4 key functions (plan, guide, communication, contract)<br>
-                • <strong>3 Wh Questions</strong> - What, Why, How<br>
-                • <strong>Key Components</strong> - Title page, introduction, problem statement, research questions, significance, definitions, limitations, delimitations, literature review, framework, research design, sampling, data analysis, references, appendices<br>
-                • <strong>Writing Guidelines</strong> - Tips for each section<br><br>
-                Ask me anything from Topic 9, or click any topic on the left!
-            </div>
-        </div>
-        <div class="input-row">
-            <input type="text" id="userQuery" placeholder="e.g., What are the key components of a research proposal?..." autocomplete="off">
-            <button id="sendBtn">Send →</button>
-        </div>
+    <div class="input-area">
+        <input type="text" id="input" placeholder="e.g., What is a research proposal?" autocomplete="off">
+        <button id="send">Send</button>
     </div>
+    <div class="footer">📘 answers based on "Topic 9 - Marketing Research Proposal" (proposal writing principles and format)</div>
 </div>
 
 <script>
-    const messagesContainer = document.getElementById('chatMessages');
-    const userInput = document.getElementById('userQuery');
-    const sendButton = document.getElementById('sendBtn');
-
-    function scrollToBottom() {
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    // Helper function to convert markdown-style **bold** to HTML <strong> tags
+    function formatBold(text) {
+        return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     }
 
-    function appendMessage(text, sender) {
-        const msgDiv = document.createElement('div');
-        msgDiv.classList.add('message-bubble');
-        msgDiv.classList.add(sender === 'user' ? 'user-msg' : 'bot-msg');
-        msgDiv.innerHTML = text;
-        messagesContainer.appendChild(msgDiv);
-        scrollToBottom();
+    // Comprehensive knowledge base derived from Topic 9 PDF
+    function getProposalAnswer(userQuery) {
+        let q = userQuery.toLowerCase().trim();
+        
+        // --- What is a research proposal ---
+        if ((q.includes("research proposal") && (q.includes("what is") || q.includes("definition") || q.includes("meaning")))) {
+            return formatBold("**Marketing Research Proposal**\n\nThe product of a thorough and consistent process of planning and designing the intended marketing research. It is a professionally prepared document that includes the key phases of the entire marketing research process.\n\nA well-written marketing research proposal is instrumental for effective implementation of the desired marketing research as well as generating a good marketing research report.");
+        }
+        
+        // --- Importance/Functions of Research Proposal (4 functions) ---
+        if ((q.includes("importance") || q.includes("functions") || q.includes("purpose")) && (q.includes("proposal") || q.includes("research proposal"))) {
+            return formatBold("**Importance of a Research Proposal (4 Key Functions)**\n\n1️⃣ **As a Research Plan** – Entails planned strategies and activities, systematic steps, problem definition, objectives, methodology, time schedule, and costing.\n\n2️⃣ **As a Research Guide** – Continuously used to implement planned strategies, reminds researcher of objectives, helps monitor deadlines and costs.\n\n3️⃣ **As an Effective Communication Tool** – Communicates the research purpose and methodology to clients, supervisors, and stakeholders.\n\n4️⃣ **As a Contract** – Serves as an agreement between researcher and client regarding what will be delivered.");
+        }
+        
+        // --- The 3 Wh questions (What, Why, How) ---
+        if ((q.includes("what why how") || q.includes("3 wh") || (q.includes("three questions") && q.includes("proposal")))) {
+            return formatBold("**The 3 'Wh' Questions in Research Proposal**\n\nA good scientific marketing research proposal addresses three fundamental questions:\n\n❓ **WHAT** – What is this research trying to find out? (Found mainly in the problem statement)\n\n❓ **WHY** – Why is this research necessary? (Addressed in research objectives, research questions, and significance of the study)\n\n❓ **HOW** – How should this research be done? (Explained in research methodology section, schedule, and costing)\n\nFor hypothetical-deductive research, a theoretical/conceptual framework with hypotheses illustrates the 'HOW'.");
+        }
+        
+        // --- Proposal Format (Key Elements) ---
+        if ((q.includes("proposal format") || q.includes("components of proposal") || q.includes("elements of proposal") || q.includes("structure of proposal"))) {
+            return formatBold("**Marketing Research Proposal Format (Key Elements)**\n\n• Title page\n• Table of contents\n• Introduction\n• Statement of the problem\n• Research questions and objectives\n• Significance of the study\n• Definitions of terms\n• Limitations and delimitations\n• Literature review\n• Theoretical or Conceptual Framework\n• Research design\n• Measurement and instrumentation\n• Sampling technique and sample size\n• Data collection methods and ethical issues\n• Data preparation\n• Data analysis strategy\n• Report presentation format\n• References\n• Appendices (Time schedule/Gantt chart, Budget, Questionnaire)");
+        }
+        
+        // --- Statement of the problem in proposal ---
+        if ((q.includes("statement of the problem") || (q.includes("problem statement") && q.includes("proposal")))) {
+            return formatBold("**Statement of the Problem in Proposal**\n\nA precious and succinct statement written in one or two paragraphs for most research. After reading it, the reader should know clearly the 'WHAT' and 'WHY' of the research.\n\nTypically covers both management and research dimensions of the problem. Some researchers highlight the problem(s) with critical question(s).");
+        }
+        
+        // --- Research questions and objectives ---
+        if ((q.includes("research questions") && q.includes("proposal")) || (q.includes("research objectives") && q.includes("proposal"))) {
+            return formatBold("**Research Questions and Objectives in Proposal**\n\nMost researchers use 'what', 'why', and 'how' to write research questions as these provide clear indication of what the research tries to solve or resolve.\n\n**Writing tip:** Use an opening paragraph to describe the issue or purpose, then follow with specific and itemized research questions or objectives.\n\nAlternatively, research objectives tell the reader what is to be achieved in the proposed study.");
+        }
+        
+        // --- Significance of the study ---
+        if ((q.includes("significance of the study") || (q.includes("significance") && q.includes("proposal")))) {
+            return formatBold("**Significance of the Study**\n\nAddresses the contributions and indirectly the 'WHY' of the proposed study.\n\n**Writing tip:** Put yourself in the reader/client's shoes to logically highlight the benefits and impacts.\n\n**Common approach:** Go by specific stakeholders or beneficiaries such as managers, researchers, governments, academicians.");
+        }
+        
+        // --- Definitions of terms ---
+        if ((q.includes("definitions of terms") || (q.includes("definition of terms") && q.includes("proposal")))) {
+            return formatBold("**Definitions of Terms in Proposal**\n\nAccurate and commonly used definitions of key terms used in the proposed study should be given with correct referencing.\n\n**Purposes:**\n• Facilitates better understanding of issues and variables to be researched\n• Convinces the reader that the researcher is knowledgeable and competent\n• Establishes credibility");
+        }
+        
+        // --- Limitations vs Delimitations ---
+        if ((q.includes("limitations") && q.includes("delimitations")) || (q.includes("limitation") && q.includes("delimitation"))) {
+            return formatBold("**Limitations vs Delimitations**\n\n**Limitations** – Unavoidable constraints faced by the researcher, most probably acceptable to readers/clients. NOT 'excuses'. Researcher should convince reader that necessary precautions will be taken to safeguard reliability, validity, and representativeness.\n\n**Delimitations** – Set the limits, scope, or boundaries of the study. Useful to avoid unnecessary misunderstanding, confusion, and potential arguments.");
+        }
+        
+        // --- Literature review in proposal ---
+        if ((q.includes("literature review") && q.includes("proposal"))) {
+            return formatBold("**Literature Review in Proposal**\n\nThe proposal should appropriately and adequately identify and explain closely related literature (especially theories, models, and measurement aspects) as foundations to the proposed research.\n\n**Purpose:** Enhances the reader's knowledge and enables them to appreciate the study.\n\n**Requirement:** Write-up should be precise and smooth flowing.");
+        }
+        
+        // --- Theoretical/Conceptual Framework in proposal ---
+        if ((q.includes("theoretical framework") && q.includes("proposal")) || (q.includes("conceptual framework") && q.includes("proposal"))) {
+            return formatBold("**Theoretical/Conceptual Framework in Proposal**\n\nA graphical model crucial for hypothetical-deductive research to effectively communicate variables and relationships to be investigated.\n\n**Structure:**\n1. Introductory paragraph\n2. Schematic diagram (the model)\n3. Systematic paragraphs explaining respective hypotheses/propositions (at least one paragraph per hypothesis with literature citation)\n\nResearchers may use mathematical models with equations for quantitative investigations.");
+        }
+        
+        // --- Research design in proposal ---
+        if ((q.includes("research design") && q.includes("proposal"))) {
+            return formatBold("**Research Design in Proposal**\n\nThe blueprint of the study should be systematically explained including:\n\n• Types of research design (exploratory or conclusive)\n• Nature of investigation (qualitative/quantitative, contrive/natural setting)\n• Time horizon (cross-sectional or longitudinal)\n• Unit of analysis\n• Measurement and instrument\n• Data collection methods (at different stages if necessary)\n\n**Useful additions:** Flow chart showing steps, operational definitions of variables, sample of tentative questionnaire.");
+        }
+        
+        // --- Sampling in proposal ---
+        if ((q.includes("sampling") && q.includes("proposal")) || (q.includes("sample size") && q.includes("proposal"))) {
+            return formatBold("**Sampling Technique and Sample Size in Proposal**\n\nThe researcher should demonstrate good understanding and skills in sampling including:\n\n• Explanations on the choice of the best sampling technique and procedures\n• Identification of sampling frame\n• Determination or recommendation of sample size\n\n**Advantage:** A proposal with good sampling technique and tentative size proposed will have an added advantage.");
+        }
+        
+        // --- Data collection, preparation, analysis in proposal ---
+        if ((q.includes("data collection") && q.includes("proposal")) || (q.includes("data analysis") && q.includes("proposal"))) {
+            return formatBold("**Data Collection, Preparation, and Analysis in Proposal**\n\nA reasonably detailed process should be included to convince the reader that project execution will be professionally and effectively done.\n\n**Key elements:**\n• Data collection procedures\n• Data preparation process (editing, coding, transcription, cleaning)\n• Proposed analysis strategy\n• Indicates the set of information the project can produce");
+        }
+        
+        // --- References in proposal ---
+        if ((q.includes("references") && q.includes("proposal")) || (q.includes("reference list") && q.includes("proposal"))) {
+            return formatBold("**References in Proposal**\n\nA list of references cited in the proposal.\n\n**Guideline:** Good quality books and international refereed journal articles should be used to enhance credibility.\n\nThis demonstrates the researcher has conducted a thorough literature review and builds on existing knowledge.");
+        }
+        
+        // --- Appendices in proposal (Schedule, Budget, Questionnaire) ---
+        if ((q.includes("appendices") || q.includes("gantt chart") || q.includes("time schedule") || q.includes("budget")) && q.includes("proposal")) {
+            return formatBold("**Appendices in Research Proposal**\n\nA cutting-edge research proposal should have necessary additional documents in the appendix section:\n\n• Research schedule or Gantt chart\n• Budget\n• Tentative research instruments or questionnaire\n• Map, flow chart, pictures\n• Interview outline\n• Observation form\n\nThese documents support the proposal and demonstrate thorough planning.");
+        }
+        
+        // --- Tips for writing cutting-edge proposal (Title page, Table of Contents, Introduction) ---
+        if ((q.includes("tips for writing") || q.includes("cutting-edge proposal") || q.includes("proposal tips"))) {
+            return formatBold("**Tips for Writing a Cutting-Edge Proposal**\n\n**Title/Cover Page** – First impression counts! No mistakes. Include name, logo, address, project title. Good binding contributes to perceived quality.\n\n**Table of Contents** – Neatly aligned for quick and precise reference.\n\n**Introduction** – First topic in proposal. Entails background, area of research, context. End with good indication of problem. Strong introduction is crucial to convince reader.\n\n**General principles:** Professional appearance, clear language, logical flow, evidence-based arguments.");
+        }
+        
+        // --- Proposal as contract ---
+        if ((q.includes("contract") && q.includes("proposal"))) {
+            return formatBold("**Proposal as a Contract**\n\nA research proposal serves as a contract between the researcher and the client/ supervisor.\n\n**What it specifies:**\n• What will be delivered\n• How it will be delivered\n• Timeline for delivery\n• Cost involved\n• Responsibilities of both parties\n\nThis formal agreement helps prevent misunderstandings and sets clear expectations.");
+        }
+        
+        // --- Proposal as communication tool ---
+        if ((q.includes("communication tool") && q.includes("proposal"))) {
+            return formatBold("**Proposal as a Communication Tool**\n\nThe research proposal is an effective communication tool that:\n\n• Explains the research purpose and methodology to clients\n• Demonstrates the researcher's competence and knowledge\n• Helps secure approval and funding\n• Aligns expectations between researcher and stakeholders\n• Provides a reference point for discussions throughout the project");
+        }
+        
+        // --- Default fallback ---
+        return formatBold("**Topic 9: Marketing Research Proposal**\n\nTry asking about:\n• What is a research proposal?\n• Importance/functions of a proposal (plan, guide, communication, contract)\n• The 3 Wh questions (What, Why, How)\n• Proposal format / key elements / components\n• Statement of the problem in proposal\n• Research questions and objectives\n• Significance of the study\n• Definitions of terms\n• Limitations vs delimitations\n• Literature review in proposal\n• Theoretical/conceptual framework\n• Research design in proposal\n• Sampling technique and sample size\n• Data collection, preparation, analysis\n• References\n• Appendices (Gantt chart, budget, questionnaire)\n• Tips for writing a cutting-edge proposal\n\nJust type your question!");
     }
 
-    function getBotAnswer(questionText) {
-        const q = questionText.toLowerCase();
-        
-        // Definition of Marketing Research Proposal
-        if ((q.includes('what is') && q.includes('proposal')) || (q.includes('definition') && q.includes('proposal'))) {
-            return `<b>📄 What is a Marketing Research Proposal?</b><br><br>
-            The marketing research proposal is the <b>product of a thorough and consistent process of planning and designing</b> the intended marketing research.<br><br>
-            • Must be professionally prepared<br>
-            • Includes the key phases of the entire marketing research process<br>
-            • A well-written proposal is instrumental for:<br>
-            &nbsp;&nbsp;&nbsp;✓ Effective implementation of the desired marketing research<br>
-            &nbsp;&nbsp;&nbsp;✓ Generating a good marketing research report<br><br>
-            It is a scientifically produced and carefully written document that is very important for a professional marketing researcher and their research project.`;
-        }
-        
-        // 4 Key Functions
-        if ((q.includes('functions') || q.includes('purpose')) && q.includes('proposal')) {
-            return `<b>🔑 4 Key Functions of a Research Proposal</b><br><br>
-            <b>1. As a Research Plan</b><br>
-            • Entails various planned strategies and activities<br>
-            • Includes systematic steps, problem definition, objectives, methodology<br>
-            • Time schedule and costing essential for future reference<br><br>
-            <b>2. As a Research Guide</b><br>
-            • Continuously used as a guide for implementing planned strategies<br>
-            • Researcher consistently reminded by documented research objectives<br>
-            • Monitoring of deadlines and costs guided<br><br>
-            <b>3. As an Effective Communication Tool</b><br>
-            • Tangible 'product' conveying 'what', 'why', and 'how'<br>
-            • Enables audience/client to understand and be convinced<br><br>
-            <b>4. As a Contract</b><br>
-            • Acts as contract document for researcher and client<br>
-            • Forms part of legal research agreement or contract<br>
-            • Stipulated terms and conditions must be followed`;
-        }
-        
-        // 3 Wh Questions
-        if (q.includes('3 wh') || (q.includes('what why how') && q.includes('proposal')) || q.includes('three wh')) {
-            return `<b>❓ The 3 Wh Questions in Proposal Writing</b><br><br>
-            A good and scientific marketing research always tries to ask the <b>3 Wh questions</b>:<br><br>
-            <b>1. WHAT is this research trying to find out?</b><br>
-            • Found mainly in the <b>problem statement</b><br>
-            • Also addressed in literature review<br><br>
-            <b>2. WHY is this research necessary?</b><br>
-            • Addressed in <b>research objectives, research questions, and significance of the study</b><br>
-            • Literature review also indicates why research is necessary<br><br>
-            <b>3. HOW should this research be done?</b><br>
-            • Explained in <b>research methodology</b> section<br>
-            • Followed by schedule and costing<br>
-            • For hypothetical deductive research: <b>theoretical/conceptual framework with hypotheses</b> illustrates the 'how'`;
-        }
-        
-        // Key Components
-        if (q.includes('key components') || (q.includes('components') && q.includes('proposal')) || (q.includes('elements') && q.includes('proposal'))) {
-            return `<b>📋 Key Components of a Good Marketing Research Proposal</b><br><br>
-            <b>1.</b> Title page<br>
-            <b>2.</b> Table of contents<br>
-            <b>3.</b> Introduction<br>
-            <b>4.</b> Statement of the problem<br>
-            <b>5.</b> Research questions and objectives of the study<br>
-            <b>6.</b> Significance of the study<br>
-            <b>7.</b> Definitions of terms<br>
-            <b>8.</b> Limitations and delimitations<br>
-            <b>9.</b> Literature review<br>
-            <b>10.</b> Theoretical or Conceptual Framework<br>
-            <b>11.</b> Research design<br>
-            <b>12.</b> Measurement and instrumentation<br>
-            <b>13.</b> Sampling technique and sample size<br>
-            <b>14.</b> Data collection methods and ethical issues<br>
-            <b>15.</b> Data preparation<br>
-            <b>16.</b> Data analysis strategy<br>
-            <b>17.</b> Report presentation format<br>
-            <b>18.</b> References<br>
-            <b>19.</b> Appendix – Time Schedule/Gantt chart, Budget, Questionnaire`;
-        }
-        
-        // Title/Cover Page
-        if (q.includes('title page') || q.includes('cover page')) {
-            return `<b>📄 Title/Cover Page Guidelines</b><br><br>
-            Most probably, this is the <b>first thing the reader will see</b>. First impression is important!<br><br>
-            <b>Key requirements:</b><br>
-            • Must not contain any mistake<br>
-            • Name, logo, address, title of project must be correct<br>
-            • Font, font size and specifications must be appropriate or follow client's instructions<br>
-            • Overall design coupled with good binding contributes to perceived quality<br>
-            • Physical appearance of the document counts!<br><br>
-            <i>The proposal must be able to create an excellent first impression.</i>`;
-        }
-        
-        // Introduction
-        if (q.includes('introduction') && q.includes('proposal')) {
-            return `<b>✍️ Introduction Section</b><br><br>
-            The introduction entails the:<br>
-            • Background of the study<br>
-            • Area of research<br>
-            • Context of the proposed study<br><br>
-            <b>Key points:</b><br>
-            • Should end with a good indication of the problem<br>
-            • A strong introduction is crucial to convince the reader<br>
-            • Should prompt the reader to read on to the next part(s) of the proposal`;
-        }
-        
-        // Statement of the Problem
-        if (q.includes('problem statement') && q.includes('proposal')) {
-            return `<b>📝 Statement of the Problem in Proposal</b><br><br>
-            This is the precious and succinct statement which may be written in <b>one or two paragraphs</b> for most research.<br><br>
-            <b>After reading it, the reader should know clearly:</b><br>
-            • The <b>'what'</b> of the research<br>
-            • The <b>'why'</b> of the research<br><br>
-            <b>Content:</b><br>
-            • Normally covers both management and research dimensions of the problem<br>
-            • Some researchers like to highlight the problem(s) with critical question(s)`;
-        }
-        
-        // Research Questions and Objectives
-        if ((q.includes('research questions') || q.includes('research objectives')) && q.includes('proposal')) {
-            return `<b>❓ Research Questions & Objectives</b><br><br>
-            Most researchers will tend to use <b>'what', 'why', and 'how'</b> to write research questions as these assist in having a clear indication of what the research tries to solve or resolve.<br><br>
-            <b>Writing tips:</b><br>
-            • Use an opening paragraph to describe the issue or purpose<br>
-            • Then followed by specific and itemized research questions or objectives<br><br>
-            <b>Alternative approach:</b><br>
-            Research objectives can be used to tell the reader what is to be achieved in the proposed study.`;
-        }
-        
-        // Significance of the Study
-        if (q.includes('significance')) {
-            return `<b>⭐ Significance of the Study</b><br><br>
-            The significance or importance of the study concerns the <b>contributions</b> and indirectly the <b>'why'</b> of the proposed study.<br><br>
-            <b>Writing tips:</b><br>
-            • Put yourself in the shoe of the reader/client<br>
-            • Logically highlight the benefits and impacts of the study<br><br>
-            <b>Common approach:</b><br>
-            Some researchers go by specific stakeholders or beneficiaries such as:<br>
-            • Managers<br>
-            • Researchers<br>
-            • Governments<br>
-            • Academicians`;
-        }
-        
-        // Limitations vs Delimitations
-        if ((q.includes('limitations') && q.includes('delimitations')) || (q.includes('difference between') && (q.includes('limitation') || q.includes('delimitation')))) {
-            return `<b>⚠️ Limitations vs Delimitations</b><br><br>
-            <b>Limitations:</b><br>
-            • Unavoidable constraints faced by the researcher<br>
-            • Most probably acceptable to the reader/clients<br>
-            • These are NOT 'excuses'<br>
-            • Researcher must convince reader that necessary precautions will be taken for reliability, validity, and representativeness<br><br>
-            <b>Delimitations:</b><br>
-            • Aim to set the <b>limits, scope, or boundaries</b> of the study<br>
-            • Useful to avoid unnecessary misunderstanding, confusion, and potential arguments<br><br>
-            <i>Limitations = constraints you cannot control; Delimitations = boundaries you deliberately set.</i>`;
-        }
-        
-        // Literature Review in Proposal
-        if (q.includes('literature review') && q.includes('proposal')) {
-            return `<b>📚 Literature Review in Proposal</b><br><br>
-            The proposal should appropriately and adequately identify and explain the closely related literature as foundations to the proposed research.<br><br>
-            <b>What to include:</b><br>
-            • Theories<br>
-            • Models<br>
-            • Measurement aspects<br><br>
-            <b>Benefits:</b><br>
-            • Enhances knowledge of the reader<br>
-            • Enables them to appreciate the study<br><br>
-            <b>Writing tip:</b><br>
-            The write-up should be <b>precise and smooth flowing</b>.`;
-        }
-        
-        // Theoretical/Conceptual Framework
-        if (q.includes('theoretical framework') || q.includes('conceptual framework')) {
-            return `<b>🏗️ Theoretical/Conceptual Framework in Proposal</b><br><br>
-            This graphical model is <b>very crucial for hypothetical-deductive research</b> as it can effectively communicate the variables and relationships to be investigated.<br><br>
-            <b>Structure:</b><br>
-            • Introductory paragraph<br>
-            • Schematic diagram (the model)<br>
-            • Systematic explanations for respective hypotheses/propositions<br><br>
-            <b>Guidelines:</b><br>
-            • At least one paragraph of explanation (with literature citation) for one hypothesis/proposition<br>
-            • Researchers may use mathematical model(s) and equations for quantitative investigations`;
-        }
-        
-        // Research Design Section
-        if (q.includes('research design') && q.includes('proposal')) {
-            return `<b>📐 Research Design Section in Proposal</b><br><br>
-            The blueprint of the study should be systematically explained to the reader.<br><br>
-            <b>What to include:</b><br>
-            • Types of research design (exploratory or conclusive)<br>
-            • Nature of investigation (qualitative or quantitative, contrive or natural setting)<br>
-            • Time horizon (cross-sectional or longitudinal)<br>
-            • Unit of analysis<br>
-            • Measurement and instrument<br>
-            • Data collection methods (at different stages if necessary)<br><br>
-            <b>Useful additions:</b><br>
-            • Flow chart showing steps in the research process<br>
-            • Operational definitions of variables<br>
-            • Sample of tentative questionnaire (for survey research)`;
-        }
-        
-        // Sampling Section
-        if (q.includes('sampling') && q.includes('proposal')) {
-            return `<b>🎯 Sampling Technique and Sample Size in Proposal</b><br><br>
-            The researcher should demonstrate <b>good understanding and skills in sampling</b>.<br><br>
-            <b>What to include:</b><br>
-            • Explanations on the choice of the best sampling technique<br>
-            • Procedures for sampling<br>
-            • Sampling frame<br>
-            • Sample size determination or recommendation<br><br>
-            <b>Key point:</b><br>
-            A proposal with good sampling technique and tentative size proposed will have an <b>added advantage</b>.`;
-        }
-        
-        // Data Analysis Strategy
-        if (q.includes('data analysis') && q.includes('proposal')) {
-            return `<b>📊 Data Analysis Strategy in Proposal</b><br><br>
-            A reasonably detailed process of data collection and preparation should be included to convince the reader that the project execution will be professionally and effectively done.<br><br>
-            <b>What to include:</b><br>
-            • Data collection methods<br>
-            • Data preparation procedures<br>
-            • Data analysis strategy<br><br>
-            <b>Importance:</b><br>
-            The proposed analysis strategy will indicate more clearly the <b>set of information that the project can produce</b>.`;
-        }
-        
-        // Appendices
-        if (q.includes('appendix') || q.includes('appendices')) {
-            return `<b>📎 Appendices in Research Proposal</b><br><br>
-            A cutting-edge research proposal should have necessary additional documents placed in the appendix section.<br><br>
-            <b>Common appendices include:</b><br>
-            • Research schedule or Gantt chart<br>
-            • Budget<br>
-            • Tentative research instruments or questionnaire<br>
-            • Map<br>
-            • Flow chart<br>
-            • Pictures<br>
-            • Interview outline<br>
-            • Observation form`;
-        }
-        
-        // References
-        if (q.includes('references') && q.includes('proposal')) {
-            return `<b>📚 References in Research Proposal</b><br><br>
-            This is a list of <b>references cited in the proposal</b>.<br><br>
-            <b>Guidelines for quality references:</b><br>
-            • Use good quality books<br>
-            • Use international refereed journal articles<br>
-            • Enhances credibility of the proposal<br><br>
-            <i>Quality references demonstrate the researcher's knowledge and competence in the subject area.</i>`;
-        }
-        
-        // Default
-        return `<b>📘 Topic 9: Marketing Research Proposal</b><br><br>
-        Based on your lecture notes, I can help you with:<br><br>
-        📄 <b>Definition</b> - What is a marketing research proposal<br>
-        🔑 <b>4 Key Functions</b> - Plan, Guide, Communication, Contract<br>
-        ❓ <b>3 Wh Questions</b> - What, Why, How<br>
-        📋 <b>Key Components</b> - 19 essential sections of a proposal<br>
-        📄 <b>Title/Cover Page</b> - First impression, physical appearance<br>
-        ✍️ <b>Introduction</b> - Background, context, problem indication<br>
-        📝 <b>Problem Statement</b> - Succinct, one or two paragraphs<br>
-        ❓ <b>Research Questions/Objectives</b> - What, why, how format<br>
-        ⭐ <b>Significance of the Study</b> - Contributions, stakeholders<br>
-        📚 <b>Definitions of Terms</b> - Accurate, referenced definitions<br>
-        ⚠️ <b>Limitations vs Delimitations</b> - Constraints vs boundaries<br>
-        📚 <b>Literature Review</b> - Theories, models, measurements<br>
-        🏗️ <b>Theoretical Framework</b> - Graphical model, hypotheses<br>
-        📐 <b>Research Design</b> - Blueprint, methodology, flow chart<br>
-        🎯 <b>Sampling</b> - Technique, frame, size<br>
-        📊 <b>Data Analysis</b> - Collection, preparation, strategy<br>
-        📎 <b>Appendices</b> - Gantt chart, budget, questionnaire<br><br>
-        Try asking: <i>"What are the key components of a research proposal?"</i> or <i>"Explain the 4 functions of a proposal"</i> or <i>"What is the difference between limitations and delimitations?"</i>`;
+    // UI elements
+    const messagesDiv = document.getElementById('messages');
+    const inputEl = document.getElementById('input');
+    const sendBtn = document.getElementById('send');
+
+    function addMessage(text, isUser) {
+        const messageWrapper = document.createElement('div');
+        messageWrapper.className = `msg ${isUser ? 'user-msg' : 'bot-msg'}`;
+        const formattedText = text.replace(/\n/g, '<br>');
+        messageWrapper.innerHTML = `
+            <div class="bubble ${isUser ? 'user-bubble' : 'bot-bubble'}">${formattedText}</div>
+            <div class="time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+        `;
+        messagesDiv.appendChild(messageWrapper);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
 
-    function escapeHtmlSimple(str) {
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
+    function showTypingAndRespond(questionText) {
+        const typingWrapper = document.createElement('div');
+        typingWrapper.className = 'msg bot-msg';
+        typingWrapper.id = 'typingMsg';
+        typingWrapper.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+        messagesDiv.appendChild(typingWrapper);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
+        setTimeout(() => {
+            const typingElem = document.getElementById('typingMsg');
+            if (typingElem) typingElem.remove();
+            const answer = getProposalAnswer(questionText);
+            addMessage(answer, false);
+        }, 420);
+    }
+    
     function handleSend() {
-        let query = userInput.value.trim();
-        if (query === "") return;
-        
-        appendMessage(escapeHtmlSimple(query), 'user');
-        userInput.value = '';
-        
-        const answerHtml = getBotAnswer(query);
-        appendMessage(answerHtml, 'bot');
+        const rawText = inputEl.value.trim();
+        if (rawText === "") return;
+        addMessage(rawText, true);
+        inputEl.value = '';
+        showTypingAndRespond(rawText);
     }
     
-    sendButton.addEventListener('click', handleSend);
-    userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') handleSend();
+    sendBtn.addEventListener('click', handleSend);
+    inputEl.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSend();
+        }
     });
     
-    const topicChips = document.querySelectorAll('.topic-chip');
-    topicChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            const preQuestion = chip.getAttribute('data-question');
-            if (preQuestion) {
-                appendMessage(preQuestion, 'user');
-                const botAns = getBotAnswer(preQuestion);
-                appendMessage(botAns, 'bot');
-            }
-        });
-    });
-    
-    window.addEventListener('load', () => {
-        scrollToBottom();
-    });
+    inputEl.focus();
 </script>
 </body>
 </html>

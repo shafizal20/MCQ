@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Topic 13: Communicating Research Findings | Quick Quiz</title>
     <style>
         * {
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Inter', sans-serif;
             background: #eef2f8;
             min-height: 100vh;
             display: flex;
@@ -22,7 +22,7 @@
         }
 
         .quiz-box {
-            max-width: 1100px;
+            max-width: 1000px;
             width: 100%;
             background: white;
             border-radius: 2rem;
@@ -107,7 +107,7 @@
             display: flex;
             gap: 2rem;
             padding: 2rem;
-            min-height: 350px;
+            min-height: 380px;
         }
 
         .col {
@@ -248,17 +248,19 @@
     <div class="quiz-header">
         <div class="title-area">
             <h2>Topic 13: Communicating Research Findings</h2>
-            <div style="font-size:0.75rem; color:#5e7a93; margin-top:0.2rem;">Comprehensive Marketing Research Report</div>
         </div>
         <div class="final-score-badge" id="finalScoreBadge" style="display: none;">
             <div class="final-score-label">FINAL SCORE</div>
-            <div class="final-score-value" id="finalScoreValue">0 <span>/ 2</span></div>
+            <div class="final-score-value" id="finalScoreValue">0 <span>/ 5</span></div>
         </div>
     </div>
 
     <div class="progress-text">
         <span class="progress-item" data-qidx="0">1</span>
         <span class="progress-item" data-qidx="1">2</span>
+        <span class="progress-item" data-qidx="2">3</span>
+        <span class="progress-item" data-qidx="3">4</span>
+        <span class="progress-item" data-qidx="4">5</span>
     </div>
 
     <div class="match-area" id="matchContainer">
@@ -285,32 +287,63 @@
 
 <script>
     (function() {
+        // ============= TOPIC 13: Communicating Research Findings =============
         const questions = [
             {
-                text: "What are important for an oral presentation?<br><br>i) Good preparation<br>ii) Body language<br>iii) Visual aids<br>iv) Language",
+                text: "According to the document, which section of a marketing research report allows busy managers to obtain a comprehensive overview of the findings without reading the entire report?",
                 answers: [
-                    { text: "A) i, ii, iii, iv — All are important", correct: true, id: "q1_a" },
-                    { text: "B) i, ii, iv", correct: false, id: "q1_b" },
-                    { text: "C) i, iii, iv", correct: false, id: "q1_c" },
-                    { text: "D) ii, iii, iv", correct: false, id: "q1_d" }
+                    { text: "A) Letter of transmittal", correct: false, id: "q1_a" },
+                    { text: "B) Executive summary", correct: true, id: "q1_b" },
+                    { text: "C) List of appendices", correct: false, id: "q1_c" }
                 ],
-                correctId: "q1_a"
+                correctIds: ["q1_b"],
+                isMultiCorrect: false
             },
             {
-                text: "The KISS principle in oral presentation is:",
+                text: "In the oral presentation of a marketing research report, what is the recommended time allocation for findings and conclusions in a 30-minute presentation?",
                 answers: [
-                    { text: "A) Keep it slow and steady", correct: false, id: "q2_a" },
-                    { text: "B) Keep insisting self-confidence and speed", correct: false, id: "q2_b" },
-                    { text: "C) Keep it short and simple", correct: true, id: "q2_c" },
-                    { text: "D) Keep impressive, simple and shocking", correct: false, id: "q2_d" }
+                    { text: "A) 5 minutes", correct: false, id: "q2_a" },
+                    { text: "B) 10 minutes", correct: true, id: "q2_b" },
+                    { text: "C) 15 minutes", correct: false, id: "q2_c" }
                 ],
-                correctId: "q2_c"
+                correctIds: ["q2_b"],
+                isMultiCorrect: false
+            },
+            {
+                text: "Which of the following is NOT listed as a major reason for good research reporting?",
+                answers: [
+                    { text: "A) To serve as a historical record of the company", correct: false, id: "q3_a" },
+                    { text: "B) To replace the need for primary data collection in future studies", correct: true, id: "q3_b" },
+                    { text: "C) To guide management decisions", correct: false, id: "q3_c" }
+                ],
+                correctIds: ["q3_b"],
+                isMultiCorrect: false
+            },
+            {
+                text: "According to the document, the research report is divided into three main parts. Which part contains the chapters on introduction, literature review, methodology, findings, and conclusions?",
+                answers: [
+                    { text: "A) Part I – The preliminary pages", correct: false, id: "q4_a" },
+                    { text: "B) Part II – The contents", correct: true, id: "q4_b" },
+                    { text: "C) Part III – References", correct: false, id: "q4_c" }
+                ],
+                correctIds: ["q4_b"],
+                isMultiCorrect: false
+            },
+            {
+                text: "Which principle of oral presentation emphasizes the importance of maintaining good eye contact, using appropriate gestures, and showing positive posture?",
+                answers: [
+                    { text: "A) Voice projection", correct: false, id: "q5_a" },
+                    { text: "B) Language selection", correct: false, id: "q5_b" },
+                    { text: "C) Body language", correct: true, id: "q5_c" }
+                ],
+                correctIds: ["q5_c"],
+                isMultiCorrect: false
             }
         ];
 
         const total = questions.length;
         let currentIdx = 0;
-        let matches = [];
+        let matches = [];        // each: { qIdx, answerId: single id }
         let quizCompleted = false;
         let confettiTriggered = false;
 
@@ -323,20 +356,34 @@
         const resultArea = document.getElementById("resultArea");
         const progressItems = document.querySelectorAll(".progress-item");
 
-        function getAnswer(qIdx) {
+        function getAnswerId(qIdx) {
             const m = matches.find(m => m.qIdx === qIdx);
             return m ? m.answerId : null;
         }
 
+        function setAnswerId(qIdx, ansId) {
+            const existingIdx = matches.findIndex(m => m.qIdx === qIdx);
+            if (existingIdx !== -1) {
+                matches[existingIdx].answerId = ansId;
+            } else {
+                matches.push({ qIdx, answerId: ansId });
+            }
+        }
+
         function isAnswered(qIdx) {
-            return matches.some(m => m.qIdx === qIdx);
+            return getAnswerId(qIdx) !== null;
+        }
+
+        function isAnswerCorrect(qIdx, ansId) {
+            const q = questions[qIdx];
+            return q.correctIds.includes(ansId);
         }
 
         function computeScore() {
             let score = 0;
             for (let i = 0; i < total; i++) {
-                const match = matches.find(m => m.qIdx === i);
-                if (match && match.answerId === questions[i].correctId) score++;
+                const ansId = getAnswerId(i);
+                if (ansId && isAnswerCorrect(i, ansId)) score++;
             }
             return score;
         }
@@ -373,7 +420,7 @@
 
         function drawLine() {
             svg.innerHTML = "";
-            const answerId = getAnswer(currentIdx);
+            const answerId = getAnswerId(currentIdx);
             if (!answerId) return;
             
             const leftCard = document.querySelector(".left .card");
@@ -401,7 +448,7 @@
 
         function render() {
             const q = questions[currentIdx];
-            const storedId = getAnswer(currentIdx);
+            const storedId = getAnswerId(currentIdx);
             
             document.getElementById("leftQuestionContainer").innerHTML = `
                 <div class="card">
@@ -424,17 +471,15 @@
                 card.onclick = () => {
                     if (quizCompleted) return;
                     const aid = card.dataset.aid;
-                    matches = matches.filter(m => m.qIdx !== currentIdx);
-                    matches.push({ qIdx: currentIdx, answerId: aid });
+                    setAnswerId(currentIdx, aid);
                     
                     document.querySelectorAll(".ans-card").forEach(c => c.classList.remove("matched-answer"));
                     card.classList.add("matched-answer");
                     
                     drawLine();
                     updateProgress();
-                    
                     if (currentIdx === total - 1) {
-                        hintMsg.innerHTML = "✓ Ready to submit! Click Submit to see your score.";
+                        hintMsg.innerHTML = "✓ Ready to submit! Click Finish to see your score.";
                     } else {
                         hintMsg.innerHTML = "✓ Matched! Click Next →";
                     }
@@ -445,7 +490,50 @@
             setTimeout(() => drawLine(), 30);
         }
 
-        function nextOrSubmit() {
+        function finishQuiz() {
+            quizCompleted = true;
+            const score = computeScore();
+            const percent = Math.round(score/total*100);
+            const perfect = score === total;
+            
+            finalValue.innerHTML = `${score} <span>/ ${total}</span>`;
+            finalBadge.style.display = "block";
+            if (perfect) {
+                finalBadge.classList.add("perfect-score-top");
+                if (!confettiTriggered) {
+                    confettiTriggered = true;
+                    burstConfetti();
+                }
+            }
+            
+            nextBtn.classList.add("hidden");
+            
+            let fb = `<div style="font-weight:600; margin-bottom:12px;">📊 Quiz Results — Topic 13: Communicating Research Findings</div>`;
+            for (let i = 0; i < total; i++) {
+                const q = questions[i];
+                const ansId = getAnswerId(i);
+                const correct = ansId && isAnswerCorrect(i, ansId);
+                const correctAnswerObj = q.answers.find(a => q.correctIds.includes(a.id));
+                const correctText = correctAnswerObj ? correctAnswerObj.text : "Unknown";
+                
+                if (correct) {
+                    fb += `<div style="margin-bottom:8px; color:#2b6e3b;">✓ Question ${i+1}: Correct</div>`;
+                } else {
+                    fb += `<div style="margin-bottom:8px; color:#b13b2d;">✗ Question ${i+1}: Incorrect.<br> <span style="margin-left: 16px; font-size:0.85rem;">✔ Correct answer: ${correctText}</span></div>`;
+                }
+            }
+            fb += `<div class="score-highlight">🏅 Final Score: ${score}/${total} · ${percent}%</div>`;
+            if (perfect) fb += `<div style="margin-top:12px; background:#ffe5b4; padding:8px 16px; border-radius:40px; display:inline-block;">🌟 Perfect! Congratulations! 🎊</div>`;
+            
+            resultArea.style.display = "block";
+            resultArea.className = "result-panel";
+            resultArea.innerHTML = fb;
+            hintMsg.innerHTML = "Quiz completed! Your final score is shown above.";
+            
+            updateProgress();
+        }
+
+        function nextOrFinish() {
             if (quizCompleted) return;
             
             if (!isAnswered(currentIdx)) {
@@ -474,13 +562,13 @@
             render();
             updateProgress();
             if (currentIdx === total - 1) {
-                hintMsg.innerHTML = "Last question. Click any answer to match, then Submit.";
+                hintMsg.innerHTML = "Last question. Select answer, then Finish.";
             } else {
                 hintMsg.innerHTML = "Click any answer to match";
             }
         }
 
-        // Confetti
+        // ========== CONFETTI ==========
         const canvas = document.getElementById("confetti-canvas");
         let ctx = canvas.getContext("2d");
         let animId = null;
@@ -545,52 +633,12 @@
             animId = requestAnimationFrame(animate);
         }
 
-        function finishQuiz() {
-            quizCompleted = true;
-            const score = computeScore();
-            const percent = Math.round(score/total*100);
-            const perfect = score === total;
-            
-            finalValue.innerHTML = `${score} <span>/ ${total}</span>`;
-            finalBadge.style.display = "block";
-            if (perfect) {
-                finalBadge.classList.add("perfect-score-top");
-                if (!confettiTriggered) {
-                    confettiTriggered = true;
-                    burstConfetti();
-                }
-            }
-            
-            nextBtn.classList.add("hidden");
-            
-            let fb = `<div style="font-weight:600; margin-bottom:12px;">📊 Quiz Results — Topic 13: Communicating Research Findings</div>`;
-            for (let i = 0; i < total; i++) {
-                const q = questions[i];
-                const match = matches.find(m => m.qIdx === i);
-                const correct = match && match.answerId === q.correctId;
-                const correctText = q.answers.find(a => a.id === q.correctId)?.text;
-                if (correct) {
-                    fb += `<div style="margin-bottom:8px; color:#2b6e3b;">✓ Question ${i+1}: Correct</div>`;
-                } else {
-                    fb += `<div style="margin-bottom:8px; color:#b13b2d;">✗ Question ${i+1}: Incorrect. Correct: ${correctText}</div>`;
-                }
-            }
-            fb += `<div class="score-highlight">🏅 Score: ${score}/${total} · ${percent}%</div>`;
-            if (perfect) fb += `<div style="margin-top:12px; background:#ffe5b4; padding:8px 16px; border-radius:40px; display:inline-block;">🌟 Perfect! Congratulations! 🎊</div>`;
-            
-            resultArea.style.display = "block";
-            resultArea.className = "result-panel";
-            resultArea.innerHTML = fb;
-            hintMsg.innerHTML = "Quiz completed! Your final score is shown above.";
-            
-            updateProgress();
-        }
-
+        // attach navigation
         progressItems.forEach((item, idx) => {
             item.onclick = () => navigateTo(idx);
         });
         
-        nextBtn.onclick = nextOrSubmit;
+        nextBtn.onclick = nextOrFinish;
         
         window.addEventListener("resize", () => setTimeout(() => drawLine(), 100));
         

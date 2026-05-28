@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Topic 8: Measurement & Questionnaire Design | Quick Quiz</title>
     <style>
         * {
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', 'Inter', sans-serif;
             background: #eef2f8;
             min-height: 100vh;
             display: flex;
@@ -22,7 +22,7 @@
         }
 
         .quiz-box {
-            max-width: 1100px;
+            max-width: 1000px;
             width: 100%;
             background: white;
             border-radius: 2rem;
@@ -107,7 +107,7 @@
             display: flex;
             gap: 2rem;
             padding: 2rem;
-            min-height: 350px;
+            min-height: 380px;
         }
 
         .col {
@@ -251,7 +251,7 @@
         </div>
         <div class="final-score-badge" id="finalScoreBadge" style="display: none;">
             <div class="final-score-label">FINAL SCORE</div>
-            <div class="final-score-value" id="finalScoreValue">0 <span>/ 3</span></div>
+            <div class="final-score-value" id="finalScoreValue">0 <span>/ 5</span></div>
         </div>
     </div>
 
@@ -259,6 +259,8 @@
         <span class="progress-item" data-qidx="0">1</span>
         <span class="progress-item" data-qidx="1">2</span>
         <span class="progress-item" data-qidx="2">3</span>
+        <span class="progress-item" data-qidx="3">4</span>
+        <span class="progress-item" data-qidx="4">5</span>
     </div>
 
     <div class="match-area" id="matchContainer">
@@ -285,40 +287,63 @@
 
 <script>
     (function() {
+        // ============= TOPIC 8: Measurement & Questionnaire Design =============
         const questions = [
             {
-                text: "66. A good Observation Form will help the marketing researchers to answer the 6W questions.",
+                text: "Which of the following best describes an operational definition in marketing research?",
                 answers: [
-                    { text: "✅ Yes — 6W questions (Who, What, When, Where, Why, How)", correct: true, id: "q1_yes" },
-                    { text: "❌ No — Observation forms are not that comprehensive", correct: false, id: "q1_no" }
+                    { text: "A) A dictionary definition of a concept used to ensure all researchers understand the term", correct: false, id: "q1_a" },
+                    { text: "B) A practical, measurable definition of a concept by specifying the activities or operations needed to measure it", correct: true, id: "q1_b" },
+                    { text: "C) A statistical formula used to calculate the reliability of a measurement scale", correct: false, id: "q1_c" }
                 ],
-                correctId: "q1_yes"
+                correctIds: ["q1_b"],
+                isMultiCorrect: false
             },
             {
-                text: "67. A questionnaire can ask ____ and ____ questions in order to obtain reliable and valid information from the respondents.",
+                text: "A researcher assigns numbers to different brands of smartphones (e.g., 1 = Apple, 2 = Samsung, 3 = Huawei) for classification purposes only. This is an example of which scale of measurement?",
                 answers: [
-                    { text: "A) long, very long", correct: false, id: "q2_a" },
-                    { text: "B) open-ended, closed format", correct: true, id: "q2_b" },
-                    { text: "C) short, sensitive", correct: false, id: "q2_c" },
-                    { text: "D) variety, brief", correct: false, id: "q2_d" }
+                    { text: "A) Ordinal scale", correct: false, id: "q2_a" },
+                    { text: "B) Interval scale", correct: false, id: "q2_b" },
+                    { text: "C) Nominal scale", correct: true, id: "q2_c" }
                 ],
-                correctId: "q2_b"
+                correctIds: ["q2_c"],
+                isMultiCorrect: false
             },
             {
-                text: "68. Which of the following 'Avoids' is INCORRECT in questionnaire design?",
+                text: "Which scaling technique requires respondents to allocate a constant sum of units (e.g., 100 points) among a set of objects based on certain criteria?",
                 answers: [
-                    { text: "A) Avoid ambiguous words", correct: false, id: "q3_a" },
-                    { text: "B) Avoid leading questions", correct: false, id: "q3_b" },
-                    { text: "C) Avoid cost implication", correct: true, id: "q3_c" },
-                    { text: "D) Avoid implicit assumptions", correct: false, id: "q3_d" }
+                    { text: "A) Rank order scaling", correct: false, id: "q3_a" },
+                    { text: "B) Constant sum scaling", correct: true, id: "q3_b" },
+                    { text: "C) Paired comparison scaling", correct: false, id: "q3_c" }
                 ],
-                correctId: "q3_c"
+                correctIds: ["q3_b"],
+                isMultiCorrect: false
+            },
+            {
+                text: "According to the document, which of the following is a recommended consideration when deciding the number of scale categories in a non-comparative rating scale?",
+                answers: [
+                    { text: "A) Scales should always have an even number of categories to avoid neutral answers", correct: false, id: "q4_a" },
+                    { text: "B) Most researchers tend to use five to nine categories", correct: true, id: "q4_b" },
+                    { text: "C) The higher the number of scale categories, the lower the reliability", correct: false, id: "q4_c" }
+                ],
+                correctIds: ["q4_b"],
+                isMultiCorrect: false
+            },
+            {
+                text: "In questionnaire design, what is the main purpose of pre-testing?",
+                answers: [
+                    { text: "A) To finalize the sample size for the main survey", correct: false, id: "q5_a" },
+                    { text: "B) To identify and eliminate potential problems in the questionnaire by testing it on a small sample of respondents", correct: true, id: "q5_b" },
+                    { text: "C) To train interviewers on how to administer the questionnaire", correct: false, id: "q5_c" }
+                ],
+                correctIds: ["q5_b"],
+                isMultiCorrect: false
             }
         ];
 
         const total = questions.length;
         let currentIdx = 0;
-        let matches = [];
+        let matches = [];        // each: { qIdx, answerId: single id }
         let quizCompleted = false;
         let confettiTriggered = false;
 
@@ -331,20 +356,34 @@
         const resultArea = document.getElementById("resultArea");
         const progressItems = document.querySelectorAll(".progress-item");
 
-        function getAnswer(qIdx) {
+        function getAnswerId(qIdx) {
             const m = matches.find(m => m.qIdx === qIdx);
             return m ? m.answerId : null;
         }
 
+        function setAnswerId(qIdx, ansId) {
+            const existingIdx = matches.findIndex(m => m.qIdx === qIdx);
+            if (existingIdx !== -1) {
+                matches[existingIdx].answerId = ansId;
+            } else {
+                matches.push({ qIdx, answerId: ansId });
+            }
+        }
+
         function isAnswered(qIdx) {
-            return matches.some(m => m.qIdx === qIdx);
+            return getAnswerId(qIdx) !== null;
+        }
+
+        function isAnswerCorrect(qIdx, ansId) {
+            const q = questions[qIdx];
+            return q.correctIds.includes(ansId);
         }
 
         function computeScore() {
             let score = 0;
             for (let i = 0; i < total; i++) {
-                const match = matches.find(m => m.qIdx === i);
-                if (match && match.answerId === questions[i].correctId) score++;
+                const ansId = getAnswerId(i);
+                if (ansId && isAnswerCorrect(i, ansId)) score++;
             }
             return score;
         }
@@ -381,7 +420,7 @@
 
         function drawLine() {
             svg.innerHTML = "";
-            const answerId = getAnswer(currentIdx);
+            const answerId = getAnswerId(currentIdx);
             if (!answerId) return;
             
             const leftCard = document.querySelector(".left .card");
@@ -409,7 +448,7 @@
 
         function render() {
             const q = questions[currentIdx];
-            const storedId = getAnswer(currentIdx);
+            const storedId = getAnswerId(currentIdx);
             
             document.getElementById("leftQuestionContainer").innerHTML = `
                 <div class="card">
@@ -432,17 +471,15 @@
                 card.onclick = () => {
                     if (quizCompleted) return;
                     const aid = card.dataset.aid;
-                    matches = matches.filter(m => m.qIdx !== currentIdx);
-                    matches.push({ qIdx: currentIdx, answerId: aid });
+                    setAnswerId(currentIdx, aid);
                     
                     document.querySelectorAll(".ans-card").forEach(c => c.classList.remove("matched-answer"));
                     card.classList.add("matched-answer");
                     
                     drawLine();
                     updateProgress();
-                    
                     if (currentIdx === total - 1) {
-                        hintMsg.innerHTML = "✓ Ready to submit! Click Submit to see your score.";
+                        hintMsg.innerHTML = "✓ Ready to submit! Click Finish to see your score.";
                     } else {
                         hintMsg.innerHTML = "✓ Matched! Click Next →";
                     }
@@ -453,7 +490,50 @@
             setTimeout(() => drawLine(), 30);
         }
 
-        function nextOrSubmit() {
+        function finishQuiz() {
+            quizCompleted = true;
+            const score = computeScore();
+            const percent = Math.round(score/total*100);
+            const perfect = score === total;
+            
+            finalValue.innerHTML = `${score} <span>/ ${total}</span>`;
+            finalBadge.style.display = "block";
+            if (perfect) {
+                finalBadge.classList.add("perfect-score-top");
+                if (!confettiTriggered) {
+                    confettiTriggered = true;
+                    burstConfetti();
+                }
+            }
+            
+            nextBtn.classList.add("hidden");
+            
+            let fb = `<div style="font-weight:600; margin-bottom:12px;">📊 Quiz Results — Topic 8: Measurement & Questionnaire Design</div>`;
+            for (let i = 0; i < total; i++) {
+                const q = questions[i];
+                const ansId = getAnswerId(i);
+                const correct = ansId && isAnswerCorrect(i, ansId);
+                const correctAnswerObj = q.answers.find(a => q.correctIds.includes(a.id));
+                const correctText = correctAnswerObj ? correctAnswerObj.text : "Unknown";
+                
+                if (correct) {
+                    fb += `<div style="margin-bottom:8px; color:#2b6e3b;">✓ Question ${i+1}: Correct</div>`;
+                } else {
+                    fb += `<div style="margin-bottom:8px; color:#b13b2d;">✗ Question ${i+1}: Incorrect.<br> <span style="margin-left: 16px; font-size:0.85rem;">✔ Correct answer: ${correctText}</span></div>`;
+                }
+            }
+            fb += `<div class="score-highlight">🏅 Final Score: ${score}/${total} · ${percent}%</div>`;
+            if (perfect) fb += `<div style="margin-top:12px; background:#ffe5b4; padding:8px 16px; border-radius:40px; display:inline-block;">🌟 Perfect! Congratulations! 🎊</div>`;
+            
+            resultArea.style.display = "block";
+            resultArea.className = "result-panel";
+            resultArea.innerHTML = fb;
+            hintMsg.innerHTML = "Quiz completed! Your final score is shown above.";
+            
+            updateProgress();
+        }
+
+        function nextOrFinish() {
             if (quizCompleted) return;
             
             if (!isAnswered(currentIdx)) {
@@ -482,13 +562,13 @@
             render();
             updateProgress();
             if (currentIdx === total - 1) {
-                hintMsg.innerHTML = "Last question. Click any answer to match, then Submit.";
+                hintMsg.innerHTML = "Last question. Select answer, then Finish.";
             } else {
                 hintMsg.innerHTML = "Click any answer to match";
             }
         }
 
-        // Confetti
+        // ========== CONFETTI ==========
         const canvas = document.getElementById("confetti-canvas");
         let ctx = canvas.getContext("2d");
         let animId = null;
@@ -553,52 +633,12 @@
             animId = requestAnimationFrame(animate);
         }
 
-        function finishQuiz() {
-            quizCompleted = true;
-            const score = computeScore();
-            const percent = Math.round(score/total*100);
-            const perfect = score === total;
-            
-            finalValue.innerHTML = `${score} <span>/ ${total}</span>`;
-            finalBadge.style.display = "block";
-            if (perfect) {
-                finalBadge.classList.add("perfect-score-top");
-                if (!confettiTriggered) {
-                    confettiTriggered = true;
-                    burstConfetti();
-                }
-            }
-            
-            nextBtn.classList.add("hidden");
-            
-            let fb = `<div style="font-weight:600; margin-bottom:12px;">📊 Quiz Results — Topic 8: Measurement & Questionnaire Design</div>`;
-            for (let i = 0; i < total; i++) {
-                const q = questions[i];
-                const match = matches.find(m => m.qIdx === i);
-                const correct = match && match.answerId === q.correctId;
-                const correctText = q.answers.find(a => a.id === q.correctId)?.text;
-                if (correct) {
-                    fb += `<div style="margin-bottom:8px; color:#2b6e3b;">✓ Question ${i+1}: Correct</div>`;
-                } else {
-                    fb += `<div style="margin-bottom:8px; color:#b13b2d;">✗ Question ${i+1}: Incorrect. Correct: ${correctText}</div>`;
-                }
-            }
-            fb += `<div class="score-highlight">🏅 Score: ${score}/${total} · ${percent}%</div>`;
-            if (perfect) fb += `<div style="margin-top:12px; background:#ffe5b4; padding:8px 16px; border-radius:40px; display:inline-block;">🌟 Perfect! Congratulations! 🎊</div>`;
-            
-            resultArea.style.display = "block";
-            resultArea.className = "result-panel";
-            resultArea.innerHTML = fb;
-            hintMsg.innerHTML = "Quiz completed! Your final score is shown above.";
-            
-            updateProgress();
-        }
-
+        // attach navigation
         progressItems.forEach((item, idx) => {
             item.onclick = () => navigateTo(idx);
         });
         
-        nextBtn.onclick = nextOrSubmit;
+        nextBtn.onclick = nextOrFinish;
         
         window.addEventListener("resize", () => setTimeout(() => drawLine(), 100));
         

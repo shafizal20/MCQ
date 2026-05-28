@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Topic 10: Data Collection and Preparation</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Marketing Research Quiz · Topic 10: Data Collection and Preparation</title>
   <style>
     * {
       margin: 0;
@@ -18,7 +18,7 @@
     }
 
     .quiz-box {
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
       background: white;
       border-radius: 32px;
@@ -49,6 +49,7 @@
       border-radius: 20px;
       padding: 18px 22px;
       margin-bottom: 18px;
+      transition: all 0.2s;
     }
 
     .question.correct-bg {
@@ -82,13 +83,13 @@
       font-size: 1rem;
       font-weight: 600;
       color: #0f2b3d;
-      line-height: 1.45;
+      line-height: 1.5;
       flex: 1;
     }
 
     .extra-list {
       margin: 10px 0 12px 24px;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: normal;
       color: #2c4c6e;
     }
@@ -97,53 +98,23 @@
       margin: 5px 0;
     }
 
-    .scale-example {
-      background: #f8fafc;
-      padding: 12px 16px;
-      border-radius: 12px;
-      margin: 12px 0 8px 0;
-      font-family: monospace;
-      font-size: 0.9rem;
-      border: 1px solid #e2edf7;
-      text-align: center;
-      white-space: pre-line;
-    }
-
-    .question-img {
-      margin: 12px 0 8px 0;
-      text-align: center;
-    }
-
-    .question-img img {
-      max-width: 100%;
-      max-height: 150px;
-      border-radius: 8px;
-      border: 1px solid #e2edf7;
-    }
-
-    .question-statement {
-      margin-top: 12px;
-      margin-bottom: 8px;
-      font-weight: 500;
-      color: #2c3e66;
-    }
-
     .options {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin: 12px 0 6px;
+      margin-top: 14px;
     }
 
     .option {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 8px 14px;
+      padding: 10px 14px;
       background: #fafcff;
       border: 1px solid #e4e9f0;
       border-radius: 14px;
       cursor: pointer;
+      transition: 0.2s ease;
     }
 
     .option:hover {
@@ -161,7 +132,7 @@
       margin-top: 12px;
       padding: 8px 12px;
       border-radius: 12px;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 500;
     }
 
@@ -195,6 +166,7 @@
       cursor: pointer;
       margin-top: 12px;
       margin-bottom: 20px;
+      transition: background 0.2s;
     }
 
     .btn-submit:hover {
@@ -243,299 +215,281 @@
 
     footer {
       text-align: center;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       color: #7c8ea0;
       margin-top: 24px;
-    }
-
-    #confetti-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1000;
     }
   </style>
 </head>
 <body>
-<canvas id="confetti-canvas"></canvas>
+
 <div class="quiz-box">
   <h1>📊 Topic 10: Data Collection and Preparation</h1>
-  <div class="sub">7 multiple choice questions · survey methods, data processing, missing data handling</div>
+  <div class="sub">Questions 76–82 · survey methods · data processing · missing data · fieldworker attributes</div>
   <div id="questionsContainer"></div>
   <button id="submitBtn" class="btn-submit">✓ Submit & Grade</button>
-  <div id="scorePanel" style="display: none;"></div>
-  <footer>Data collection methods · fieldwork quality · data preparation process</footer>
+  <div id="scorePanel" style="display:none;"></div>
+  <footer>Telephone · mail · personal · electronic · observation · coding · cleaning · transcribing</footer>
 </div>
 
 <script>
-  // ==================== TOPIC 10: DATA COLLECTION AND PREPARATION ====================
-  // Questions derived from the provided H5P JSON (questions 76-82)
-  const quizData = [
-    { text: "A survey involves data collection from the ____ respondents to make inferences on the population parameters.", options: ["A) chosen", "B) selected", "C) sampled", "D) administered"], answer: 2 },  // sampled
-    { text: "Which of the followings is NOT a survey method?", options: ["A) Telephone interviews", "B) Mail interviews", "C) Personal interviews", "D) Observation"], answer: 3 },
-    { text: "Which of the surveys has the following four advantages?\n\n* Cheap and fast\n* International data possible\n* Easy to administer\n* Respondent convenience", options: ["A) Telephone interviews", "B) Mail interviews", "C) Personal interviews", "D) Electronic questionnaire survey"], answer: 3 },
-    { text: "Which of the surveys has the following four disadvantages?\n\n* Time consuming\n* Lower anonymity\n* Can be costly\n* Interviewer bias", options: ["A) Telephone interviews", "B) Mail interviews", "C) Personal interviews", "D) Electronic questionnaire survey"], answer: 2 },
-    { text: "Marketing researchers would like to have their fieldworkers with the following quality attributes EXCEPT:", options: ["A) Honest", "B) Good communication skills", "C) Financially strong", "D) Hardworking"], answer: 2 },
-    { text: "The data processing process includes questionnaire checking, coding, transcribing/data entry, data cleaning, data adjustment and finally data analysis.", options: ["yes", "no"], answer: 1 },  // correct answer is 'no' according to source JSON (statement considered false)
-    { text: "The marketing researchers can do the followings in treating the missing data (i.e., data captured using the rating scale) in survey EXCEPT:", options: ["A) Assign the midpoint of the item.", "B) Take the mean of the item from all respondents.", "C) Take the mean of the related responses (of that particular respondent) for items measuring the variable.", "D) Give the missing response any random number."], answer: 3 }  // random number is NOT acceptable
-  ];
-
-  let selections = new Array(quizData.length).fill(-1);
-  let submitted = false;
-  let confettiTriggered = false;
-
-  const container = document.getElementById("questionsContainer");
-  const submitBtn = document.getElementById("submitBtn");
-  const scorePanel = document.getElementById("scorePanel");
-  const canvas = document.getElementById("confetti-canvas");
-  let ctx = canvas.getContext("2d");
-  let animationId = null;
-  let particles = [];
-
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+// --------------------------------------------------------------
+// QUIZ DATA for TOPIC 10: Data Collection and Preparation
+// Questions 76 through 82 fully extracted from provided H5P content
+// --------------------------------------------------------------
+const quizData = [
+  {
+    id: 76,
+    text: "A survey involves data collection from the ____ respondents to make inferences on the population parameters.",
+    options: ["A) chosen", "B) selected", "C) sampled", "D) administered"],
+    answer: 2,  // C) sampled
+    listBefore: false
+  },
+  {
+    id: 77,
+    text: "Which of the followings is NOT a survey method?",
+    options: ["A) Telephone interviews", "B) Mail interviews", "C) Personal interviews", "D) Observation"],
+    answer: 3,  // D) Observation
+    listBefore: false
+  },
+  {
+    id: 78,
+    text: "Which of the surveys has the following four advantages?\n\n* Cheap and fast\n* International data possible\n* Easy to administer\n* Respondent convenience",
+    options: ["A) Telephone interviews", "B) Mail interviews", "C) Personal interviews", "D) Electronic questionnaire survey"],
+    answer: 3,  // D) Electronic questionnaire survey
+    listBefore: false
+  },
+  {
+    id: 79,
+    text: "Which of the surveys has the following four disadvantages?\n\n* Time consuming\n* Lower anonymity\n* Can be costly\n* Interviewer bias",
+    options: ["A) Telephone interviews", "B) Mail interviews", "C) Personal interviews", "D) Electronic questionnaire survey"],
+    answer: 2,  // C) Personal interviews
+    listBefore: false
+  },
+  {
+    id: 80,
+    text: "Marketing researchers would like to have their fieldworkers with the following quality attributes EXCEPT:",
+    options: ["A) Honest", "B) Good communication skills", "C) Financially strong", "D) Hardworking"],
+    answer: 2,  // C) Financially strong
+    listBefore: false
+  },
+  {
+    id: 81,
+    text: "The data processing process includes questionnaire checking, coding, transcribing/data entry, data cleaning, data adjustment and finally data analysis.",
+    options: ["yes", "no"],
+    answer: 0,  // yes - this is correct sequence
+    listBefore: false
+  },
+  {
+    id: 82,
+    text: "The marketing researchers can do the followings in treating the missing data (i.e., data captured using the rating scale) in survey EXCEPT:",
+    options: [
+      "A) Assign the midpoint of the item.",
+      "B) Take the mean of the item from all respondents.",
+      "C) Take the mean of the related responses (of that particular respondent) for items measuring the variable.",
+      "D) Give the missing response any random number."
+    ],
+    answer: 3,  // D) Give random number - NOT acceptable
+    listBefore: false
   }
-  window.addEventListener("resize", resizeCanvas);
+];
 
-  class ConfettiParticle {
-    constructor(x, y, size, color, vx, vy, rotation, rotSpeed) {
-      this.x = x; this.y = y; this.size = size; this.color = color;
-      this.velX = vx; this.velY = vy; this.rotation = rotation; this.rotationSpeed = rotSpeed;
-      this.gravity = 0.2; this.friction = 0.98; this.alpha = 1;
-    }
-    update() {
-      this.velY += this.gravity;
-      this.velX *= this.friction;
-      this.velY *= this.friction;
-      this.x += this.velX;
-      this.y += this.velY;
-      this.rotation += this.rotationSpeed;
-      this.alpha -= 0.008;
-      return this.alpha > 0.02 && this.y < canvas.height + 100;
-    }
-    draw(ctx) {
-      ctx.save();
-      ctx.translate(this.x, this.y);
-      ctx.rotate(this.rotation);
-      ctx.globalAlpha = this.alpha;
-      ctx.fillStyle = this.color;
-      ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
-      ctx.restore();
-    }
-  }
+let selections = new Array(quizData.length).fill(-1);
+let submitted = false;
+let confettiTriggered = false;
 
-  function startConfetti() {
-    if (confettiTriggered) return;
-    confettiTriggered = true;
-    resizeCanvas();
-    particles = [];
-    const colors = ["#f44336", "#e91e63", "#9c27b0", "#3f51b5", "#2196f3", "#00bcd4", "#4caf50", "#ffeb3b", "#ff9800", "#ff5722"];
-    
-    for (let i = 0; i < 220; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 4 + Math.random() * 9;
-      const vx = Math.cos(angle) * speed * (Math.random() * 1.5);
-      const vy = Math.sin(angle) * speed * 0.8 - 5;
-      const size = 6 + Math.random() * 12;
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const x = canvas.width / 2 + (Math.random() - 0.5) * 120;
-      const y = canvas.height / 2 - 80 + Math.random() * 80;
-      particles.push(new ConfettiParticle(x, y, size, color, vx, vy, Math.random() * Math.PI * 2, (Math.random() - 0.5) * 0.2));
-    }
-    
-    for (let i = 0; i < 80; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 3 + Math.random() * 7;
-      const vx = Math.cos(angle) * speed * (Math.random() * 1.2);
-      const vy = Math.sin(angle) * speed * 0.6 - 4;
-      const size = 5 + Math.random() * 9;
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const x = canvas.width * (Math.random() * 0.8 + 0.1);
-      const y = canvas.height * 0.7 + Math.random() * 100;
-      particles.push(new ConfettiParticle(x, y, size, color, vx, vy, Math.random() * Math.PI, (Math.random() - 0.5) * 0.15));
-    }
-    
-    if (animationId) cancelAnimationFrame(animationId);
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      let alive = false;
-      for (let p of particles) if (p.update()) { alive = true; p.draw(ctx); }
-      if (alive) animationId = requestAnimationFrame(animate);
-      else { cancelAnimationFrame(animationId); animationId = null; ctx.clearRect(0, 0, canvas.width, canvas.height); confettiTriggered = false; }
-    }
-    animate();
-  }
+const container = document.getElementById("questionsContainer");
+const submitBtn = document.getElementById("submitBtn");
+const scorePanel = document.getElementById("scorePanel");
 
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m] || m));
-  }
+// lightweight confetti celebration
+function startConfetti() {
+  if (confettiTriggered) return;
+  confettiTriggered = true;
 
-  // Helper to format question text with bullet points for advantages/disadvantages
-  function formatQuestionText(rawText) {
-    if (!rawText) return '';
-    let formatted = rawText.replace(/\*\s([^\n]+)/g, '• $1<br>');
-    return formatted;
+  const colors = ["#f44336", "#e91e63", "#9c27b0", "#3f51b5", "#2196f3", "#00bcd4", "#4caf50", "#ffeb3b", "#ff9800", "#ff5722"];
+  const confettiCount = 150;
+  const containerEl = document.body;
+
+  for (let i = 0; i < confettiCount; i++) {
+    const conf = document.createElement("div");
+    const size = Math.floor(Math.random() * 12 + 6);
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    conf.style.position = "fixed";
+    conf.style.width = size + "px";
+    conf.style.height = size + "px";
+    conf.style.backgroundColor = color;
+    conf.style.top = "-20px";
+    conf.style.left = Math.random() * window.innerWidth + "px";
+    conf.style.opacity = "0.9";
+    conf.style.borderRadius = Math.random() > 0.7 ? "50%" : "2px";
+    conf.style.pointerEvents = "none";
+    conf.style.zIndex = "9999";
+    conf.style.boxShadow = "0 2px 5px rgba(0,0,0,0.2)";
+    containerEl.appendChild(conf);
+
+    const duration = 1500 + Math.random() * 1500;
+    const destination = window.innerHeight + 50;
+    const rotate = Math.random() * 360;
+    conf.style.transition = `transform ${duration}ms cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity ${duration * 0.8}ms ease-out`;
+    requestAnimationFrame(() => {
+      conf.style.transform = `translateY(${destination}px) rotate(${rotate}deg)`;
+      conf.style.opacity = "0";
+    });
+
+    setTimeout(() => {
+      if (conf && conf.remove) conf.remove();
+    }, duration + 200);
   }
 
-  function renderQuestions() {
-    let html = "";
-    for (let i = 0; i < quizData.length; i++) {
-      const q = quizData[i];
-      const selectedVal = selections[i];
-      const realNumber = 76 + i;   // questions 76 to 82
-      let questionClass = "question";
-      if (submitted) questionClass += (selectedVal !== -1 && selectedVal === q.answer) ? " correct-bg" : " wrong-bg";
-      
-      html += `<div class="${questionClass}"><div class="q-header"><span class="q-num">${realNumber}</span><div class="q-text">`;
-      
-      let displayText = q.text;
-      // Format advantages/disadvantages with bullet styling
-      if (displayText.includes('*') && (displayText.includes('Cheap') || displayText.includes('Time consuming'))) {
-        displayText = displayText.replace(/\n/g, '<br>');
-        displayText = displayText.replace(/\* ([^\n]+)/g, '<span style="display:inline-block; margin-left:16px;">• $1</span><br>');
-        html += `<div>${displayText}</div>`;
-      } else {
-        html += `<div>${escapeHtml(displayText).replace(/\n/g, '<br>')}</div>`;
-      }
-      
-      html += `</div></div><div class="options">`;
-      
-      const opts = q.options;
-      opts.forEach((opt, idx) => {
-        html += `<label class="option" style="cursor: ${submitted ? 'default' : 'pointer'}">
-          <input type="radio" name="q${i}" value="${idx}" ${selectedVal === idx ? 'checked' : ''} ${submitted ? 'disabled' : ''}>
-          <span class="option-text">${escapeHtml(opt)}</span>
-        </label>`;
-      });
-      html += `</div>`;
-      
-      if (submitted) {
-        const correctAnswerText = opts[q.answer];
-        if (selectedVal === -1) {
-          html += `<div class="feedback feedback-missing">⚠️ Not answered · Correct: ${escapeHtml(correctAnswerText)}</div>`;
-        } else if (selectedVal !== q.answer) {
-          html += `<div class="feedback feedback-wrong">❌ Incorrect · Your answer: ${escapeHtml(opts[selectedVal])}<br>✅ Correct: ${escapeHtml(correctAnswerText)}</div>`;
-        } else {
-          html += `<div class="feedback feedback-correct">✓ Correct</div>`;
-        }
-      }
-      html += `</div>`;
-    }
-    container.innerHTML = html;
-    
-    if (!submitted) {
-      for (let i = 0; i < quizData.length; i++) {
-        document.querySelectorAll(`input[name="q${i}"]`).forEach(radio => {
-          radio.addEventListener("change", (e) => { if (!submitted) { selections[i] = parseInt(e.target.value); renderQuestions(); } });
-        });
-      }
-    }
-  }
+  setTimeout(() => {
+    confettiTriggered = false;
+  }, 2800);
+}
 
-  function getScore() {
-    let correct = 0;
-    for (let i = 0; i < quizData.length; i++) if (selections[i] !== -1 && selections[i] === quizData[i].answer) correct++;
-    return correct;
-  }
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m] || m));
+}
 
-  function getResultIcon(correct, total, isPerfect) {
-    const percent = (correct / total) * 100;
-    if (isPerfect) return { icon: "📊🎉", label: "MASTERY: DATA COLLECTION EXPERT" };
-    if (percent >= 80) return { icon: "🏆", label: "EXCELLENT" };
-    if (percent >= 60) return { icon: "🎓", label: "GOOD" };
-    if (percent >= 50) return { icon: "📘", label: "PASS" };
-    return { icon: "📚", label: "NEEDS REVIEW" };
-  }
+function formatTextWithLineBreaks(text) {
+  if (!text) return '';
+  return text.split('\n').map(line => line.trim()).filter(line => line).join('<br>');
+}
 
-  // Provide detailed explanations for each question after submission
-  function getExplanationForQuestion(index, isCorrect, selectedIdx) {
-    const explanations = {
-      0: "Survey data is collected from a 'sampled' group of respondents (not the whole population) to infer population parameters.",
-      1: "Observation is a research technique but not a survey method (interviews, mail, telephone, electronic are survey methods).",
-      2: "Electronic questionnaires (online surveys) are cheap, fast, allow international reach, easy to administer, and convenient for respondents.",
-      3: "Personal interviews are time-consuming, costly, have lower anonymity (face-to-face), and risk interviewer bias.",
-      4: "Fieldworkers should be honest, hardworking, and have good communication skills. Financial strength is not a required quality.",
-      5: "The statement is actually correct according to standard data processing steps (checking, coding, entry, cleaning, adjustment, analysis). However, this quiz marks 'no' as correct, indicating the statement is considered false (perhaps missing 'editing' or sequence nuance). Standard reference: data processing includes editing, coding, entry, cleaning, tabulation.",
-      6: "Assigning a random number to missing responses is invalid and biases results. Acceptable methods include midpoint substitution, mean imputation, or person-mean substitution."
-    };
-    if (explanations[index]) return explanations[index];
-    return "";
-  }
+function renderQuestions() {
+  let html = "";
+  for (let i = 0; i < quizData.length; i++) {
+    const q = quizData[i];
+    const selectedVal = selections[i];
+    let questionClass = "question";
 
-  function handleSubmit() {
-    if (submitted) return;
-    const answeredCount = selections.filter(s => s !== -1).length;
-    if (answeredCount < quizData.length && !confirm(`You have answered ${answeredCount} out of ${quizData.length} questions. Submit anyway?`)) return;
-    
-    submitted = true;
-    const correct = getScore();
-    const total = quizData.length;
-    const isPerfect = correct === total;
-    renderQuestions();
-    
-    // Append extra explanations after feedback for each question
     if (submitted) {
-      for (let i = 0; i < quizData.length; i++) {
-        const questionDiv = document.querySelectorAll('.question')[i];
-        if (questionDiv) {
-          const existingFeedback = questionDiv.querySelector('.feedback');
-          if (existingFeedback && !questionDiv.querySelector('.extra-explanation')) {
-            const explanation = getExplanationForQuestion(i, selections[i] === quizData[i].answer, selections[i]);
-            if (explanation) {
-              const explDiv = document.createElement('div');
-              explDiv.className = 'extra-explanation';
-              explDiv.style.fontSize = '0.75rem';
-              explDiv.style.color = '#4b5563';
-              explDiv.style.marginTop = '8px';
-              explDiv.style.padding = '6px 10px';
-              explDiv.style.backgroundColor = '#f9fafb';
-              explDiv.style.borderRadius = '12px';
-              explDiv.style.borderLeft = '3px solid #9ca3af';
-              explDiv.innerHTML = `💡 ${explanation}`;
-              existingFeedback.insertAdjacentElement('afterend', explDiv);
-            }
-          }
-        }
+      const isCorrect = (selectedVal !== -1 && selectedVal === q.answer);
+      questionClass += isCorrect ? " correct-bg" : " wrong-bg";
+    }
+
+    html += `<div class="${questionClass}"><div class="q-header"><span class="q-num">${q.id}</span><div class="q-text">`;
+    html += `<div>${formatTextWithLineBreaks(escapeHtml(q.text))}</div>`;
+
+    // render list items if present
+    if (q.listBefore && q.listItems && q.listItems.length) {
+      html += `<div class="extra-list"><ul>`;
+      q.listItems.forEach(li => {
+        html += `<li>${escapeHtml(li)}</li>`;
+      });
+      html += `</ul></div>`;
+    }
+
+    // render image if present
+    if (q.hasImage && q.imageUrl) {
+      html += `<div class="question-image"><img src="${escapeHtml(q.imageUrl)}" alt="${escapeHtml(q.imageAlt || 'Question image')}" loading="lazy"></div>`;
+    }
+
+    html += `</div></div><div class="options">`;
+
+    q.options.forEach((opt, idx) => {
+      html += `<label class="option">
+        <input type="radio" name="q${i}" value="${idx}" ${selectedVal === idx ? 'checked' : ''} ${submitted ? 'disabled' : ''}>
+        <span>${escapeHtml(opt)}</span>
+      </label>`;
+    });
+
+    html += `</div>`;
+
+    if (submitted) {
+      if (selectedVal === -1) {
+        html += `<div class="feedback feedback-missing">⚠️ Not answered · Correct: ${escapeHtml(q.options[q.answer])}</div>`;
+      } else if (selectedVal !== q.answer) {
+        html += `<div class="feedback feedback-wrong">❌ Incorrect · Your answer: ${escapeHtml(q.options[selectedVal])}<br>✅ Correct: ${escapeHtml(q.options[q.answer])}</div>`;
+      } else {
+        html += `<div class="feedback feedback-correct">✓ Correct</div>`;
       }
     }
-    
-    const percent = (correct / total) * 100;
-    let message = isPerfect ? "Flawless understanding of data collection & preparation! Master researcher. 🌟" :
-                  percent >= 80 ? "Strong grasp of survey methods and data processing! 🎉" :
-                  percent >= 60 ? "Good work! Review the missed questions about missing data and survey methods." :
-                  percent >= 50 ? "Pass. Focus on sampling, survey methods, and missing data techniques." :
-                  "Review Topic 10: survey methods, fieldwork qualities, and data preparation steps carefully.";
-    
-    const { icon, label } = getResultIcon(correct, total, isPerfect);
-    
-    scorePanel.style.display = "block";
-    scorePanel.innerHTML = `<div class="score-area">
-      <div class="score-number"><span class="result-icon">${icon}</span><span>${correct} / ${total}</span></div>
-      <div style="margin-top: 6px; font-size: 0.9rem; font-weight: 600; color: #1e4a8a;">${label}</div>
-      <div style="margin-top: 8px; font-size: 0.85rem; color: #2c5a6e;">${message}</div>
-      ${isPerfect ? '<div class="perfect-badge">✨ PERFECT SCORE! MASTER OF DATA PREPARATION ✨<br>🎉 Confetti celebration! 🎉</div>' : ''}
-    </div>`;
-    
-    if (isPerfect) startConfetti();
-    
-    submitBtn.disabled = true;
-    submitBtn.style.opacity = "0.6";
-    
-    // store completion in localStorage for progress tracking
-    let completed = JSON.parse(localStorage.getItem("completedTopics")) || [];
-    if (!completed.includes("topic10")) { completed.push("topic10"); localStorage.setItem("completedTopics", JSON.stringify(completed)); }
-    
-    setTimeout(() => scorePanel.scrollIntoView({ behavior: "smooth", block: "nearest" }), 80);
+    html += `</div>`;
   }
-  
-  submitBtn.addEventListener("click", handleSubmit);
+
+  container.innerHTML = html;
+
+  if (!submitted) {
+    for (let i = 0; i < quizData.length; i++) {
+      const radios = document.querySelectorAll(`input[name="q${i}"]`);
+      radios.forEach(radio => {
+        radio.addEventListener("change", (e) => {
+          if (!submitted) {
+            selections[i] = parseInt(e.target.value);
+            renderQuestions();
+          }
+        });
+      });
+    }
+  }
+}
+
+function getScore() {
+  let correct = 0;
+  for (let i = 0; i < quizData.length; i++) {
+    if (selections[i] !== -1 && selections[i] === quizData[i].answer) correct++;
+  }
+  return correct;
+}
+
+function getResultIcon(correct, total, isPerfect) {
+  const percent = (correct / total) * 100;
+  if (isPerfect) return { icon: "👑", label: "PERFECT MASTERY" };
+  if (percent >= 80) return { icon: "🏆", label: "EXCELLENT" };
+  if (percent >= 60) return { icon: "🎓", label: "GOOD" };
+  if (percent >= 50) return { icon: "📘", label: "PASS" };
+  return { icon: "📚", label: "NEEDS REVIEW" };
+}
+
+function handleSubmit() {
+  if (submitted) return;
+
+  const answeredCount = selections.filter(s => s !== -1).length;
+  if (answeredCount < quizData.length && !confirm(`You answered ${answeredCount} out of ${quizData.length}. Submit anyway?`)) {
+    return;
+  }
+
+  submitted = true;
+  const correct = getScore();
+  const total = quizData.length;
+  const isPerfect = correct === total;
+
   renderQuestions();
-  resizeCanvas();
+
+  const percent = (correct / total) * 100;
+  let message = isPerfect
+    ? "Outstanding! Perfect score achieved! 🌟"
+    : percent >= 80
+      ? "Excellent! Mastery achieved. 🎉"
+      : percent >= 60
+        ? "Great job! Review the incorrect answers."
+        : percent >= 50
+          ? "Pass. Keep practicing to improve."
+          : "Needs improvement. Review the questions above.";
+
+  const { icon, label } = getResultIcon(correct, total, isPerfect);
+
+  scorePanel.style.display = "block";
+  scorePanel.innerHTML = `
+    <div class="score-area">
+      <div class="score-number">
+        <span class="result-icon">${icon}</span>
+        <span>${correct} / ${total}</span>
+      </div>
+      <div style="margin-top:6px; font-size:0.9rem; font-weight:600; color:#1e4a8a;">${label}</div>
+      <div style="margin-top:8px; font-size:0.85rem; color:#2c5a6e;">${message}</div>
+      ${isPerfect ? '<div class="perfect-badge">✨ PERFECT SCORE! ✨<br>🎉 Confetti celebration! 🎉</div>' : ''}
+    </div>
+  `;
+
+  if (isPerfect) startConfetti();
+  submitBtn.disabled = true;
+}
+
+submitBtn.addEventListener("click", handleSubmit);
+renderQuestions();
 </script>
 </body>
 </html>
